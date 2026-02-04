@@ -327,3 +327,22 @@
     100% { background-position: -200% 0; }
   }
 }
+
+/* Hide Google Translate toolbar */
+.goog-te-banner-frame,
+.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+/* Fix for translated text styling */
+.goog-te-gadget {
+  font-family: inherit !important;
+}
+
+font[style*="vertical-align: inherit"] {
+  vertical-align: baseline !important;
+}
