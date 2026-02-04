@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, Loader2, Trash2, Volume2, VolumeX, Globe } from 'lucide-react';
+import { X, Send, Loader2, Trash2, Volume2, VolumeX, Globe, Mic, MicOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import { useToast } from '@/hooks/use-toast';
 import { useChatPersistence } from '@/hooks/useChatPersistence';
 import { useTextToSpeech, LANGUAGE_OPTIONS, type SupportedLanguage } from '@/hooks/useTextToSpeech';
+import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import avoMascot from '@/assets/avo-mascot.png';
 
 type Message = {
@@ -28,6 +29,11 @@ export function ChatWidget() {
   const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>('en');
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [autoSpeak, setAutoSpeak] = useState(false);
+  
+  const handleVoiceResult = useCallback((transcript: string) => {
+    setInput(transcript);
+  }, []);
+  const { isListening, isSupported: isSpeechSupported, startListening, stopListening } = useSpeechRecognition(handleVoiceResult);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -410,13 +416,28 @@ export function ChatWidget() {
             {/* Input */}
             <div className="border-t border-border p-3 bg-muted/30">
               <div className="flex gap-2">
+                {isSpeechSupported && (
+                  <Button
+                    onClick={isListening ? stopListening : startListening}
+                    disabled={isLoading}
+                    size="icon"
+                    variant={isListening ? "destructive" : "outline"}
+                    className={cn(
+                      "shrink-0 rounded-full w-10 h-10",
+                      isListening && "animate-pulse"
+                    )}
+                    title={isListening ? "Stop recording" : "Voice input"}
+                  >
+                    {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                  </Button>
+                )}
                 <input
                   ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about ATROUN or freeze-drying..."
+                  placeholder={isListening ? "Listening..." : "Ask about ATROUN or freeze-drying..."}
                   className="flex-1 px-4 py-2.5 text-sm rounded-full border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 font-body"
                   disabled={isLoading}
                 />
