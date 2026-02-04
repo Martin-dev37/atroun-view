@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { cmsClient } from '@/lib/cms-client';
 import type {
   Page,
   HeroSection,
@@ -46,7 +46,7 @@ async function fetchCMSTable<T>(
   }
 ): Promise<T[] | T | null> {
   try {
-    let query = (supabase as any).from(tableName).select('*');
+    let query = (cmsClient as any).from(tableName).select('*');
     
     if (options?.eq) {
       options.eq.forEach(([column, value]) => {
