@@ -31,7 +31,7 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      // Save to database
+      // Submit to shared backend
       const { error: dbError } = await supabase
         .from('contact_submissions')
         .insert({
@@ -45,22 +45,6 @@ const Contact = () => {
       if (dbError) {
         console.error('Database error:', dbError);
         throw new Error('Failed to save your message. Please try again.');
-      }
-
-      // Send email notifications
-      const { error: emailError } = await supabase.functions.invoke('send-contact-notification', {
-        body: {
-          name: data.name,
-          email: data.email,
-          company: data.company,
-          subject: data.subject,
-          message: data.message,
-        },
-      });
-
-      if (emailError) {
-        console.error('Email error:', emailError);
-        // Don't fail the submission if email fails - the message is already saved
       }
 
       toast({
