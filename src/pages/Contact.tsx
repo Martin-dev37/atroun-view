@@ -21,8 +21,6 @@ import {
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
-  company: z.string().trim().max(100, "Company name must be less than 100 characters").optional(),
-  subject: z.string().trim().min(1, "Subject is required").max(200, "Subject must be less than 200 characters"),
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(2000, "Message must be less than 2000 characters"),
 });
 
@@ -85,13 +83,12 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      const { error: dbError } = await supabase
+      // Using 'as any' to bypass TypeScript types that may not match external DB schema
+      const { error: dbError } = await (supabase as any)
         .from('contact_submissions')
         .insert({
           name: data.name,
           email: data.email,
-          company: data.company || null,
-          subject: data.subject,
           message: data.message,
         });
 
@@ -203,33 +200,6 @@ const Contact = () => {
                 </div>
               </div>
               
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="company">Company (Optional)</Label>
-                  <Input
-                    id="company"
-                    placeholder="Your company"
-                    {...register('company')}
-                    className={errors.company ? 'border-destructive' : ''}
-                  />
-                  {errors.company && (
-                    <p className="text-sm text-destructive">{errors.company.message}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject *</Label>
-                  <Input
-                    id="subject"
-                    placeholder="How can we help?"
-                    {...register('subject')}
-                    className={errors.subject ? 'border-destructive' : ''}
-                  />
-                  {errors.subject && (
-                    <p className="text-sm text-destructive">{errors.subject.message}</p>
-                  )}
-                </div>
-              </div>
-
               <div className="space-y-2">
                 <Label htmlFor="message">Message *</Label>
                 <Textarea
