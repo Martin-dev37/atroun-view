@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export const AvocadoCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isTextInput, setIsTextInput] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -17,16 +18,24 @@ export const AvocadoCursor = () => {
     // Detect hovering over interactive elements
     const handleElementHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      
+      // Check if hovering over text input
+      const isTextInputElement = 
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable ||
+        target.closest('[contenteditable="true"]');
+      setIsTextInput(!!isTextInputElement);
+      
+      // Check if hovering over other interactive elements (not text inputs)
       const isInteractive = 
         target.tagName === 'BUTTON' || 
         target.tagName === 'A' || 
-        target.tagName === 'INPUT' ||
-        target.tagName === 'TEXTAREA' ||
         target.closest('button') ||
         target.closest('a') ||
         target.classList.contains('cursor-pointer') ||
         target.closest('[role="button"]');
-      setIsHovering(!!isInteractive);
+      setIsHovering(!!isInteractive && !isTextInputElement);
     };
 
     document.addEventListener('mousemove', updatePosition);
@@ -42,7 +51,8 @@ export const AvocadoCursor = () => {
     };
   }, []);
 
-  if (!isVisible) return null;
+  // Hide custom cursor when over text inputs
+  if (!isVisible || isTextInput) return null;
 
   return (
     <div
@@ -50,21 +60,21 @@ export const AvocadoCursor = () => {
       style={{
         left: position.x,
         top: position.y,
-        transform: `translate(-50%, -50%) scale(${isHovering ? 1.3 : 1})`,
+        transform: `translate(-20%, -10%) rotate(-35deg) scale(${isHovering ? 1.2 : 1})`,
       }}
     >
-      {/* Cut avocado SVG cursor */}
+      {/* Small angled avocado SVG cursor */}
       <svg
-        width={isHovering ? "36" : "28"}
-        height={isHovering ? "44" : "34"}
+        width={isHovering ? "22" : "18"}
+        height={isHovering ? "27" : "22"}
         viewBox="0 0 28 34"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="transition-all duration-200 drop-shadow-lg"
+        className="transition-all duration-200"
         style={{
           filter: isHovering 
-            ? 'drop-shadow(0 4px 12px rgba(0,0,0,0.3)) drop-shadow(0 0 8px rgba(140, 182, 68, 0.5))' 
-            : 'drop-shadow(0 2px 6px rgba(0,0,0,0.2))',
+            ? 'drop-shadow(0 3px 8px rgba(0,0,0,0.3)) drop-shadow(0 0 6px rgba(140, 182, 68, 0.5))' 
+            : 'drop-shadow(0 2px 4px rgba(0,0,0,0.25))',
         }}
       >
         {/* Outer skin - dark green */}
@@ -73,7 +83,7 @@ export const AvocadoCursor = () => {
           cy="17" 
           rx="13" 
           ry="16" 
-          fill="url(#avocadoSkin)"
+          fill="url(#avocadoSkinSmall)"
           stroke="#2d5a27"
           strokeWidth="1"
         />
@@ -84,7 +94,7 @@ export const AvocadoCursor = () => {
           cy="17" 
           rx="10" 
           ry="12.5" 
-          fill="url(#avocadoFlesh)"
+          fill="url(#avocadoFleshSmall)"
         />
         
         {/* Pit - brown circle */}
@@ -93,7 +103,7 @@ export const AvocadoCursor = () => {
           cy="18" 
           rx="5" 
           ry="6" 
-          fill="url(#avocadoPit)"
+          fill="url(#avocadoPitSmall)"
         />
         
         {/* Pit highlight */}
@@ -115,19 +125,19 @@ export const AvocadoCursor = () => {
         />
         
         <defs>
-          <linearGradient id="avocadoSkin" x1="14" y1="1" x2="14" y2="33" gradientUnits="userSpaceOnUse">
+          <linearGradient id="avocadoSkinSmall" x1="14" y1="1" x2="14" y2="33" gradientUnits="userSpaceOnUse">
             <stop offset="0%" stopColor="#4a7c42" />
             <stop offset="50%" stopColor="#3d6935" />
             <stop offset="100%" stopColor="#2d5a27" />
           </linearGradient>
           
-          <radialGradient id="avocadoFlesh" cx="0.4" cy="0.3" r="0.7">
+          <radialGradient id="avocadoFleshSmall" cx="0.4" cy="0.3" r="0.7">
             <stop offset="0%" stopColor="#e8f5a3" />
             <stop offset="40%" stopColor="#c5e878" />
             <stop offset="100%" stopColor="#8cb644" />
           </radialGradient>
           
-          <radialGradient id="avocadoPit" cx="0.35" cy="0.3" r="0.7">
+          <radialGradient id="avocadoPitSmall" cx="0.35" cy="0.3" r="0.7">
             <stop offset="0%" stopColor="#8B6914" />
             <stop offset="50%" stopColor="#6B4E11" />
             <stop offset="100%" stopColor="#4a3810" />
