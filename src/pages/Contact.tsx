@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+
 import heroImage from '@/assets/hero-contact.jpg';
 import {
   useHeroSection,
@@ -83,18 +83,22 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      // Using 'as any' to bypass TypeScript types that may not match external DB schema
-      const { error: dbError } = await (supabase as any)
-        .from('contact_submissions')
-        .insert({
-          name: data.name,
+      const response = await fetch('https://pdygrtgthyvcslwrktun.supabase.co/functions/v1/contact-submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          full_name: data.name,
           email: data.email,
           message: data.message,
-        });
+        }),
+      });
 
-      if (dbError) {
-        console.error('Database error:', dbError);
-        throw new Error('Failed to save your message. Please try again.');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Submission error:', errorData);
+        throw new Error(errorData.message || 'Failed to send your message. Please try again.');
       }
 
       toast({
