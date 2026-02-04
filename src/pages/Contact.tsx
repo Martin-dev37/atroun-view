@@ -12,6 +12,7 @@ import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 
 import heroImage from '@/assets/hero-contact.jpg';
+import { supabase } from '@/integrations/supabase/client';
 import {
   useHeroSection,
   useContactInfo,
@@ -85,24 +86,17 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      const response = await fetch('https://pdygrtgthyvcslwrktun.supabase.co/functions/v1/contact-submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          full_name: data.name,
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: data.name,
           email: data.email,
           message: data.message,
-          subject: data.subject || undefined,
-          phone: data.phone || undefined,
-        }),
-      });
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Submission error:', errorData);
-        throw new Error(errorData.message || 'Failed to send your message. Please try again.');
+      if (error) {
+        console.error('Submission error:', error);
+        throw new Error('Failed to send your message. Please try again.');
       }
 
       toast({
