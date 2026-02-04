@@ -12,7 +12,8 @@ type Message = {
   content: string;
 };
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/company-chat`;
+// Use separate chat function URL for Lovable Cloud edge function (different from external Supabase)
+const CHAT_URL = import.meta.env.VITE_CHAT_FUNCTION_URL || `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/company-chat`;
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
