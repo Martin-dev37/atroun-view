@@ -12,6 +12,11 @@ import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import heroImage from '@/assets/hero-contact.jpg';
+import {
+  useHeroSection,
+  useContactInfo,
+  useContentSections,
+} from '@/hooks/useCMS';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -23,15 +28,63 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
+// Fallback data
+const fallbackContactInfo = [
+  {
+    id: '1',
+    info_type: 'email',
+    icon: null,
+    label: 'Email',
+    value: 'atroun.bd@gmail.com',
+    link: 'mailto:atroun.bd@gmail.com',
+    display_order: 1,
+    is_active: true,
+    created_at: '',
+    updated_at: '',
+  },
+  {
+    id: '2',
+    info_type: 'phone',
+    icon: null,
+    label: 'Phone',
+    value: '+256 783 125 129',
+    link: 'https://wa.me/256783125129',
+    display_order: 2,
+    is_active: true,
+    created_at: '',
+    updated_at: '',
+  },
+  {
+    id: '3',
+    info_type: 'location',
+    icon: null,
+    label: 'Location',
+    value: 'Uganda, East Africa',
+    link: null,
+    display_order: 3,
+    is_active: true,
+    created_at: '',
+    updated_at: '',
+  },
+];
+
 const Contact = () => {
   const { toast } = useToast();
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
 
+  const { data: heroSections } = useHeroSection('contact');
+  const { data: cmsContactInfo } = useContactInfo();
+  const { data: contentSections } = useContentSections('contact');
+
+  const hero = heroSections?.[0];
+  const contactInfo = cmsContactInfo?.length ? cmsContactInfo : fallbackContactInfo;
+  const formSection = contentSections?.find(s => s.section_key === 'contact_form');
+  const expectationsSection = contentSections?.find(s => s.section_key === 'expectations');
+
   const onSubmit = async (data: ContactFormData) => {
     try {
-      // Submit to shared backend
       const { error: dbError } = await supabase
         .from('contact_submissions')
         .insert({
@@ -63,6 +116,15 @@ const Contact = () => {
     }
   };
 
+  const getIconForType = (type: string) => {
+    switch (type) {
+      case 'email': return Mail;
+      case 'phone': return Phone;
+      case 'location': return MapPin;
+      default: return Mail;
+    }
+  };
+
   return (
     <Layout>
       {/* Hero */}
@@ -81,7 +143,7 @@ const Contact = () => {
               transition={{ duration: 0.6 }}
               className="text-sm font-body font-medium tracking-wider uppercase text-sage mb-4"
             >
-              Contact
+              {hero?.eyebrow || 'Contact'}
             </motion.p>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -89,7 +151,7 @@ const Contact = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
             >
-              Let's Start a Conversation
+              {hero?.title || "Let's Start a Conversation"}
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -97,7 +159,7 @@ const Contact = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
             >
-              Whether you're an investor exploring opportunities, a buyer seeking quality ingredients, or an organization interested in partnership—we'd welcome the chance to connect.
+              {hero?.subtitle || "Whether you're an investor exploring opportunities, a buyer seeking quality ingredients, or an organization interested in partnership—we'd welcome the chance to connect."}
             </motion.p>
           </div>
         </div>
@@ -109,8 +171,8 @@ const Contact = () => {
           {/* Contact Form */}
           <div>
             <SectionHeader
-              title="Send Us a Message"
-              subtitle="Fill out the form below and we'll get back to you as soon as possible."
+              title={formSection?.title || 'Send Us a Message'}
+              subtitle={formSection?.subtitle || "Fill out the form below and we'll get back to you as soon as possible."}
             />
             <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
@@ -200,58 +262,31 @@ const Contact = () => {
             <div className="bg-muted/30 p-8 md:p-10 rounded-lg">
               <h3 className="text-xl font-display font-semibold">Contact Information</h3>
               <div className="mt-6 space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Mail className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-display font-semibold">Email</h4>
-                    <p className="mt-1 text-sm text-muted-foreground font-body">
-                      For general inquiries
-                    </p>
-                    <a 
-                      href="mailto:atroun.bd@gmail.com" 
-                      className="mt-1 inline-block text-primary font-body font-medium hover:underline"
-                    >
-                      atroun.bd@gmail.com
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Phone className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-display font-semibold">Phone</h4>
-                    <p className="mt-1 text-sm text-muted-foreground font-body">
-                      Call or WhatsApp
-                    </p>
-                    <a 
-                      href="https://wa.me/256783125129" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1 inline-block text-primary font-body font-medium hover:underline"
-                    >
-                      +256 783 125 129
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-display font-semibold">Location</h4>
-                    <p className="mt-1 text-sm text-muted-foreground font-body">
-                      ATROUN Bio-Dynamics
-                    </p>
-                    <p className="text-sm text-muted-foreground font-body">
-                      Uganda, East Africa
-                    </p>
-                  </div>
-                </div>
+                {contactInfo.map((info) => {
+                  const IconComponent = getIconForType(info.info_type || '');
+                  return (
+                    <div key={info.id} className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <IconComponent className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-display font-semibold">{info.label}</h4>
+                        {info.link ? (
+                          <a 
+                            href={info.link} 
+                            target={info.link.startsWith('http') ? '_blank' : undefined}
+                            rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                            className="mt-1 inline-block text-primary font-body font-medium hover:underline"
+                          >
+                            {info.value}
+                          </a>
+                        ) : (
+                          <p className="mt-1 text-sm text-muted-foreground font-body">{info.value}</p>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -286,8 +321,8 @@ const Contact = () => {
       <Section variant="muted">
         <div className="max-w-3xl mx-auto text-center">
           <SectionHeader
-            title="What to Expect"
-            subtitle="We value every inquiry and aim to respond thoughtfully."
+            title={expectationsSection?.title || 'What to Expect'}
+            subtitle={expectationsSection?.subtitle || 'We value every inquiry and aim to respond thoughtfully.'}
             centered
           />
           <div className="mt-10 grid sm:grid-cols-3 gap-6">
