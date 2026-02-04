@@ -132,6 +132,12 @@
     cursor: none !important;
   }
 
+  input,
+  textarea,
+  [contenteditable="true"] {
+    cursor: text !important;
+  }
+
   html {
     scroll-behavior: smooth;
   }
