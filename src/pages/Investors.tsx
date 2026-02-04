@@ -1,251 +1,322 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight, TrendingUp, Shield, Target, Scale } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { Section, SectionHeader } from '@/components/ui/section';
-import { motion } from 'framer-motion';
-import { TrendingUp, Target, Users, Globe, ChevronRight } from 'lucide-react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import heroInvestors from '@/assets/hero-investors.jpg';
+import { Button } from '@/components/ui/button';
+import heroImage from '@/assets/hero-investors.jpg';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
-const highlights = [
-  { value: '$4.2B', label: 'Global Market Size' },
-  { value: '8.5%', label: 'Annual Growth Rate' },
-  { value: '500+', label: 'Partner Farmers' },
-  { value: '$2.5M', label: 'Seed Round Target' },
+const faqItems = [
+  {
+    question: 'What is the addressable market for freeze-dried ingredients?',
+    answer: 'The global freeze-dried food market is valued at approximately $60 billion and growing at 7-8% annually. Key drivers include rising demand for convenient, shelf-stable foods with high nutritional retention. Our focus segments—functional foods, nutraceuticals, and premium food service—represent the highest-margin portions of this market, with strong appetite for traceable, sustainably-sourced ingredients.',
+  },
+  {
+    question: 'Why Uganda as a base of operations?',
+    answer: 'Uganda offers a compelling combination of agricultural abundance, favorable climate for year-round production, competitive operating costs, and strategic access to both East African and global export markets. The country has established trade agreements, improving infrastructure, and a government supportive of agricultural value addition. Importantly, post-harvest losses in the region exceed 30%, representing both a problem we can address and an opportunity for sourcing quality feedstock.',
+  },
+  {
+    question: 'What are the primary risks and how are they managed?',
+    answer: 'Key risks include supply chain consistency, operational execution, and market access. We mitigate supply risk through diversified farmer relationships and multi-crop capability. Execution risk is addressed through phased development—validating operations at pilot scale before major capital deployment. Market risk is reduced by securing offtake relationships early and focusing on established B2B channels rather than consumer markets. Currency and regulatory risks are managed through dollarized contracts where possible and proactive compliance frameworks.',
+  },
+  {
+    question: 'How does the phased investment structure work?',
+    answer: 'Our development follows a milestone-based approach. Phase 1 focuses on establishing pilot operations, achieving certifications, and validating unit economics with limited capital. Subsequent phases deploy expansion capital only after commercial proof points are established. This structure protects investor capital by ensuring each stage proves viability before scaling, while maintaining flexibility to adjust based on market feedback.',
+  },
+  {
+    question: 'What partnership structures are available?',
+    answer: 'We are open to various partnership structures depending on investor objectives and expertise. These include equity investment in the operating company, project-specific co-investment vehicles, strategic partnerships with offtake commitments, and blended finance structures incorporating development capital. We work with partners to structure arrangements that align incentives and leverage complementary capabilities.',
+  },
+  {
+    question: 'What is the expected timeline to profitability?',
+    answer: 'We anticipate reaching operational breakeven within 18-24 months of pilot facility launch, with Phase 1 designed to be cash-flow positive before triggering expansion. Full commercial-scale profitability is projected within 3-4 years of initial investment. These projections are based on validated processing yields, current market pricing, and conservative utilization assumptions.',
+  },
+  {
+    question: 'How do you ensure product quality for export markets?',
+    answer: 'Quality assurance is embedded throughout our operations. We are building toward international food safety certifications aligned with EU and major Asian market requirements. Our processing protocols emphasize documentation, traceability, and consistency. Laboratory testing at critical control points verifies product specifications. This discipline positions us to serve demanding B2B customers who require reliable, auditable supply chains.',
+  },
+  {
+    question: 'What governance structures are in place?',
+    answer: 'ATROUN maintains governance standards appropriate for institutional investment. This includes independent board oversight, clear reporting frameworks, and financial controls aligned with international standards. We are committed to transparency with investors through regular operational and financial reporting, and we welcome investor representation in governance as partnerships develop.',
+  },
 ];
 
-const investmentThesis = [
-  {
-    icon: TrendingUp,
-    title: 'High-Growth Market',
-    description: 'The freeze-dried food market is projected to reach $7.8B by 2030, driven by demand for clean-label, nutritious products.',
-  },
+const investmentHighlights = [
   {
     icon: Target,
-    title: 'First-Mover Advantage',
-    description: 'ATROUN is the first integrated biorefinery for tropical fruits in East Africa, with established farmer networks and processing infrastructure.',
+    title: 'Clear Market Opportunity',
+    description: 'Growing global demand for shelf-stable, nutrient-preserving ingredients meets underserved African agricultural supply chains.',
   },
   {
-    icon: Users,
-    title: 'Impact-Driven Model',
-    description: 'Our circular economy approach creates multiple revenue streams while delivering measurable social and environmental impact.',
+    icon: Scale,
+    title: 'Capital-Efficient Model',
+    description: 'Modular design allows phased deployment, reducing upfront capital intensity and enabling validation before scale.',
   },
   {
-    icon: Globe,
-    title: 'Export-Ready',
-    description: 'Products designed for premium international markets in Europe, North America, and Middle East.',
+    icon: TrendingUp,
+    title: 'Scalable Platform',
+    description: 'Technology and processes designed for replication across crops and geographies as opportunities emerge.',
+  },
+  {
+    icon: Shield,
+    title: 'Risk-Aware Execution',
+    description: 'Phased approach validates commercial viability before major capital deployment, with clear milestones and governance.',
   },
 ];
 
-const roadmap = [
-  {
-    phase: 'Phase 1',
-    title: 'Foundation (Current)',
-    items: ['Pilot facility operational', 'Farmer network established', 'Initial export partnerships'],
-  },
-  {
-    phase: 'Phase 2',
-    title: 'Scale (2025-2026)',
-    items: ['Facility expansion 5x capacity', 'ISO/HACCP certification', 'European market entry'],
-  },
-  {
-    phase: 'Phase 3',
-    title: 'Growth (2027+)',
-    items: ['Second facility in Kenya', 'Product line expansion', 'Series A fundraise'],
-  },
-];
-
-const faqs = [
-  {
-    question: 'What is the minimum investment amount?',
-    answer: 'We are currently raising a $2.5M seed round with minimum investment of $50,000. For smaller investments, we may offer convertible notes or SAFE agreements.',
-  },
-  {
-    question: 'What are the use of funds?',
-    answer: 'Funds will be allocated to facility expansion (40%), working capital for farmer partnerships (30%), international certifications (15%), and team expansion (15%).',
-  },
-  {
-    question: 'What is the expected timeline for returns?',
-    answer: 'We project profitability by end of Year 2, with potential exit opportunities through strategic acquisition or Series A within 4-5 years.',
-  },
-  {
-    question: 'How do you measure impact?',
-    answer: 'We track farmer income improvements, carbon sequestration through biochar, water usage reduction, and jobs created. All metrics are third-party verified.',
-  },
-  {
-    question: 'What certifications are you pursuing?',
-    answer: 'We are pursuing ISO 22000, HACCP, organic certification (EU and USDA), and Fair Trade certification for our products and operations.',
-  },
-];
-
-export default function Investors() {
+const Investors = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
+      {/* Hero */}
+      <section className="relative py-24 md:py-32">
+        <div className="absolute inset-0 overflow-hidden">
           <img
-            src={heroInvestors}
-            alt="Investment Opportunity"
-            className="w-full h-full object-cover"
+            src={heroImage}
+            alt="Investment opportunity"
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-primary/70" />
+          <div className="absolute inset-0 bg-foreground/75" />
         </div>
-        <div className="relative container text-center text-primary-foreground">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold tracking-tight"
-          >
-            Investor Relations
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-primary-foreground/90 font-body"
-          >
-            Join us in building the future of sustainable African agriculture.
-          </motion.p>
+        <div className="container relative z-10">
+          <div className="max-w-3xl">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-sm font-body font-medium tracking-wider uppercase text-sage mb-4"
+            >
+              For Investors
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
+            >
+              Building Infrastructure for African Agricultural Value Chains
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
+            >
+              ATROUN represents an opportunity to invest in processing infrastructure that addresses structural gaps in African agriculture while serving growing global demand for premium, shelf-stable ingredients.
+            </motion.p>
+          </div>
         </div>
       </section>
 
-      {/* Key Highlights */}
-      <Section>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {highlights.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="text-center"
-            >
-              <div className="text-4xl md:text-5xl font-display font-bold text-primary">{stat.value}</div>
-              <p className="mt-2 text-muted-foreground font-body">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
-
       {/* Investment Thesis */}
+      <Section size="large">
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader
+            title="Investment Thesis"
+            subtitle="A straightforward opportunity at the intersection of agricultural abundance and global market demand."
+            centered
+          />
+          <div className="mt-10 font-body text-muted-foreground leading-relaxed space-y-4">
+            <p>
+              Uganda and the broader East African region produce significant agricultural abundance, but limited processing infrastructure means much of that value is lost to spoilage or exported as low-margin raw commodities. Post-harvest losses exceed 30% for many perishable crops.
+            </p>
+            <p>
+              At the same time, global demand for freeze-dried and shelf-stable ingredients is growing at approximately 8% annually, driven by consumer interest in convenient, nutritious, and long-lasting food products. The functional foods, nutraceuticals, and natural cosmetics sectors all seek reliable suppliers of premium plant-based inputs.
+            </p>
+            <p>
+              ATROUN bridges this gap by introducing processing capacity at source, converting perishable produce into export-ready ingredients with extended shelf life and strong margin potential. Our integrated approach—combining lyophilization with biochar production—creates multiple value streams while aligning commercial and sustainability objectives.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* Highlights */}
       <Section variant="muted">
         <SectionHeader
-          title="Investment Thesis"
-          subtitle="Why ATROUN represents a compelling investment opportunity."
+          title="Investment Highlights"
           centered
         />
-        <div className="mt-12 grid md:grid-cols-2 gap-8">
-          {investmentThesis.map((item, index) => (
-            <motion.div
+        <div className="mt-12 md:mt-16 grid sm:grid-cols-2 gap-8">
+          {investmentHighlights.map((item, index) => (
+            <div
               key={item.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-background rounded-xl p-6 shadow-sm"
+              className="bg-background p-6 md:p-8 rounded-lg shadow-soft animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-display font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-muted-foreground font-body">{item.description}</p>
-                </div>
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <item.icon className="h-6 w-6 text-primary" />
               </div>
-            </motion.div>
+              <h3 className="text-xl font-display font-semibold">{item.title}</h3>
+              <p className="mt-3 text-muted-foreground font-body leading-relaxed">
+                {item.description}
+              </p>
+            </div>
           ))}
         </div>
       </Section>
 
-      {/* Roadmap */}
+      {/* Phased Approach */}
       <Section>
-        <SectionHeader
-          title="Growth Roadmap"
-          subtitle="Our phased approach to scaling impact and returns."
-          centered
-        />
-        <div className="mt-12 grid md:grid-cols-3 gap-8">
-          {roadmap.map((phase, index) => (
-            <motion.div
-              key={phase.phase}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="relative"
-            >
-              <div className="bg-primary text-primary-foreground rounded-xl p-6">
-                <span className="text-sm font-body opacity-80">{phase.phase}</span>
-                <h3 className="mt-1 text-xl font-display font-semibold">{phase.title}</h3>
-              </div>
-              <div className="mt-4 space-y-3">
-                {phase.items.map((item) => (
-                  <div key={item} className="flex items-center gap-2">
-                    <ChevronRight className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-body text-muted-foreground">{item}</span>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div>
+            <SectionHeader
+              title="Phased Development Approach"
+              subtitle="We're building in stages, validating commercial assumptions before deploying significant capital."
+            />
+            <p className="mt-6 text-muted-foreground font-body leading-relaxed">
+              Our development model prioritizes capital efficiency and risk management. Rather than building at scale from day one, we establish pilot operations that prove commercial viability, secure quality certifications, and build customer relationships. This approach generates learning and market feedback before major expansion.
+            </p>
+          </div>
+          <div className="space-y-6">
+            {[
+              {
+                phase: 'Phase 1: Pilot Facility',
+                investment: 'Initial investment',
+                focus: 'Establish processing operations, achieve quality certifications, secure initial export customers, validate unit economics.',
+              },
+              {
+                phase: 'Phase 2: Commercial Scale',
+                investment: 'Expansion capital',
+                focus: 'Scale processing capacity, expand product range, build distribution relationships, optimize operations.',
+              },
+              {
+                phase: 'Phase 3: Platform Replication',
+                investment: 'Growth capital',
+                focus: 'Geographic expansion, multi-crop processing, technology refinement, broader market penetration.',
+              },
+            ].map((item, index) => (
+              <div key={item.phase} className="border border-border p-6 rounded-lg">
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-body font-semibold">
+                    {index + 1}
                   </div>
-                ))}
+                  <h4 className="font-display font-semibold">{item.phase}</h4>
+                </div>
+                <p className="text-sm text-muted-foreground font-body">{item.focus}</p>
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
       </Section>
 
-      {/* FAQs */}
+      {/* Financial Logic */}
       <Section variant="muted">
-        <SectionHeader
-          title="Investor FAQs"
-          subtitle="Common questions from potential investors."
-          centered
-        />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-12 max-w-3xl mx-auto"
-        >
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="bg-background rounded-lg border-none shadow-sm"
-              >
-                <AccordionTrigger className="px-6 py-4 hover:no-underline font-display font-semibold text-left">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pb-4 text-muted-foreground font-body">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </motion.div>
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader
+            title="Financial Logic"
+            subtitle="Our model is built on sound unit economics and realistic market assumptions."
+            centered
+          />
+          <div className="mt-10 space-y-6">
+            <div className="bg-background p-6 md:p-8 rounded-lg shadow-soft">
+              <h4 className="font-display font-semibold text-lg">Cost Advantage</h4>
+              <p className="mt-2 text-muted-foreground font-body">
+                Processing in Uganda leverages competitive labor costs, abundant feedstock, and favorable energy options. This positions ATROUN to produce at margins that support both investment returns and market competitiveness.
+              </p>
+            </div>
+            <div className="bg-background p-6 md:p-8 rounded-lg shadow-soft">
+              <h4 className="font-display font-semibold text-lg">Premium Pricing</h4>
+              <p className="mt-2 text-muted-foreground font-body">
+                Freeze-dried ingredients command significant premiums over fresh or conventionally dried products. Our quality focus and documentation discipline support positioning in higher-value market segments.
+              </p>
+            </div>
+            <div className="bg-background p-6 md:p-8 rounded-lg shadow-soft">
+              <h4 className="font-display font-semibold text-lg">Multiple Revenue Streams</h4>
+              <p className="mt-2 text-muted-foreground font-body">
+                Beyond primary ingredient sales, biochar production and potential future carbon certification create additional value streams that improve overall returns and reduce single-product risk.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* FAQ Section */}
+      <Section>
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader
+            title="Frequently Asked Questions"
+            subtitle="Common questions from investors and partners about ATROUN's opportunity, approach, and structure."
+            centered
+          />
+          <div className="mt-10">
+            <Accordion type="single" collapsible className="w-full">
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-border">
+                  <AccordionTrigger className="text-left font-display font-medium text-base md:text-lg hover:no-underline">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground font-body leading-relaxed">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </Section>
+
+      {/* What We Seek */}
+      <Section>
+        <div className="max-w-3xl mx-auto text-center">
+          <SectionHeader
+            title="What We Seek in Partners"
+            subtitle="We're looking for investors who share our perspective on building durable infrastructure rather than chasing rapid exits."
+            centered
+          />
+          <div className="mt-10 grid sm:grid-cols-2 gap-6 text-left">
+            <div className="border border-border p-6 rounded-lg">
+              <h4 className="font-display font-semibold">Long-Term Orientation</h4>
+              <p className="mt-2 text-sm text-muted-foreground font-body">
+                Understanding that infrastructure businesses build value over time through operational excellence and market position.
+              </p>
+            </div>
+            <div className="border border-border p-6 rounded-lg">
+              <h4 className="font-display font-semibold">Sector Knowledge</h4>
+              <p className="mt-2 text-sm text-muted-foreground font-body">
+                Familiarity with agricultural value chains, food processing, or African market dynamics adds strategic value.
+              </p>
+            </div>
+            <div className="border border-border p-6 rounded-lg">
+              <h4 className="font-display font-semibold">Patient Capital</h4>
+              <p className="mt-2 text-sm text-muted-foreground font-body">
+                Comfort with phased development and realistic timelines for building operational capacity.
+              </p>
+            </div>
+            <div className="border border-border p-6 rounded-lg">
+              <h4 className="font-display font-semibold">Values Alignment</h4>
+              <p className="mt-2 text-sm text-muted-foreground font-body">
+                Appreciation for businesses that create environmental and social value alongside financial returns.
+              </p>
+            </div>
+          </div>
+        </div>
       </Section>
 
       {/* CTA */}
-      <Section>
-        <div className="text-center">
+      <Section variant="primary">
+        <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-semibold">
-            Ready to Learn More?
+            Start a Conversation
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground font-body max-w-2xl mx-auto">
-            Request our detailed investor deck and schedule a call with our team.
+          <p className="mt-4 text-lg font-body text-primary-foreground/80">
+            We welcome inquiries from investors interested in learning more about ATROUN, our development approach, and potential partnership structures.
           </p>
-          <motion.a
-            href="/contact"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-8 inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-lg font-body font-medium hover:bg-primary/90 transition-colors"
-          >
-            Request Investor Deck
-            <ChevronRight className="w-5 h-5" />
-          </motion.a>
+          <div className="mt-8">
+            <Button asChild size="lg" variant="secondary" className="font-body">
+              <Link to="/contact">
+                Contact Us <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </Section>
     </Layout>
   );
-}
+};
+
+export default Investors;
