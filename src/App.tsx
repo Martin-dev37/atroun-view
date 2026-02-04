@@ -6,6 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GeometricBackground } from "@/components/ui/geometric-background";
 import { AvocadoCursor } from "@/components/ui/avocado-cursor";
 import Index from "./pages/Index";
+import About from "./pages/About";
+import WhatWeDo from "./pages/WhatWeDo";
+import Technology from "./pages/Technology";
+import Markets from "./pages/Markets";
+import Sustainability from "./pages/Sustainability";
+import Investors from "./pages/Investors";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,6 +27,13 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/what-we-do" element={<WhatWeDo />} />
+          <Route path="/technology" element={<Technology />} />
+          <Route path="/markets" element={<Markets />} />
+          <Route path="/sustainability" element={<Sustainability />} />
+          <Route path="/investors" element={<Investors />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
