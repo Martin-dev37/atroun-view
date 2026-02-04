@@ -28,7 +28,7 @@ export function SectionHeader({
   centered = false,
   className
 }: SectionHeaderProps) {
-  return <div className={cn("max-w-3xl text-sidebar-primary", centered && 'mx-auto text-center', className)}>
+  return <div className={cn('max-w-3xl', centered && 'mx-auto text-center', className)}>
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold tracking-tight text-balance">
         {title}
       </h2>
