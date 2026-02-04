@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, Loader2 } from 'lucide-react';
+import { X, Send, Loader2, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import { useToast } from '@/hooks/use-toast';
+import { useChatPersistence } from '@/hooks/useChatPersistence';
 import avoMascot from '@/assets/avo-mascot.png';
 
 type Message = {
@@ -12,17 +13,16 @@ type Message = {
   content: string;
 };
 
-// Use separate chat function URL for Lovable Cloud edge function (different from external Supabase)
-const CHAT_URL = import.meta.env.VITE_CHAT_FUNCTION_URL || `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/company-chat`;
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/company-chat`;
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const { messages, setMessages, saveMessage, clearConversation, isLoadingHistory } = useChatPersistence();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -125,6 +125,9 @@ export function ChatWidget() {
     setInput('');
     setIsLoading(true);
 
+    // Save user message to database
+    await saveMessage('user', userMessage.content);
+
     let assistantSoFar = "";
     const upsertAssistant = (nextChunk: string) => {
       assistantSoFar += nextChunk;
@@ -141,7 +144,13 @@ export function ChatWidget() {
       await streamChat(
         [...messages, userMessage],
         (chunk) => upsertAssistant(chunk),
-        () => setIsLoading(false)
+        async () => {
+          setIsLoading(false);
+          // Save assistant response to database
+          if (assistantSoFar) {
+            await saveMessage('assistant', assistantSoFar);
+          }
+        }
       );
     } catch (error) {
       console.error("Chat error:", error);
@@ -152,6 +161,11 @@ export function ChatWidget() {
         description: error instanceof Error ? error.message : "Failed to get response. Please try again.",
       });
     }
+  };
+
+  const handleClearHistory = async () => {
+    await clearConversation();
+    toast({ title: "Chat cleared", description: "Your conversation history has been deleted." });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -236,18 +250,35 @@ export function ChatWidget() {
                   <p className="text-xs text-primary-foreground/80">Ask about freeze-drying & more</p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-1 hover:bg-primary-foreground/20 rounded-full transition-colors"
-                aria-label="Close chat"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-1">
+                {messages.length > 0 && (
+                  <button
+                    onClick={handleClearHistory}
+                    className="p-1.5 hover:bg-primary-foreground/20 rounded-full transition-colors"
+                    aria-label="Clear chat history"
+                    title="Clear history"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 hover:bg-primary-foreground/20 rounded-full transition-colors"
+                  aria-label="Close chat"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.length === 0 && (
+              {isLoadingHistory ? (
+                <div className="text-center py-6">
+                  <Loader2 className="w-6 h-6 animate-spin mx-auto text-muted-foreground" />
+                  <p className="text-xs text-muted-foreground mt-2">Loading history...</p>
+                </div>
+              ) : messages.length === 0 ? (
                 <div className="text-center text-muted-foreground py-6">
                   <img src={avoMascot} alt="Avo" className="w-20 h-24 mx-auto mb-3 opacity-70 object-contain" />
                   <p className="text-sm font-body">
@@ -257,7 +288,7 @@ export function ChatWidget() {
                     Ask me about freeze-drying, our products, sustainability, or investment opportunities!
                   </p>
                 </div>
-              )}
+              ) : null}
               {messages.map((message, index) => (
                 <motion.div
                   key={index}
