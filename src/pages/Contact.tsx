@@ -21,6 +21,8 @@ import {
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
+  subject: z.string().trim().max(200, "Subject must be less than 200 characters").optional().or(z.literal('')),
+  phone: z.string().trim().max(30, "Phone must be less than 30 characters").optional().or(z.literal('')),
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(2000, "Message must be less than 2000 characters"),
 });
 
@@ -92,6 +94,8 @@ const Contact = () => {
           full_name: data.name,
           email: data.email,
           message: data.message,
+          subject: data.subject || undefined,
+          phone: data.phone || undefined,
         }),
       });
 
@@ -200,6 +204,34 @@ const Contact = () => {
                   />
                   {errors.email && (
                     <p className="text-sm text-destructive">{errors.email.message}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input
+                    id="subject"
+                    placeholder="What is this regarding?"
+                    {...register('subject')}
+                    className={errors.subject ? 'border-destructive' : ''}
+                  />
+                  {errors.subject && (
+                    <p className="text-sm text-destructive">{errors.subject.message}</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+1 234 567 8900"
+                    {...register('phone')}
+                    className={errors.phone ? 'border-destructive' : ''}
+                  />
+                  {errors.phone && (
+                    <p className="text-sm text-destructive">{errors.phone.message}</p>
                   )}
                 </div>
               </div>
