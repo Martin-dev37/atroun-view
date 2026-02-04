@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import { useToast } from '@/hooks/use-toast';
-import { AvocadoMascot } from './AvocadoMascot';
+import avoMascot from '@/assets/avo-mascot.png';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -166,14 +166,33 @@ export function ChatWidget() {
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "fixed bottom-4 right-4 z-50 w-20 h-24 cursor-pointer",
+          "fixed bottom-4 right-4 z-50 w-24 h-28 cursor-pointer",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-full"
         )}
-        whileHover={{ scale: 1.1 }}
+        initial={{ y: 0 }}
+        animate={{ 
+          y: [0, -4, 0, -2, 0],
+          rotate: [0, -1, 0, 1, 0],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        whileHover={{ 
+          scale: 1.08,
+          y: -8,
+          transition: { duration: 0.3 }
+        }}
         whileTap={{ scale: 0.95 }}
         aria-label={isOpen ? "Close chat" : "Ask me anything about ATROUN!"}
       >
-        <AvocadoMascot className="w-full h-full drop-shadow-lg" />
+        <motion.img 
+          src={avoMascot} 
+          alt="Avo - ATROUN Assistant"
+          className="w-full h-full object-contain drop-shadow-xl"
+          style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.25))' }}
+        />
         
         {/* Speech bubble hint when closed */}
         <AnimatePresence>
@@ -182,7 +201,7 @@ export function ChatWidget() {
               initial={{ opacity: 0, scale: 0.8, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 10 }}
-              className="absolute -top-12 -left-16 bg-background border border-border rounded-lg px-3 py-2 shadow-lg whitespace-nowrap"
+              className="absolute -top-12 -left-20 bg-background border border-border rounded-lg px-3 py-2 shadow-lg whitespace-nowrap"
             >
               <span className="text-xs font-body text-foreground">Ask me anything! 🥑</span>
               <div className="absolute bottom-0 right-6 translate-y-1/2 rotate-45 w-2 h-2 bg-background border-r border-b border-border" />
@@ -208,8 +227,8 @@ export function ChatWidget() {
             {/* Header */}
             <div className="bg-primary text-primary-foreground p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center overflow-hidden">
-                  <AvocadoMascot className="w-12 h-14" />
+              <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center overflow-hidden">
+                  <img src={avoMascot} alt="Avo" className="w-12 h-12 object-contain" />
                 </div>
                 <div>
                   <h3 className="font-display font-semibold">ATROUN Assistant</h3>
@@ -229,7 +248,7 @@ export function ChatWidget() {
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.length === 0 && (
                 <div className="text-center text-muted-foreground py-6">
-                  <AvocadoMascot className="w-20 h-24 mx-auto mb-3 opacity-70" />
+                  <img src={avoMascot} alt="Avo" className="w-20 h-24 mx-auto mb-3 opacity-70 object-contain" />
                   <p className="text-sm font-body">
                     Hi there! I'm Avo, your ATROUN guide. 🥑
                   </p>
