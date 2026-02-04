@@ -136,8 +136,8 @@ export default function WhatWeDo() {
             className="relative aspect-video rounded-2xl overflow-hidden shadow-xl"
           >
             <img
-              src={facilityProcessing}
-              alt="Processing facility"
+              src="/lovable-uploads/47078f44-976a-40a1-863a-3bfcbe7c89d0.png"
+              alt="ATROUN processing facility"
               className="w-full h-full object-cover"
             />
           </motion.div>
