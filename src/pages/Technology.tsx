@@ -1,225 +1,252 @@
+import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { Section, SectionHeader } from '@/components/ui/section';
-import { motion } from 'framer-motion';
-import { Thermometer, Clock, Award, Leaf, ArrowRight } from 'lucide-react';
-import heroTechnology from '@/assets/hero-technology.jpg';
-import process1 from '@/assets/process-1-preparation.jpg';
-import process2 from '@/assets/process-2-lyophilization.jpg';
-import process3 from '@/assets/process-3-packaging.jpg';
-import process4 from '@/assets/process-4-export.jpg';
-import atrounSchema from '@/assets/atroun-schema-cycle.png';
-
-const benefits = [
-  {
-    icon: Thermometer,
-    title: 'Nutrient Preservation',
-    description: 'Low-temperature processing preserves up to 97% of vitamins, minerals, and antioxidants.',
-  },
-  {
-    icon: Clock,
-    title: 'Extended Shelf Life',
-    description: 'Products maintain quality for 2+ years without refrigeration or preservatives.',
-  },
-  {
-    icon: Award,
-    title: 'Premium Quality',
-    description: 'Superior taste, color, and texture compared to conventional drying methods.',
-  },
-  {
-    icon: Leaf,
-    title: 'Clean Label',
-    description: 'No additives, preservatives, or artificial ingredients—just pure fruit.',
-  },
-];
+import heroImage from '@/assets/hero-technology.jpg';
+import atrounSchemaCycle from '@/assets/atroun-schema-cycle.png';
+import processPreparation from '@/assets/process-1-preparation.jpg';
+import processLyophilization from '@/assets/process-2-lyophilization.jpg';
+import processPackaging from '@/assets/process-3-packaging.jpg';
+import processExport from '@/assets/process-4-export.jpg';
 
 const processSteps = [
+  { image: processPreparation, label: 'Fruit Preparation', step: '01' },
+  { image: processLyophilization, label: 'Lyophilization', step: '02' },
+  { image: processPackaging, label: 'Packaging', step: '03' },
+  { image: processExport, label: 'Export', step: '04' },
+];
+
+const techPrinciples = [
   {
-    image: process1,
-    title: 'Preparation',
-    description: 'Fresh fruits are carefully selected, washed, and prepared within hours of harvest.',
+    title: 'Modular Design',
+    description: 'Our systems are built as modular units that can be deployed incrementally and scaled based on feedstock availability and market demand. This reduces capital intensity and allows for phased growth.',
   },
   {
-    image: process2,
-    title: 'Lyophilization',
-    description: 'Freeze-drying at -40°C removes moisture while preserving cellular structure.',
+    title: 'Controlled Environments',
+    description: 'Processing occurs in controlled conditions with documented temperature, pressure, and humidity parameters. This ensures batch-to-batch consistency and supports quality certification requirements.',
   },
   {
-    image: process3,
-    title: 'Packaging',
-    description: 'Nitrogen-flushed packaging ensures long-term freshness and quality.',
+    title: 'Multi-Feedstock Capability',
+    description: 'While we start with avocados, our platform is designed to process multiple crop categories—fruits, herbs, roots, and vegetables—allowing diversification as market opportunities emerge.',
   },
   {
-    image: process4,
-    title: 'Export',
-    description: 'Temperature-controlled logistics deliver products to global markets.',
+    title: 'Zero-Waste Integration',
+    description: 'Organic residues from primary processing are directed to biochar production rather than disposal. This closes material loops and generates additional value streams.',
   },
 ];
 
-export default function Technology() {
+const lyophilizationBenefits = [
+  { title: 'Nutrient Retention', value: '95%+', description: 'Vitamins, minerals, and bioactive compounds preserved' },
+  { title: 'Shelf Life Extension', value: '12-36 months', description: 'Without refrigeration or preservatives' },
+  { title: 'Weight Reduction', value: '90%+', description: 'Lighter products reduce shipping costs' },
+  { title: 'Moisture Removal', value: '99%', description: 'Halts microbial growth and enzymatic reactions' },
+  { title: 'Global Demand Growth', value: '↗ 8.5%', description: 'Annual CAGR for shelf-stable nutrient-rich ingredients' },
+];
+
+const Technology = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroTechnology}
-            alt="ATROUN Technology"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-primary/70" />
+      {/* Hero */}
+      <section className="relative py-24 md:py-32">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-foreground/85" />
         </div>
-        <div className="relative container text-center text-primary-foreground">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold tracking-tight"
-          >
-            Technology & Platform
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-primary-foreground/90 font-body"
-          >
-            Advanced lyophilization technology for premium agricultural products.
-          </motion.p>
+        <div className="container relative z-10">
+          <div className="max-w-3xl">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-sm font-body font-medium tracking-wider uppercase text-sage mb-4"
+            >
+              Technology & Platform
+            </motion.p>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
+            >
+              Processing Technology Designed for Scale
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
+            >
+              Our platform combines proven lyophilization technology with modular, integrated design principles. The result is processing infrastructure that can grow with demand while maintaining quality and cost efficiency.
+            </motion.p>
+          </div>
         </div>
       </section>
 
-      {/* Lyophilization Overview */}
-      <Section>
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Lyophilization Explained */}
+      <Section size="large">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div>
             <SectionHeader
-              title="What is Lyophilization?"
-              subtitle="Freeze-drying is the gold standard for preserving agricultural products while maintaining nutritional integrity."
+              title="Lyophilization: The Core Technology"
+              subtitle="Freeze-drying is a preservation method that removes water at very low temperatures, allowing food to maintain its nutritional value, taste, and structure for extended periods."
             />
-            <p className="mt-6 text-muted-foreground font-body leading-relaxed">
-              Lyophilization, or freeze-drying, is a dehydration process that removes water from 
-              products by freezing them and then reducing the surrounding pressure to allow the 
-              frozen water to sublimate directly from solid to gas. This preserves the product's 
-              structure, nutrients, and flavor far better than conventional drying methods.
-            </p>
-            <p className="mt-4 text-muted-foreground font-body leading-relaxed">
-              Our proprietary process has been optimized specifically for tropical fruits, 
-              ensuring maximum quality retention while achieving the efficiency needed for 
-              commercial-scale production.
-            </p>
+            <div className="mt-8 space-y-4 font-body text-muted-foreground leading-relaxed">
+              <p>
+                Unlike conventional drying methods that use heat—degrading nutrients and altering texture—lyophilization works by freezing the product and then reducing pressure to allow frozen water to sublimate directly from solid to vapor.
+              </p>
+              <p>
+                The result is a lightweight, shelf-stable product that retains the original characteristics of fresh produce. When rehydrated, lyophilized ingredients return to near-original form, making them suitable for demanding applications in food, cosmetics, and nutraceuticals.
+              </p>
+              <p>
+                This technology is widely used in pharmaceutical and specialty food industries globally. ATROUN brings it to East African agricultural value chains, where it can transform perishable abundance into export-ready ingredients.
+              </p>
+            </div>
           </div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative aspect-square rounded-2xl overflow-hidden shadow-xl"
-          >
-            <img
-              src={atrounSchema}
-              alt="ATROUN System Diagram"
-              className="w-full h-full object-contain bg-background p-4"
-            />
-          </motion.div>
+          <div>
+            {/* Process Flow Collage */}
+            <div className="grid grid-cols-2 gap-3">
+              {processSteps.map((step, index) => (
+                <div 
+                  key={step.step} 
+                  className="relative group overflow-hidden rounded-lg shadow-soft animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <img
+                    src={step.image}
+                    alt={step.label}
+                    className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3">
+                    <span className="text-xs font-body font-medium text-white/70">{step.step}</span>
+                    <p className="text-sm font-display font-semibold text-white">{step.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Section>
 
-      {/* Benefits */}
+      {/* The ATROUN System */}
       <Section variant="muted">
-        <SectionHeader
-          title="Technology Benefits"
-          subtitle="Why lyophilization delivers superior results."
-          centered
-        />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {benefits.map((benefit, index) => (
-            <motion.div
-              key={benefit.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-background rounded-xl p-6 shadow-sm text-center"
-            >
-              <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                <benefit.icon className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="mt-4 text-lg font-display font-semibold">{benefit.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground font-body">{benefit.description}</p>
-            </motion.div>
-          ))}
+        <div className="max-w-4xl mx-auto text-center">
+          <SectionHeader
+            title="The ATROUN System"
+            centered
+          />
+          <div className="mt-8">
+            <img 
+              src={atrounSchemaCycle} 
+              alt="ATROUN Schema Cycle - Closed-loop system diagram" 
+              className="w-full max-w-3xl mx-auto rounded-lg shadow-soft"
+            />
+          </div>
+          <p className="mt-6 text-muted-foreground font-body leading-relaxed max-w-2xl mx-auto">
+            ATROUN operates as a closed-loop system where material flows, value creation, and impact measurement continuously reinforce each other.
+          </p>
         </div>
       </Section>
 
-      {/* Process Steps */}
+      {/* Benefits Grid */}
       <Section>
         <SectionHeader
-          title="Our Process"
-          subtitle="From harvest to export—a carefully controlled journey."
+          title="Why Lyophilization Works"
+          subtitle="The technology delivers measurable advantages that translate directly to product quality and commercial viability."
           centered
         />
-        <div className="mt-12 space-y-12">
-          {processSteps.map((step, index) => (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`grid lg:grid-cols-2 gap-8 items-center ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              }`}
+        <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {lyophilizationBenefits.map((item, index) => (
+            <div 
+              key={item.title}
+              className="bg-background p-6 rounded-lg shadow-soft text-center animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl font-display font-bold text-primary/20">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <ArrowRight className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-2xl font-display font-semibold">{step.title}</h3>
-                <p className="mt-3 text-muted-foreground font-body leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-              <div className={`relative aspect-video rounded-xl overflow-hidden shadow-lg ${
-                index % 2 === 1 ? 'lg:order-1' : ''
-              }`}>
-                <img
-                  src={step.image}
-                  alt={step.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
+              <p className="text-3xl md:text-4xl font-display font-semibold text-primary">{item.value}</p>
+              <h3 className="mt-2 text-lg font-display font-semibold">{item.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground font-body">{item.description}</p>
+            </div>
           ))}
         </div>
       </Section>
 
-      {/* ATROUN System */}
-      <Section variant="muted">
+      {/* Platform Principles */}
+      <Section>
         <SectionHeader
-          title="The ATROUN System"
-          subtitle="An integrated closed-loop approach that maximizes value and minimizes waste."
+          title="Platform Design Principles"
+          subtitle="Beyond the core technology, our platform is built around operational principles that support long-term growth and resilience."
           centered
         />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="mt-12 max-w-4xl mx-auto"
-        >
-          <img
-            src={atrounSchema}
-            alt="ATROUN Integrated System"
-            className="w-full h-auto rounded-xl shadow-lg"
+        <div className="mt-12 md:mt-16 grid md:grid-cols-2 gap-8">
+          {techPrinciples.map((item, index) => (
+            <div 
+              key={item.title}
+              className="border border-border p-6 md:p-8 rounded-lg animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <h3 className="text-xl font-display font-semibold">{item.title}</h3>
+              <p className="mt-3 text-muted-foreground font-body leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Biochar Section */}
+      <Section variant="muted">
+        <div className="max-w-3xl mx-auto text-center">
+          <SectionHeader
+            title="Biochar: Closing the Loop"
+            subtitle="Organic residues from our lyophilization process—peels, seeds, and off-spec material—are converted into biochar through controlled pyrolysis."
+            centered
           />
-          <p className="mt-8 text-center text-muted-foreground font-body leading-relaxed max-w-2xl mx-auto">
-            Our integrated system transforms every part of the fruit into valuable products. 
-            Flesh becomes premium freeze-dried products, seeds are processed into biochar for 
-            soil enhancement, and organic waste returns to partner farms as nutrient-rich compost.
-          </p>
-        </motion.div>
+          <div className="mt-8 font-body text-muted-foreground leading-relaxed space-y-4">
+            <p>
+              Biochar is a carbon-stable soil amendment that improves soil structure, water retention, and nutrient efficiency. By producing it from processing residues, we transform waste streams into valuable agricultural inputs while sequestering carbon that would otherwise return to the atmosphere.
+            </p>
+            <p>
+              This circular approach generates additional revenue, reduces waste disposal costs, and creates positive environmental outcomes—aligning commercial and sustainability objectives.
+            </p>
+          </div>
+          <div className="mt-10 grid sm:grid-cols-3 gap-6 text-center">
+            <div className="bg-background p-6 rounded-lg shadow-soft">
+              <p className="text-2xl font-display font-semibold text-primary">Carbon Stable</p>
+              <p className="mt-1 text-sm text-muted-foreground font-body">Locks biogenic carbon for centuries</p>
+            </div>
+            <div className="bg-background p-6 rounded-lg shadow-soft">
+              <p className="text-2xl font-display font-semibold text-primary">Soil Health</p>
+              <p className="mt-1 text-sm text-muted-foreground font-body">Improves water and nutrient retention</p>
+            </div>
+            <div className="bg-background p-6 rounded-lg shadow-soft">
+              <p className="text-2xl font-display font-semibold text-primary">Zero Waste</p>
+              <p className="mt-1 text-sm text-muted-foreground font-body">All residues become value</p>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Quality & Standards */}
+      <Section>
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader
+            title="Quality as a Design Principle"
+            subtitle="Meeting international standards isn't an afterthought—it's built into how we operate from day one."
+            centered
+          />
+          <div className="mt-8 font-body text-muted-foreground leading-relaxed space-y-4">
+            <p>
+              Our facilities are designed with documentation, traceability, and process control as core requirements. Raw material inspection, batch tracking, and quality testing are standard operating procedures.
+            </p>
+            <p>
+              This discipline positions ATROUN to meet the expectations of international B2B buyers in food, cosmetic, and nutraceutical sectors—where quality consistency and regulatory alignment are baseline requirements for market access.
+            </p>
+          </div>
+        </div>
       </Section>
     </Layout>
   );
-}
+};
+
+export default Technology;

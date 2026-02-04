@@ -91,7 +91,7 @@ const About = () => {
     <Layout>
       {/* Hero */}
       <section className="relative py-24 md:py-32">
-        <div
+        <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
@@ -99,7 +99,7 @@ const About = () => {
         </div>
         <div className="container relative z-10">
           <div className="max-w-3xl">
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -107,7 +107,7 @@ const About = () => {
             >
               About ATROUN
             </motion.p>
-            <motion.h1
+            <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -115,7 +115,7 @@ const About = () => {
             >
               Building Agricultural Processing Infrastructure for Africa
             </motion.h1>
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -175,7 +175,7 @@ const About = () => {
         />
         <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {leadershipTeam.map((member, index) => (
-            <div
+            <div 
               key={member.name}
               className="bg-background p-6 rounded-lg shadow-soft animate-fade-in text-center"
               style={{ animationDelay: `${index * 0.1}s` }}
@@ -206,7 +206,7 @@ const About = () => {
         />
         <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {advisoryBoard.map((advisor, index) => (
-            <div
+            <div 
               key={advisor.name}
               className="border border-border p-6 rounded-lg animate-fade-in text-center"
               style={{ animationDelay: `${index * 0.1}s` }}
@@ -233,7 +233,7 @@ const About = () => {
         />
         <div className="mt-12 md:mt-16 grid sm:grid-cols-2 gap-8">
           {values.map((value, index) => (
-            <div
+            <div 
               key={value.title}
               className="border border-border p-6 md:p-8 rounded-lg animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}

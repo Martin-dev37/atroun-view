@@ -27,7 +27,7 @@ export function GeometricBackground() {
     const initNodes = () => {
       const nodeCount = Math.floor((canvas.width * canvas.height) / 25000); // Density based on area
       nodesRef.current = [];
-
+      
       for (let i = 0; i < nodeCount; i++) {
         nodesRef.current.push({
           x: Math.random() * canvas.width,
@@ -40,7 +40,7 @@ export function GeometricBackground() {
 
     const drawNetwork = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+      
       const nodes = nodesRef.current;
       const connectionDistance = 150;
       const opacity = 0.4; // 40% intensity

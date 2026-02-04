@@ -1,251 +1,312 @@
+import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { Section, SectionHeader } from '@/components/ui/section';
-import { motion } from 'framer-motion';
-import { Leaf, Recycle, Sun, Droplets, TreePine, Users } from 'lucide-react';
-import heroSustainability from '@/assets/hero-sustainability.jpg';
+import { Leaf, Droplets, Sun, Users, Recycle, TrendingDown, Sprout, CloudSun, GlassWater, Building2, Flame } from 'lucide-react';
+import heroVideo from '@/assets/hero-sustainability-video.mp4';
 
-const pillars = [
+const impactAreas = [
   {
     icon: Recycle,
-    title: 'Zero Waste Operations',
-    description: 'Every byproduct becomes a valuable resource—nothing goes to landfill.',
-    details: ['Fruit waste becomes compost', 'Seeds converted to biochar', 'Water recycled and reused'],
+    title: 'Post-Harvest Loss Reduction',
+    description: 'By processing perishable produce into shelf-stable ingredients, we capture value that would otherwise be lost to spoilage—reducing waste and increasing farmer income.',
   },
   {
-    icon: Sun,
-    title: 'Renewable Energy',
-    description: 'Our facility runs on solar power, minimizing carbon emissions.',
-    details: ['100% solar-powered processing', 'Energy-efficient equipment', 'Carbon-neutral goal by 2026'],
+    icon: Leaf,
+    title: 'Carbon Sequestration',
+    description: 'Biochar production locks biogenic carbon into stable, long-lived forms. Each ton of biochar represents carbon that stays out of the atmosphere for centuries.',
+  },
+  {
+    icon: TrendingDown,
+    title: 'Cold-Chain Independence',
+    description: 'Freeze-dried products eliminate the need for energy-intensive refrigeration during storage and transport, reducing lifecycle emissions.',
   },
   {
     icon: Droplets,
-    title: 'Water Conservation',
-    description: 'Advanced water management systems reduce consumption by 70%.',
-    details: ['Rainwater harvesting', 'Closed-loop cooling systems', 'Drip irrigation support'],
+    title: 'Soil Regeneration',
+    description: 'Biochar improves soil structure, water retention, and nutrient efficiency—building resilience to drought and reducing dependency on synthetic inputs.',
   },
   {
-    icon: TreePine,
-    title: 'Carbon Sequestration',
-    description: 'Biochar production actively removes carbon from the atmosphere.',
-    details: ['Biochar locks carbon for 1000+ years', 'Supports soil regeneration', 'Measurable carbon credits'],
+    icon: Sun,
+    title: 'Energy Efficiency',
+    description: 'Centralized processing reduces fragmented, inefficient handling. Our modular design allows for integration of renewable energy as we scale.',
+  },
+  {
+    icon: Users,
+    title: 'Community Livelihoods',
+    description: 'Our operations create skilled and semi-skilled jobs while providing farmers with reliable markets and stable income.',
   },
 ];
 
-const sdgGoals = [
-  { number: 2, title: 'Zero Hunger', description: 'Supporting smallholder farmers with stable income' },
-  { number: 8, title: 'Decent Work', description: 'Creating quality jobs in rural communities' },
-  { number: 12, title: 'Responsible Consumption', description: 'Zero-waste production systems' },
-  { number: 13, title: 'Climate Action', description: 'Carbon-negative through biochar production' },
-];
-
-const impactStats = [
-  { value: '500+', label: 'Partner Farmers' },
-  { value: '70%', label: 'Water Reduction' },
-  { value: '0', label: 'Waste to Landfill' },
-  { value: '100%', label: 'Renewable Energy' },
-];
-
-export default function Sustainability() {
+const Sustainability = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroSustainability}
-            alt="Sustainability"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-primary/70" />
+      {/* Hero */}
+      <section className="relative py-24 md:py-32">
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/75 to-foreground/60" />
         </div>
-        <div className="relative container text-center text-primary-foreground">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold tracking-tight"
-          >
-            Sustainability
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-primary-foreground/90 font-body"
-          >
-            Building a regenerative future for African agriculture.
-          </motion.p>
+        <div className="container relative z-10">
+          <div className="max-w-3xl">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-sm font-body font-medium tracking-wider uppercase text-sage mb-4"
+            >
+              Sustainability & Circular Value
+            </motion.p>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
+            >
+              Building Systems That Create More Than They Take
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
+            >
+              Sustainability isn't a separate initiative at ATROUN—it's embedded in how our business model works. By designing for circularity, we align commercial success with positive environmental and social outcomes.
+            </motion.p>
+          </div>
         </div>
       </section>
 
-      {/* Impact Stats */}
-      <Section>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {impactStats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="text-center"
-            >
-              <div className="text-4xl md:text-5xl font-display font-bold text-primary">{stat.value}</div>
-              <p className="mt-2 text-muted-foreground font-body">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Sustainability Pillars */}
-      <Section variant="muted">
-        <SectionHeader
-          title="Our Sustainability Pillars"
-          subtitle="A comprehensive approach to environmental stewardship."
-          centered
-        />
-        <div className="mt-12 grid md:grid-cols-2 gap-8">
-          {pillars.map((pillar, index) => (
-            <motion.div
-              key={pillar.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-background rounded-xl p-6 shadow-sm"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <pillar.icon className="w-7 h-7 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-display font-semibold">{pillar.title}</h3>
-                  <p className="mt-2 text-muted-foreground font-body">{pillar.description}</p>
-                  <ul className="mt-4 space-y-2">
-                    {pillar.details.map((detail) => (
-                      <li key={detail} className="flex items-center gap-2 text-sm font-body">
-                        <Leaf className="w-4 h-4 text-primary" />
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Circular Economy */}
-      <Section>
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <SectionHeader
-              title="Circular Economy Model"
-              subtitle="Our closed-loop system transforms agricultural waste into valuable resources."
-            />
-            <p className="mt-6 text-muted-foreground font-body leading-relaxed">
-              At ATROUN, we've designed our operations around circularity. Fruit waste becomes 
-              nutrient-rich compost that returns to partner farms. Seeds are converted into 
-              biochar—a carbon-negative soil amendment that improves crop yields while 
-              sequestering carbon for centuries.
+      {/* Circular Model */}
+      <Section size="large">
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader
+            title="A Circular Business Model"
+            subtitle="Our integrated approach means that materials flow through our system without waste, creating multiple value streams from a single input."
+            centered
+          />
+          <div className="mt-10 font-body text-muted-foreground leading-relaxed space-y-4">
+            <p>
+              Fresh agricultural produce enters our facility. Through lyophilization, we recover premium, shelf-stable ingredients that retain nutritional value and command strong market prices. The organic residues—peels, seeds, off-spec material—are directed to controlled pyrolysis, producing biochar that improves soil health and sequesters carbon.
             </p>
-            <p className="mt-4 text-muted-foreground font-body leading-relaxed">
-              This approach not only eliminates waste but creates additional revenue streams 
-              and environmental benefits, demonstrating that sustainability and profitability 
-              can go hand in hand.
+            <p>
+              This isn't about adding sustainability as an afterthought. The circular flow is the business model. Every input generates value; nothing is discarded.
             </p>
           </div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative aspect-square bg-muted rounded-xl flex items-center justify-center"
-          >
-            <Recycle className="w-32 h-32 text-primary/20" />
-            <div className="absolute inset-8 flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-sm font-body text-muted-foreground">
-                  Closed-loop value chain
-                </p>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </Section>
 
-      {/* SDG Alignment */}
+      {/* Featured Video Section */}
+      <Section>
+        <div className="max-w-4xl mx-auto">
+          <SectionHeader
+            title="BioChar, the Future of Sustainable Agriculture, Carbon Sequestration, and a Circular Economy"
+            subtitle="BioChar offers solutions for soil regeneration, climate change mitigation, and waste management by turning biomass into a stable, carbon-rich material used to improve soil health, filter water, and even create building materials. Its porous structure enhances soil fertility, water retention, and nutrient uptake, while its production (pyrolysis) creates valuable energy, positioning biochar as a key player in green technologies beyond just soil amendment."
+            centered
+          />
+          <div className="mt-10">
+            <div className="relative rounded-xl overflow-hidden shadow-lg aspect-video">
+              <video
+                controls
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src={heroVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Key Future Applications */}
       <Section variant="muted">
         <SectionHeader
-          title="UN SDG Alignment"
-          subtitle="Our operations contribute to multiple Sustainable Development Goals."
+          title="Key Future Applications of BioChar"
+          subtitle="BioChar's versatility positions it as a transformative solution across multiple industries."
           centered
         />
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {sdgGoals.map((goal, index) => (
+        <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              icon: Sprout,
+              title: 'Agriculture',
+              description: 'Restores degraded soils, boosts crop yields, reduces fertilizer/water needs, and acts as a long-term carbon sink.',
+            },
+            {
+              icon: CloudSun,
+              title: 'Climate Change',
+              description: 'Captures atmospheric carbon dioxide (CO2) that would otherwise return to the atmosphere, offering significant potential for net-zero goals.',
+            },
+            {
+              icon: GlassWater,
+              title: 'Water Treatment',
+              description: 'Its high surface area filters contaminants, providing affordable solutions for clean drinking water.',
+            },
+            {
+              icon: Building2,
+              title: 'Construction',
+              description: 'Used as an additive in materials like concrete and insulation to lower carbon footprints and improve properties.',
+            },
+            {
+              icon: Flame,
+              title: 'Energy & Waste',
+              description: 'Produces heat and valuable byproducts during its creation from organic waste, promoting circular economy principles.',
+            },
+          ].map((item, index) => (
             <motion.div
-              key={goal.number}
+              key={item.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-background rounded-xl p-6 shadow-sm text-center"
+              className="bg-background p-6 rounded-lg shadow-soft"
             >
-              <div className="w-16 h-16 mx-auto rounded-full bg-primary flex items-center justify-center text-primary-foreground font-display font-bold text-xl">
-                {goal.number}
+              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                <item.icon className="h-6 w-6 text-accent" />
               </div>
-              <h3 className="mt-4 font-display font-semibold">{goal.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground font-body">{goal.description}</p>
+              <h3 className="text-lg font-display font-semibold">{item.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground font-body leading-relaxed">
+                {item.description}
+              </p>
             </motion.div>
           ))}
+        </div>
+      </Section>
+
+      {/* Impact Areas */}
+      <Section variant="muted">
+        <SectionHeader
+          title="Where We Create Impact"
+          subtitle="Our model generates measurable benefits across environmental, economic, and social dimensions."
+          centered
+        />
+        <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {impactAreas.map((item, index) => (
+            <div 
+              key={item.title}
+              className="bg-background p-6 rounded-lg shadow-soft animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <item.icon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-display font-semibold">{item.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground font-body leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Climate Approach */}
+      <Section>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+          <div>
+            <SectionHeader
+              title="Climate-Aligned Operations"
+              subtitle="Our processing model addresses multiple climate-relevant challenges simultaneously."
+            />
+            <div className="mt-8 space-y-6">
+              {[
+                {
+                  title: 'Emissions Avoided',
+                  description: 'Surplus biomass diverted from open decomposition reduces methane emissions. Shelf-stable products eliminate cold-chain dependencies.',
+                },
+                {
+                  title: 'Carbon Captured',
+                  description: 'Biochar production converts organic residues into stable carbon that remains sequestered for centuries rather than returning to the atmosphere.',
+                },
+                {
+                  title: 'Resilience Built',
+                  description: 'Biochar soil amendments improve agricultural resilience to drought and climate variability, supporting adaptation in farming communities.',
+                },
+              ].map((item) => (
+                <div key={item.title} className="border-l-4 border-accent pl-6">
+                  <h4 className="font-display font-semibold">{item.title}</h4>
+                  <p className="mt-1 text-muted-foreground font-body text-sm">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-muted/30 p-8 md:p-10 rounded-lg">
+            <h3 className="text-xl font-display font-semibold">Measurable Impact</h3>
+            <p className="mt-4 text-muted-foreground font-body leading-relaxed">
+              We track and document our environmental performance across key metrics:
+            </p>
+            <ul className="mt-6 space-y-3">
+              {[
+                'Biomass diverted from waste streams',
+                'Biochar produced and carbon sequestered',
+                'Cold-chain emissions avoided',
+                'Energy intensity per unit of output',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground font-body text-sm">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-sm text-muted-foreground font-body">
+              This data supports ESG reporting requirements and positions ATROUN for future carbon certification and climate finance alignment.
+            </p>
+          </div>
         </div>
       </Section>
 
       {/* Community Impact */}
+      <Section variant="muted">
+        <div className="max-w-3xl mx-auto text-center">
+          <SectionHeader
+            title="Community-Centered Growth"
+            subtitle="Our operations are designed to create value for the communities where we work, not extract from them."
+            centered
+          />
+          <div className="mt-10 grid sm:grid-cols-3 gap-6">
+            <div className="bg-background p-6 rounded-lg shadow-soft">
+              <p className="text-2xl font-display font-semibold text-primary">Stable Income</p>
+              <p className="mt-2 text-sm text-muted-foreground font-body">Reliable offtake reduces farmer exposure to price volatility</p>
+            </div>
+            <div className="bg-background p-6 rounded-lg shadow-soft">
+              <p className="text-2xl font-display font-semibold text-primary">Local Jobs</p>
+              <p className="mt-2 text-sm text-muted-foreground font-body">Processing facilities create skilled employment opportunities</p>
+            </div>
+            <div className="bg-background p-6 rounded-lg shadow-soft">
+              <p className="text-2xl font-display font-semibold text-primary">Inclusion</p>
+              <p className="mt-2 text-sm text-muted-foreground font-body">Priority hiring for women and youth in operational roles</p>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Approach to Claims */}
       <Section>
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="relative aspect-video bg-muted rounded-xl flex items-center justify-center"
-          >
-            <Users className="w-24 h-24 text-primary/20" />
-          </motion.div>
-          <div>
-            <SectionHeader
-              title="Community Impact"
-              subtitle="Empowering smallholder farmers and rural communities."
-            />
-            <ul className="mt-6 space-y-4">
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
-                </div>
-                <span className="text-muted-foreground font-body">Fair prices and guaranteed offtake for partner farmers</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
-                </div>
-                <span className="text-muted-foreground font-body">Training in sustainable agricultural practices</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
-                </div>
-                <span className="text-muted-foreground font-body">Free biochar distribution for soil improvement</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
-                </div>
-                <span className="text-muted-foreground font-body">Local job creation in processing and logistics</span>
-              </li>
-            </ul>
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader
+            title="Our Approach to Sustainability Claims"
+            subtitle="We believe credibility comes from transparency, not marketing language."
+            centered
+          />
+          <div className="mt-8 font-body text-muted-foreground leading-relaxed space-y-4">
+            <p>
+              We're building a business that creates genuine environmental and social value—but we're also realistic about where we are in that journey. As an early-stage company, we're focused on establishing the operational foundations that will support verified impact over time.
+            </p>
+            <p>
+              Rather than making broad sustainability claims, we document what we do, measure what we can, and build systems that will support third-party verification as we scale. This approach may be less dramatic than some sustainability marketing, but it's more honest—and ultimately more credible.
+            </p>
           </div>
         </div>
       </Section>
     </Layout>
   );
-}
+};
+
+export default Sustainability;

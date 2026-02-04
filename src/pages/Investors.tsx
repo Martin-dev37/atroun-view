@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { Section, SectionHeader } from '@/components/ui/section';
 import { Button } from '@/components/ui/button';
-import heroImage from '@/assets/hero-investors.jpg';
+import heroVideo from '@/assets/hero-investors-video.mp4';
 import {
   Accordion,
   AccordionContent,
@@ -76,16 +76,20 @@ const Investors = () => {
       {/* Hero */}
       <section className="relative py-24 md:py-32">
         <div className="absolute inset-0 overflow-hidden">
-          <img
-            src={heroImage}
-            alt="Investment opportunity"
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
             className="absolute inset-0 w-full h-full object-cover"
-          />
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-foreground/75" />
         </div>
         <div className="container relative z-10">
           <div className="max-w-3xl">
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -93,7 +97,7 @@ const Investors = () => {
             >
               For Investors
             </motion.p>
-            <motion.h1
+            <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -101,7 +105,7 @@ const Investors = () => {
             >
               Building Infrastructure for African Agricultural Value Chains
             </motion.h1>
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -143,7 +147,7 @@ const Investors = () => {
         />
         <div className="mt-12 md:mt-16 grid sm:grid-cols-2 gap-8">
           {investmentHighlights.map((item, index) => (
-            <div
+            <div 
               key={item.title}
               className="bg-background p-6 md:p-8 rounded-lg shadow-soft animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}

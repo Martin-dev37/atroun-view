@@ -1,249 +1,240 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight, Globe, Building, Users, TrendingUp } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { Section, SectionHeader } from '@/components/ui/section';
-import { motion } from 'framer-motion';
-import { Globe, TrendingUp, Users, Building, Handshake, Target } from 'lucide-react';
-import heroMarkets from '@/assets/hero-markets.jpg';
+import { Button } from '@/components/ui/button';
+import heroImage from '@/assets/hero-markets.jpg';
 
-const marketSegments = [
+const targetMarkets = [
   {
-    icon: Building,
-    title: 'Food & Beverage Industry',
-    description: 'Ingredients for premium food manufacturers, beverage companies, and restaurant chains.',
-    growth: '12% CAGR',
+    region: 'European Union',
+    description: 'The EU is the second-largest avocado consumer globally, with growing demand for organic, shelf-stable ingredients in functional foods, nutraceuticals, and natural cosmetics.',
+    opportunities: ['Functional food ingredients', 'Cosmetic actives', 'Organic certified products'],
   },
   {
-    icon: Users,
-    title: 'Health & Wellness',
-    description: 'Natural ingredients for supplements, functional foods, and nutraceuticals.',
-    growth: '18% CAGR',
+    region: 'Middle East & North Africa',
+    description: 'Growing health consciousness and premium food demand, combined with established trade relationships with East Africa.',
+    opportunities: ['Health food ingredients', 'Premium retail products', 'Food service inputs'],
   },
   {
-    icon: Globe,
-    title: 'Cosmetics & Personal Care',
-    description: 'Bio-based ingredients for skincare, haircare, and natural beauty products.',
-    growth: '15% CAGR',
+    region: 'North America',
+    description: 'Large functional food and supplement market with strong consumer interest in plant-based, natural ingredients.',
+    opportunities: ['Supplement bases', 'Clean-label ingredients', 'Specialty nutrition'],
   },
-];
-
-const targetRegions = [
-  { name: 'Europe', percentage: 45 },
-  { name: 'North America', percentage: 30 },
-  { name: 'Middle East', percentage: 15 },
-  { name: 'Asia Pacific', percentage: 10 },
+  {
+    region: 'Asia-Pacific',
+    description: 'Rapidly growing markets for functional foods and natural cosmetics, particularly in Japan, South Korea, and emerging Southeast Asian markets.',
+    opportunities: ['Cosmetic ingredients', 'Functional food inputs', 'Baby nutrition'],
+  },
 ];
 
 const partnershipModels = [
   {
-    icon: Handshake,
-    title: 'Contract Manufacturing',
-    description: 'Custom freeze-dried products under your brand specifications.',
+    icon: Users,
+    title: 'Farmer Partnerships',
+    description: 'Direct relationships with farming communities provide reliable feedstock while offering farmers stable offtake and fair pricing. We invest in long-term partnerships rather than transactional sourcing.',
   },
   {
-    icon: Target,
-    title: 'White Label',
-    description: 'Ready-to-market products with your branding and packaging.',
+    icon: Building,
+    title: 'B2B Buyer Relationships',
+    description: 'We work with ingredient distributors, food manufacturers, cosmetic formulators, and nutraceutical companies who value quality, consistency, and reliable supply.',
+  },
+  {
+    icon: Globe,
+    title: 'Strategic Partnerships',
+    description: 'Collaborations with technology providers, logistics partners, and market access organizations that strengthen our value chain and expand our reach.',
   },
   {
     icon: TrendingUp,
-    title: 'Ingredient Supply',
-    description: 'Bulk supply of freeze-dried ingredients for your production.',
+    title: 'Investment Partnerships',
+    description: 'We seek investors who share our long-term orientation and understand the value of building durable infrastructure in African agricultural value chains.',
   },
 ];
 
-export default function Markets() {
+const Markets = () => {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroMarkets}
-            alt="Global Markets"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-primary/70" />
+      {/* Hero */}
+      <section className="relative py-24 md:py-32">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-foreground/85" />
         </div>
-        <div className="relative container text-center text-primary-foreground">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold tracking-tight"
-          >
-            Markets & Partnerships
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-lg md:text-xl max-w-2xl mx-auto text-primary-foreground/90 font-body"
-          >
-            Connecting African agriculture to premium global markets.
-          </motion.p>
+        <div className="container relative z-10">
+          <div className="max-w-3xl">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-sm font-body font-medium tracking-wider uppercase text-sage mb-4"
+            >
+              Markets & Partnerships
+            </motion.p>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
+            >
+              Connecting African Agriculture to Global Markets
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
+            >
+              ATROUN is positioned to serve growing global demand for shelf-stable, nutrient-preserving ingredients. Our focus on quality, consistency, and reliability makes us a credible partner for B2B buyers across multiple industries.
+            </motion.p>
+          </div>
         </div>
       </section>
 
       {/* Market Opportunity */}
-      <Section>
+      <Section size="large">
         <SectionHeader
           title="Market Opportunity"
-          subtitle="The global freeze-dried food market is experiencing unprecedented growth, driven by demand for clean-label, nutritious, and convenient products."
+          subtitle="The global market for freeze-dried foods is growing at approximately 8% annually, driven by demand for convenient, nutritious, and long-lasting food options."
           centered
         />
-        <div className="mt-12 grid md:grid-cols-3 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-primary text-primary-foreground rounded-xl p-8 text-center"
-          >
-            <div className="text-5xl font-display font-bold">$4.2B</div>
-            <p className="mt-2 font-body opacity-80">Global Market Size (2024)</p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="bg-primary text-primary-foreground rounded-xl p-8 text-center"
-          >
-            <div className="text-5xl font-display font-bold">8.5%</div>
-            <p className="mt-2 font-body opacity-80">Annual Growth Rate</p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="bg-primary text-primary-foreground rounded-xl p-8 text-center"
-          >
-            <div className="text-5xl font-display font-bold">$7.8B</div>
-            <p className="mt-2 font-body opacity-80">Projected by 2030</p>
-          </motion.div>
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+          <div className="bg-muted/30 p-6 rounded-lg">
+            <p className="text-3xl md:text-4xl font-display font-semibold text-primary">€2.6B</p>
+            <p className="mt-2 text-sm text-muted-foreground font-body">European avocado import value (2023)</p>
+          </div>
+          <div className="bg-muted/30 p-6 rounded-lg">
+            <p className="text-3xl md:text-4xl font-display font-semibold text-primary">8%+</p>
+            <p className="mt-2 text-sm text-muted-foreground font-body">Annual growth in freeze-dried food market</p>
+          </div>
+          <div className="bg-muted/30 p-6 rounded-lg">
+            <p className="text-3xl md:text-4xl font-display font-semibold text-primary">$35-40M</p>
+            <p className="mt-2 text-sm text-muted-foreground font-body">Serviceable market for ATROUN products</p>
+          </div>
+          <div className="bg-muted/30 p-6 rounded-lg">
+            <p className="text-3xl md:text-4xl font-display font-semibold text-primary">Growing</p>
+            <p className="mt-2 text-sm text-muted-foreground font-body">Demand for sustainable, ethical sourcing</p>
+          </div>
         </div>
       </Section>
 
-      {/* Market Segments */}
+      {/* Target Markets */}
       <Section variant="muted">
         <SectionHeader
-          title="Target Market Segments"
-          subtitle="We serve diverse industries with specialized product solutions."
+          title="Target Markets"
+          subtitle="We focus on markets with strong demand for quality ingredients and established trade relationships with East Africa."
           centered
         />
-        <div className="mt-12 grid md:grid-cols-3 gap-8">
-          {marketSegments.map((segment, index) => (
-            <motion.div
-              key={segment.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-background rounded-xl p-6 shadow-sm"
+        <div className="mt-12 md:mt-16 grid md:grid-cols-2 gap-8">
+          {targetMarkets.map((market, index) => (
+            <div 
+              key={market.region}
+              className="bg-background p-6 md:p-8 rounded-lg shadow-soft animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                <segment.icon className="w-7 h-7 text-primary" />
+              <h3 className="text-xl font-display font-semibold">{market.region}</h3>
+              <p className="mt-3 text-muted-foreground font-body leading-relaxed">
+                {market.description}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {market.opportunities.map((opp) => (
+                  <span
+                    key={opp}
+                    className="inline-block px-3 py-1 text-xs font-body font-medium bg-secondary text-secondary-foreground rounded-full"
+                  >
+                    {opp}
+                  </span>
+                ))}
               </div>
-              <h3 className="mt-4 text-xl font-display font-semibold">{segment.title}</h3>
-              <p className="mt-2 text-muted-foreground font-body">{segment.description}</p>
-              <div className="mt-4 inline-flex items-center gap-2 text-sm font-body font-medium text-primary">
-                <TrendingUp className="w-4 h-4" />
-                {segment.growth}
-              </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </Section>
 
-      {/* Geographic Focus */}
+      {/* End Markets */}
       <Section>
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <SectionHeader
-              title="Geographic Focus"
-              subtitle="Strategic market prioritization based on demand, regulatory alignment, and growth potential."
-            />
-            <div className="mt-8 space-y-4">
-              {targetRegions.map((region) => (
-                <div key={region.name}>
-                  <div className="flex justify-between text-sm font-body mb-1">
-                    <span>{region.name}</span>
-                    <span className="text-muted-foreground">{region.percentage}%</span>
-                  </div>
-                  <div className="h-3 bg-muted rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${region.percentage}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.2 }}
-                      className="h-full bg-primary rounded-full"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader
+            title="Industries We Serve"
+            subtitle="Our ingredients are designed for B2B applications across multiple industries with growing demand for plant-based, natural, and shelf-stable inputs."
+            centered
+          />
+          <div className="mt-12 space-y-6">
+            {[
+              {
+                industry: 'Functional Foods & Nutraceuticals',
+                description: 'Freeze-dried powders for smoothies, supplements, health bars, and specialty nutrition products. Growing consumer demand for natural, nutrient-dense ingredients.',
+              },
+              {
+                industry: 'Cosmetics & Personal Care',
+                description: 'Natural actives for skincare, haircare, and beauty formulations. Avocado extracts are valued for their moisturizing and nourishing properties.',
+              },
+              {
+                industry: 'Food Ingredients & Manufacturing',
+                description: 'Shelf-stable ingredients for food manufacturers, bakers, and food service operations seeking quality, consistency, and extended shelf life.',
+              },
+              {
+                industry: 'Baby Food & Specialized Nutrition',
+                description: 'Nutrient-preserving formats suitable for infant nutrition and specialized dietary applications where quality and safety are paramount.',
+              },
+            ].map((item) => (
+              <div key={item.industry} className="border-l-4 border-accent pl-6 py-2">
+                <h4 className="font-display font-semibold text-lg">{item.industry}</h4>
+                <p className="mt-1 text-muted-foreground font-body">{item.description}</p>
+              </div>
+            ))}
           </div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative aspect-square bg-muted rounded-xl flex items-center justify-center"
-          >
-            <Globe className="w-32 h-32 text-primary/20" />
-            <p className="absolute text-center text-muted-foreground font-body px-8">
-              Global distribution network serving 4 continents
-            </p>
-          </motion.div>
         </div>
       </Section>
 
       {/* Partnership Models */}
       <Section variant="muted">
         <SectionHeader
-          title="Partnership Models"
-          subtitle="Flexible engagement options tailored to your business needs."
+          title="Partnership Orientation"
+          subtitle="ATROUN is built on relationships—with farmers, buyers, service providers, and investors. We seek partners who share our long-term perspective."
           centered
         />
-        <div className="mt-12 grid md:grid-cols-3 gap-8">
-          {partnershipModels.map((model, index) => (
-            <motion.div
-              key={model.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-background rounded-xl p-6 shadow-sm text-center"
+        <div className="mt-12 md:mt-16 grid sm:grid-cols-2 gap-8">
+          {partnershipModels.map((item, index) => (
+            <div 
+              key={item.title}
+              className="bg-background p-6 md:p-8 rounded-lg shadow-soft animate-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                <model.icon className="w-7 h-7 text-primary" />
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <item.icon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="mt-4 text-xl font-display font-semibold">{model.title}</h3>
-              <p className="mt-2 text-muted-foreground font-body">{model.description}</p>
-            </motion.div>
+              <h3 className="text-xl font-display font-semibold">{item.title}</h3>
+              <p className="mt-3 text-muted-foreground font-body leading-relaxed">
+                {item.description}
+              </p>
+            </div>
           ))}
         </div>
       </Section>
 
       {/* CTA */}
-      <Section>
-        <div className="text-center">
+      <Section variant="primary">
+        <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-semibold">
-            Ready to Partner?
+            Interested in Partnership?
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground font-body max-w-2xl mx-auto">
-            Let's discuss how ATROUN can supply premium freeze-dried products for your business.
+          <p className="mt-4 text-lg font-body text-primary-foreground/80">
+            Whether you're a buyer seeking quality ingredients, an investor exploring opportunities, or an organization looking to collaborate—we'd welcome a conversation.
           </p>
-          <motion.a
-            href="/contact"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-8 inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-lg font-body font-medium hover:bg-primary/90 transition-colors"
-          >
-            Contact Us
-            <Globe className="w-5 h-5" />
-          </motion.a>
+          <div className="mt-8">
+            <Button asChild size="lg" variant="secondary" className="font-body">
+              <Link to="/contact">
+                Get in Touch <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </Section>
     </Layout>
   );
-}
+};
+
+export default Markets;

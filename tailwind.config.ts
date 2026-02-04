@@ -15,12 +15,12 @@ export default {
   	extend: {
   		fontFamily: {
   			display: [
-  				'Cormorant Garamond',
+  				'Cormorant Garamond"',
   				'Georgia',
   				'serif'
   			],
   			body: [
-  				'Inter',
+  				'Inter"',
   				'system-ui',
   				'sans-serif'
   			],

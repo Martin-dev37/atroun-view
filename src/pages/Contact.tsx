@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import heroImage from '@/assets/hero-contact.jpg';
 
 const contactSchema = z.object({
@@ -30,9 +31,38 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      // For now, show success message (backend integration pending)
-      console.log('Contact form submitted:', data);
-      
+      // Save to database
+      const { error: dbError } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: data.name,
+          email: data.email,
+          company: data.company || null,
+          subject: data.subject,
+          message: data.message,
+        });
+
+      if (dbError) {
+        console.error('Database error:', dbError);
+        throw new Error('Failed to save your message. Please try again.');
+      }
+
+      // Send email notifications
+      const { error: emailError } = await supabase.functions.invoke('send-contact-notification', {
+        body: {
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          subject: data.subject,
+          message: data.message,
+        },
+      });
+
+      if (emailError) {
+        console.error('Email error:', emailError);
+        // Don't fail the submission if email fails - the message is already saved
+      }
+
       toast({
         title: "Message sent!",
         description: "Thank you for reaching out. We'll get back to you within 48 hours.",
@@ -53,7 +83,7 @@ const Contact = () => {
     <Layout>
       {/* Hero */}
       <section className="relative py-24 md:py-32">
-        <div
+        <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
@@ -61,7 +91,7 @@ const Contact = () => {
         </div>
         <div className="container relative z-10">
           <div className="max-w-3xl">
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -69,7 +99,7 @@ const Contact = () => {
             >
               Contact
             </motion.p>
-            <motion.h1
+            <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -77,7 +107,7 @@ const Contact = () => {
             >
               Let's Start a Conversation
             </motion.h1>
-            <motion.p
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -126,7 +156,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-
+              
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="company">Company (Optional)</Label>
@@ -195,8 +225,8 @@ const Contact = () => {
                     <p className="mt-1 text-sm text-muted-foreground font-body">
                       For general inquiries
                     </p>
-                    <a
-                      href="mailto:atroun.bd@gmail.com"
+                    <a 
+                      href="mailto:atroun.bd@gmail.com" 
                       className="mt-1 inline-block text-primary font-body font-medium hover:underline"
                     >
                       atroun.bd@gmail.com
@@ -213,8 +243,8 @@ const Contact = () => {
                     <p className="mt-1 text-sm text-muted-foreground font-body">
                       Call or WhatsApp
                     </p>
-                    <a
-                      href="https://wa.me/256783125129"
+                    <a 
+                      href="https://wa.me/256783125129" 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-1 inline-block text-primary font-body font-medium hover:underline"

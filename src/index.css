@@ -184,7 +184,7 @@
 
   .industrial-hover:hover {
     transform: translateY(-4px) rotateX(2deg);
-    box-shadow:
+    box-shadow: 
       0 20px 40px -15px hsl(var(--primary) / 0.2),
       0 10px 20px -10px hsl(var(--foreground) / 0.1);
   }
@@ -279,7 +279,7 @@
 
   /* Grid overlay for industrial feel */
   .industrial-grid {
-    background-image:
+    background-image: 
       linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
       linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
     background-size: 40px 40px;

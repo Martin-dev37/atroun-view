@@ -88,16 +88,16 @@ export function Footer() {
               ))}
             </ul>
             <div className="mt-6 space-y-2">
-              <a
-                href="https://wa.me/256783125129"
+              <a 
+                href="https://wa.me/256783125129" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-sm font-body text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
                 +256 783 125 129
               </a>
-              <a
-                href="mailto:atroun.bd@gmail.com"
+              <a 
+                href="mailto:atroun.bd@gmail.com" 
                 className="block text-sm font-body text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
                 atroun.bd@gmail.com
