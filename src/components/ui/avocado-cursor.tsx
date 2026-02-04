@@ -19,15 +19,27 @@ export const AvocadoCursor = () => {
     const handleElementHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       
-      // Check if hovering over text input
-      const isTextInputElement = 
+      // Check if hovering over text input or selectable text
+      const isTextElement = 
         target.tagName === 'INPUT' ||
         target.tagName === 'TEXTAREA' ||
+        target.tagName === 'P' ||
+        target.tagName === 'SPAN' ||
+        target.tagName === 'H1' ||
+        target.tagName === 'H2' ||
+        target.tagName === 'H3' ||
+        target.tagName === 'H4' ||
+        target.tagName === 'H5' ||
+        target.tagName === 'H6' ||
+        target.tagName === 'LI' ||
+        target.tagName === 'TD' ||
+        target.tagName === 'TH' ||
+        target.tagName === 'LABEL' ||
         target.isContentEditable ||
         target.closest('[contenteditable="true"]');
-      setIsTextInput(!!isTextInputElement);
+      setIsTextInput(!!isTextElement);
       
-      // Check if hovering over other interactive elements (not text inputs)
+      // Check if hovering over other interactive elements (not text)
       const isInteractive = 
         target.tagName === 'BUTTON' || 
         target.tagName === 'A' || 
@@ -35,7 +47,7 @@ export const AvocadoCursor = () => {
         target.closest('a') ||
         target.classList.contains('cursor-pointer') ||
         target.closest('[role="button"]');
-      setIsHovering(!!isInteractive && !isTextInputElement);
+      setIsHovering(!!isInteractive && !isTextElement);
     };
 
     document.addEventListener('mousemove', updatePosition);

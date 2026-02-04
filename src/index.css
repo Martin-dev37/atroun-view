@@ -134,7 +134,14 @@
 
   input,
   textarea,
-  [contenteditable="true"] {
+  [contenteditable="true"],
+  p,
+  span,
+  h1, h2, h3, h4, h5, h6,
+  li,
+  td, th,
+  label,
+  ::selection {
     cursor: text !important;
   }
 
