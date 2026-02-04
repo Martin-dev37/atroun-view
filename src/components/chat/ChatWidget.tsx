@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, Loader2, Trash2 } from 'lucide-react';
+import { X, Send, Loader2, Trash2, Volume2, VolumeX, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import { useToast } from '@/hooks/use-toast';
 import { useChatPersistence } from '@/hooks/useChatPersistence';
+import { useTextToSpeech, LANGUAGE_OPTIONS, type SupportedLanguage } from '@/hooks/useTextToSpeech';
 import avoMascot from '@/assets/avo-mascot.png';
 
 type Message = {
@@ -23,6 +24,10 @@ export function ChatWidget() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { messages, setMessages, saveMessage, clearConversation, isLoadingHistory } = useChatPersistence();
+  const { speak, stop, isSpeaking } = useTextToSpeech();
+  const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>('en');
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const [autoSpeak, setAutoSpeak] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -49,7 +54,7 @@ export function ChatWidget() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ messages: chatMessages }),
+      body: JSON.stringify({ messages: chatMessages, targetLanguage: selectedLanguage }),
     });
 
     if (!resp.ok || !resp.body) {
@@ -115,7 +120,7 @@ export function ChatWidget() {
     }
 
     onDone();
-  }, []);
+  }, [selectedLanguage]);
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
@@ -149,6 +154,10 @@ export function ChatWidget() {
           // Save assistant response to database
           if (assistantSoFar) {
             await saveMessage('assistant', assistantSoFar);
+            // Auto-speak if enabled
+            if (autoSpeak) {
+              speak(assistantSoFar, selectedLanguage);
+            }
           }
         }
       );
@@ -164,8 +173,17 @@ export function ChatWidget() {
   };
 
   const handleClearHistory = async () => {
+    stop();
     await clearConversation();
     toast({ title: "Chat cleared", description: "Your conversation history has been deleted." });
+  };
+
+  const handleSpeakMessage = (content: string) => {
+    if (isSpeaking) {
+      stop();
+    } else {
+      speak(content, selectedLanguage);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -251,6 +269,48 @@ export function ChatWidget() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
+                {/* Language selector */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                    className="p-1.5 hover:bg-primary-foreground/20 rounded-full transition-colors"
+                    aria-label="Select language"
+                    title="Select language"
+                  >
+                    <Globe className="w-4 h-4" />
+                  </button>
+                  {showLanguageMenu && (
+                    <div className="absolute top-full right-0 mt-1 bg-background border border-border rounded-lg shadow-lg py-1 min-w-[120px] z-50">
+                      {LANGUAGE_OPTIONS.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            setSelectedLanguage(lang.code);
+                            setShowLanguageMenu(false);
+                          }}
+                          className={cn(
+                            "w-full text-left px-3 py-1.5 text-sm hover:bg-muted transition-colors",
+                            selectedLanguage === lang.code && "bg-muted font-medium"
+                          )}
+                        >
+                          {lang.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {/* Auto-speak toggle */}
+                <button
+                  onClick={() => setAutoSpeak(!autoSpeak)}
+                  className={cn(
+                    "p-1.5 rounded-full transition-colors",
+                    autoSpeak ? "bg-primary-foreground/30" : "hover:bg-primary-foreground/20"
+                  )}
+                  aria-label={autoSpeak ? "Disable auto-speak" : "Enable auto-speak"}
+                  title={autoSpeak ? "Auto-speak on" : "Auto-speak off"}
+                >
+                  {autoSpeak ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                </button>
                 {messages.length > 0 && (
                   <button
                     onClick={handleClearHistory}
@@ -310,6 +370,13 @@ export function ChatWidget() {
                     {message.role === 'assistant' ? (
                       <div className="prose prose-sm max-w-none dark:prose-invert">
                         <ReactMarkdown>{message.content}</ReactMarkdown>
+                        <button
+                          onClick={() => handleSpeakMessage(message.content)}
+                          className="mt-1 text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
+                        >
+                          <Volume2 className="w-3 h-3" />
+                          {isSpeaking ? 'Stop' : 'Listen'}
+                        </button>
                       </div>
                     ) : (
                       message.content

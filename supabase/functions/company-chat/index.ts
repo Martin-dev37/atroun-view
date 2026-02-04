@@ -131,40 +131,52 @@ Organic residues from processing are converted into biochar through controlled p
 For partnership inquiries, investment opportunities, or general questions, please use the contact form on our website.
 `;
 
+const LANGUAGE_NAMES: Record<string, string> = {
+  en: 'English',
+  fr: 'French',
+  es: 'Spanish',
+  de: 'German',
+  pt: 'Portuguese',
+  ru: 'Russian',
+  sw: 'Swahili',
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, targetLanguage } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const systemPrompt = `You are the ATROUN BioDynamics AI Assistant, a knowledgeable and helpful representative of ATROUN BioDynamics, a pioneering agribusiness company based in Uganda.
+    const languageInstructions = targetLanguage && targetLanguage !== 'en' 
+      ? `\n\nIMPORTANT: Respond ENTIRELY in ${LANGUAGE_NAMES[targetLanguage] || targetLanguage}. Translate your response naturally.`
+      : '';
+
+    const systemPrompt = `You are the ATROUN BioDynamics AI Assistant, a knowledgeable representative of ATROUN BioDynamics, a pioneering agribusiness company based in Uganda.
+
+CRITICAL RESPONSE RULES:
+- Keep responses BRIEF (2-4 sentences max) unless user explicitly asks for details
+- Be direct and to the point
+- Only elaborate when asked "tell me more", "explain further", etc.
+${languageInstructions}
 
 Your role is to:
-1. Answer questions about ATROUN BioDynamics, its products, technology, mission, and business model
-2. Explain lyophilization (freeze-drying) technology in accessible terms
-3. Discuss the company's sustainability initiatives and impact
-4. Provide information about investment opportunities and partnerships
-5. Help visitors understand the value proposition and market opportunity
+1. Answer questions about ATROUN BioDynamics, products, technology, mission
+2. Explain lyophilization (freeze-drying) in simple terms
+3. Discuss sustainability initiatives
+4. Provide investment/partnership information
 
-Guidelines:
-- Be professional, warm, and informative
-- If you don't know something specific, acknowledge it and offer to connect the visitor with the team via the contact form
-- Highlight the company's unique position as a pioneer in East African biorefinery
-- Emphasize the circular economy and sustainability aspects when relevant
-- Keep responses concise but comprehensive
-
-Here is your knowledge base about ATROUN BioDynamics:
+Here is your knowledge base:
 
 ${ATROUN_KNOWLEDGE_BASE}
 
-Remember: You represent ATROUN BioDynamics. Be helpful, accurate, and professional.`;
+Remember: Brief, accurate, professional.`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
