@@ -3,9 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageTranslator } from '@/components/ui/language-translator';
+import { useNavigationItems } from '@/hooks/useCMS';
 import logo from '@/assets/atroun-logo.png';
 
-const pages = [
+// Fallback navigation when CMS is unavailable
+const fallbackPages = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'What We Do', href: '/what-we-do' },
@@ -19,6 +21,12 @@ const pages = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { data: navigationItems, isError } = useNavigationItems();
+
+  // Transform CMS navigation items to match our format, or use fallback
+  const pages = navigationItems && navigationItems.length > 0 && !isError
+    ? navigationItems.map(item => ({ name: item.label, href: item.path }))
+    : fallbackPages;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
