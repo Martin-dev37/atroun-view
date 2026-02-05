@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GeometricBackground } from "@/components/ui/geometric-background";
 import { AvocadoCursor } from "@/components/ui/avocado-cursor";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { PageGuard } from "@/components/layout/PageGuard";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import WhatWeDo from "./pages/WhatWeDo";
@@ -27,14 +28,14 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/what-we-do" element={<WhatWeDo />} />
-          <Route path="/technology" element={<Technology />} />
-          <Route path="/markets" element={<Markets />} />
-          <Route path="/sustainability" element={<Sustainability />} />
-          <Route path="/investors" element={<Investors />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/" element={<PageGuard slug="home"><Index /></PageGuard>} />
+          <Route path="/about" element={<PageGuard slug="about"><About /></PageGuard>} />
+          <Route path="/what-we-do" element={<PageGuard slug="what-we-do"><WhatWeDo /></PageGuard>} />
+          <Route path="/technology" element={<PageGuard slug="technology"><Technology /></PageGuard>} />
+          <Route path="/markets" element={<PageGuard slug="markets"><Markets /></PageGuard>} />
+          <Route path="/sustainability" element={<PageGuard slug="sustainability"><Sustainability /></PageGuard>} />
+          <Route path="/investors" element={<PageGuard slug="investors"><Investors /></PageGuard>} />
+          <Route path="/contact" element={<PageGuard slug="contact"><Contact /></PageGuard>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
