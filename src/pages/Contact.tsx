@@ -347,6 +347,16 @@ const Contact = () => {
           </div>
         </div>
       </Section>
+
+      {/* Admin Sign In */}
+      <div className="py-6 text-center">
+        <a
+          href="/admin/login"
+          className="text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors font-body"
+        >
+          Admin Sign In
+        </a>
+      </div>
     </Layout>
   );
 };
