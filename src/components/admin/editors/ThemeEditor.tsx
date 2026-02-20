@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { cmsClient } from '@/lib/cms-client';
+import { applyThemeFromDB } from '@/hooks/useTheme';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -88,7 +89,10 @@ export function ThemeEditor() {
           description: def?.description || null,
         }, { onConflict: 'setting_key' });
       }
-      toast({ title: 'Theme saved successfully' });
+      toast({ title: 'Theme saved — refreshing styles…' });
+      // Re-apply the newly saved theme to the current page immediately
+      await applyThemeFromDB();
+      toast({ title: 'Theme applied to site ✓' });
     } catch (e: any) {
       toast({ title: 'Save failed', description: e.message, variant: 'destructive' });
     }

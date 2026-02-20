@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { usePortalAccess } from '@/hooks/usePortalAccess';
@@ -11,10 +12,11 @@ import {
 import {
   LayoutDashboard, Users, Mail, PhoneCall, Globe, Settings,
   TrendingUp, BarChart3, FileText, FolderLock, Briefcase,
-  LogOut, ChevronRight, Shield
+  LogOut, Shield, Image
 } from 'lucide-react';
 import atrounLogo from '@/assets/atroun-logo.png';
 import { cn } from '@/lib/utils';
+import { MediaLibrary } from '@/components/admin/MediaLibrary';
 
 const portalItems = [
   { label: 'Investor Portal', path: '/admin/portal/investor', icon: Briefcase, section: 'investor' },
@@ -41,6 +43,7 @@ export function AdminSidebar() {
   const { toast } = useToast();
   const { user, isAdmin, profile, roles } = useAuth();
   const { hasAccess } = usePortalAccess(user?.id);
+  const [mediaLibraryOpen, setMediaLibraryOpen] = useState(false);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -129,11 +132,18 @@ export function AdminSidebar() {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
+                  <SidebarMenuItem>
+                    <SidebarMenuButton onClick={() => setMediaLibraryOpen(true)} className="flex items-center gap-3 cursor-pointer">
+                      <Image className="h-4 w-4" />
+                      <span>Media Library</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
           </>
         )}
+        <MediaLibrary open={mediaLibraryOpen} onOpenChange={setMediaLibraryOpen} mode="browse" />
       </SidebarContent>
 
       <SidebarFooter className="p-4 border-t border-border space-y-1">
