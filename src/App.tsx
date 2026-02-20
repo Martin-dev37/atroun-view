@@ -49,7 +49,7 @@ const App = () => (
           <Route path="/contact" element={<><GeometricBackground /><AvocadoCursor /><Contact /><ChatWidget /></>} />
 
           {/* Admin routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/login" element={<><AvocadoCursor /><AdminLogin /></>} />
           <Route path="/admin" element={<AdminOverview />} />
           <Route path="/admin/users" element={<UsersPage />} />
           <Route path="/admin/contacts" element={<ContactsPage />} />
