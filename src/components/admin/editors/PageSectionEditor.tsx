@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { cmsClient } from '@/lib/cms-client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import {
   Loader2, GripVertical, Edit, Eye, EyeOff, Image, FileText, Megaphone, Save,
-  ChevronRight, ExternalLink, Plus, Trash2, LayoutTemplate, FolderOpen,
+  ExternalLink, Plus, Trash2, LayoutTemplate, FolderOpen, RefreshCw, Globe, CheckCircle2,
 } from 'lucide-react';
 
 interface Page {
@@ -249,6 +249,10 @@ export function PageSectionEditor() {
   const [pageEditOpen, setPageEditOpen] = useState(false);
   const [editPageData, setEditPageData] = useState<Page | null>(null);
   const [mediaLibraryOpen, setMediaLibraryOpen] = useState(false);
+  const [publishing, setPublishing] = useState(false);
+  // iframeKey increments to force iframe reload after saves
+  const [iframeKey, setIframeKey] = useState(0);
+  const [hasUnsavedPreview, setHasUnsavedPreview] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -266,7 +270,10 @@ export function PageSectionEditor() {
   }
 
   useEffect(() => {
-    if (selectedPage) loadSections(selectedPage);
+    if (selectedPage) {
+      loadSections(selectedPage);
+      setHasUnsavedPreview(false);
+    }
   }, [selectedPage]);
 
   async function loadSections(slug: string) {
@@ -287,6 +294,11 @@ export function PageSectionEditor() {
     setSectionsLoading(false);
   }
 
+  function refreshPreview() {
+    setIframeKey(k => k + 1);
+    setHasUnsavedPreview(false);
+  }
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -294,7 +306,6 @@ export function PageSectionEditor() {
       const oldIdx = prev.findIndex(s => s.data.id === active.id);
       const newIdx = prev.findIndex(s => s.data.id === over.id);
       const reordered = arrayMove(prev, oldIdx, newIdx);
-      // Persist order
       reordered.forEach((item, idx) => {
         const table = item.type === 'hero' ? 'hero_sections' : item.type === 'cta' ? 'cta_blocks' : 'content_sections';
         (cmsClient as any).from(table).update({ display_order: idx }).eq('id', item.data.id);
@@ -302,6 +313,7 @@ export function PageSectionEditor() {
       toast({ title: 'Section order updated' });
       return reordered;
     });
+    setHasUnsavedPreview(true);
   }
 
   async function handleSaveSection() {
@@ -315,9 +327,10 @@ export function PageSectionEditor() {
     if (error) {
       toast({ title: 'Save failed', description: error.message, variant: 'destructive' });
     } else {
-      toast({ title: 'Section updated' });
+      toast({ title: 'Section saved — click Refresh Preview to see changes' });
       setEditDialogOpen(false);
       if (selectedPage) loadSections(selectedPage);
+      setHasUnsavedPreview(true);
     }
     setSaving(false);
   }
@@ -335,21 +348,26 @@ export function PageSectionEditor() {
     } else {
       toast({ title: `Page ${editPageData.is_published ? 'published' : 'unpublished'} — changes are live on the website` });
       setPageEditOpen(false);
-      // Update local page list immediately so selector reflects new state
       setPages(prev => prev.map(p => p.id === editPageData.id ? { ...p, ...editPageData } : p));
       loadPages();
+      refreshPreview();
     }
     setSaving(false);
   }
 
-  async function togglePublished(page: Page) {
-    const { error } = await (cmsClient as any).from('pages').update({ is_published: !page.is_published }).eq('id', page.id);
+  async function handleTogglePublish() {
+    if (!currentPage) return;
+    setPublishing(true);
+    const newState = !currentPage.is_published;
+    const { error } = await (cmsClient as any).from('pages').update({ is_published: newState }).eq('id', currentPage.id);
     if (error) {
       toast({ title: 'Failed to update publish status', description: error.message, variant: 'destructive' });
-      return;
+    } else {
+      setPages(prev => prev.map(p => p.id === currentPage.id ? { ...p, is_published: newState } : p));
+      toast({ title: newState ? '🌐 Page published — visible to the public' : 'Page unpublished — hidden from public' });
+      refreshPreview();
     }
-    setPages(prev => prev.map(p => p.id === page.id ? { ...p, is_published: !p.is_published } : p));
-    toast({ title: `Page ${page.is_published ? 'unpublished' : 'published'} — changes are live on the website` });
+    setPublishing(false);
   }
 
   const pageSlugToPath = (slug: string) => slug === 'home' ? '/' : `/${slug}`;
@@ -415,17 +433,65 @@ export function PageSectionEditor() {
                 </SortableContext>
               </DndContext>
             )}
+
+            {/* Publish / Commit section */}
+            <div className={`mt-4 p-4 rounded-lg border-2 transition-colors ${currentPage.is_published ? 'border-primary/30 bg-primary/5' : 'border-border bg-muted/50'}`}>
+              <div className="flex items-start gap-3 mb-3">
+                <div className={`w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 ${currentPage.is_published ? 'bg-primary' : 'bg-muted-foreground'}`} />
+                <div>
+                  <p className="text-sm font-semibold">{currentPage.is_published ? 'Published' : 'Draft'}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {currentPage.is_published
+                      ? 'This page is live and visible to all visitors.'
+                      : 'This page is in draft mode and hidden from visitors.'}
+                  </p>
+                </div>
+              </div>
+              <Button
+                className="w-full gap-2"
+                variant={currentPage.is_published ? 'outline' : 'default'}
+                onClick={handleTogglePublish}
+                disabled={publishing}
+              >
+                {publishing ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : currentPage.is_published ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Globe className="h-4 w-4" />
+                )}
+                {publishing ? 'Updating…' : currentPage.is_published ? 'Unpublish Page' : 'Commit & Publish Page'}
+              </Button>
+            </div>
           </div>
 
           {/* Right: Live Preview */}
           <div className="lg:col-span-3 space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold">Live Preview</h3>
-              <a href={`${WEBSITE_URL}${pageSlugToPath(currentPage.slug)}`} target="_blank" rel="noreferrer">
-                <Button size="sm" variant="outline" className="gap-1">
-                  <ExternalLink className="h-3 w-3" />Open in New Tab
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-semibold">Live Preview</h3>
+                {hasUnsavedPreview && (
+                  <Badge variant="outline" className="text-[10px] border-accent/60 bg-accent/10 text-foreground">
+                    Refresh to see changes
+                  </Badge>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant={hasUnsavedPreview ? 'default' : 'outline'}
+                  onClick={refreshPreview}
+                  className="gap-1.5"
+                >
+                  <RefreshCw className="h-3 w-3" />
+                  {hasUnsavedPreview ? 'Refresh Preview' : 'Refresh'}
                 </Button>
-              </a>
+                <a href={`${WEBSITE_URL}${pageSlugToPath(currentPage.slug)}`} target="_blank" rel="noreferrer">
+                  <Button size="sm" variant="outline" className="gap-1">
+                    <ExternalLink className="h-3 w-3" />Open Site
+                  </Button>
+                </a>
+              </div>
             </div>
             <div className="rounded-lg border border-border overflow-hidden bg-background shadow-sm">
               <div className="h-8 bg-muted flex items-center px-3 gap-1.5 border-b border-border">
@@ -435,10 +501,15 @@ export function PageSectionEditor() {
                 <span className="text-[10px] text-muted-foreground font-mono ml-3 truncate">
                   {WEBSITE_URL}{pageSlugToPath(currentPage.slug)}
                 </span>
+                <div className={`ml-auto flex items-center gap-1 text-[10px] ${currentPage.is_published ? 'text-primary' : 'text-muted-foreground'}`}>
+                  <div className={`w-1.5 h-1.5 rounded-full ${currentPage.is_published ? 'bg-primary' : 'bg-muted-foreground'}`} />
+                  {currentPage.is_published ? 'Live' : 'Draft'}
+                </div>
               </div>
               <iframe
+                key={iframeKey}
                 src={`${WEBSITE_URL}${pageSlugToPath(currentPage.slug)}`}
-                className="w-full h-[500px]"
+                className="w-full h-[520px]"
                 title="Page preview"
               />
             </div>
