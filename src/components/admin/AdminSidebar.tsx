@@ -31,6 +31,10 @@ const adminItems = [
   { label: 'Content Editor', path: '/admin/content', icon: Globe },
 ];
 
+const accountItems = [
+  { label: 'Settings', path: '/admin/settings', icon: Settings },
+];
+
 export function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -132,8 +136,8 @@ export function AdminSidebar() {
         )}
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t border-border">
-        <div className="flex items-center gap-3 mb-3 px-2">
+      <SidebarFooter className="p-4 border-t border-border space-y-1">
+        <div className="flex items-center gap-3 mb-2 px-2">
           <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
             <span className="text-xs font-semibold text-primary">
               {profile?.display_name?.charAt(0).toUpperCase() ?? '?'}
@@ -144,6 +148,21 @@ export function AdminSidebar() {
             <p className="text-xs text-muted-foreground truncate">{profile?.email}</p>
           </div>
         </div>
+        {accountItems.map(item => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={cn(
+              'w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors',
+              isActive(item.path)
+                ? 'bg-sidebar-accent text-foreground'
+                : 'text-muted-foreground hover:text-foreground hover:bg-sidebar-accent'
+            )}
+          >
+            <item.icon className="h-4 w-4" />
+            <span>{item.label}</span>
+          </Link>
+        ))}
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-sidebar-accent rounded-lg transition-colors"
