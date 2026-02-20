@@ -333,17 +333,23 @@ export function PageSectionEditor() {
     if (error) {
       toast({ title: 'Save failed', description: error.message, variant: 'destructive' });
     } else {
-      toast({ title: 'Page settings updated' });
+      toast({ title: `Page ${editPageData.is_published ? 'published' : 'unpublished'} — changes are live on the website` });
       setPageEditOpen(false);
+      // Update local page list immediately so selector reflects new state
+      setPages(prev => prev.map(p => p.id === editPageData.id ? { ...p, ...editPageData } : p));
       loadPages();
     }
     setSaving(false);
   }
 
   async function togglePublished(page: Page) {
-    await (cmsClient as any).from('pages').update({ is_published: !page.is_published }).eq('id', page.id);
+    const { error } = await (cmsClient as any).from('pages').update({ is_published: !page.is_published }).eq('id', page.id);
+    if (error) {
+      toast({ title: 'Failed to update publish status', description: error.message, variant: 'destructive' });
+      return;
+    }
     setPages(prev => prev.map(p => p.id === page.id ? { ...p, is_published: !p.is_published } : p));
-    toast({ title: `Page ${page.is_published ? 'unpublished' : 'published'}` });
+    toast({ title: `Page ${page.is_published ? 'unpublished' : 'published'} — changes are live on the website` });
   }
 
   const pageSlugToPath = (slug: string) => slug === 'home' ? '/' : `/${slug}`;

@@ -40,14 +40,14 @@ const SPACING_MAP: Record<string, string> = {
   spacious:    '9rem',
 };
 
-let themeLoaded = false;
-
 export function useTheme() {
   useEffect(() => {
-    if (themeLoaded) return; // Only load once per session
     loadAndApplyTheme();
   }, []);
 }
+
+// Exported so ThemeEditor can re-apply after saving
+export { loadAndApplyTheme as applyThemeFromDB };
 
 async function loadAndApplyTheme() {
   try {
@@ -110,7 +110,6 @@ async function loadAndApplyTheme() {
       root.style.setProperty('--font-body', `"${settings.theme_body_font}", sans-serif`);
     }
 
-    themeLoaded = true;
   } catch (e) {
     // Silently fail — theme is cosmetic only
     console.warn('Theme load failed:', e);
