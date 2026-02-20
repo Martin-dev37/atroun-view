@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
+import { MediaLibrary, ImagePickerInput } from '@/components/admin/MediaLibrary';
 import {
   DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent,
 } from '@dnd-kit/core';
@@ -19,7 +20,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import {
   Loader2, GripVertical, Edit, Eye, EyeOff, Image, FileText, Megaphone, Save,
-  ChevronRight, ExternalLink, Plus, Trash2, LayoutTemplate,
+  ChevronRight, ExternalLink, Plus, Trash2, LayoutTemplate, FolderOpen,
 } from 'lucide-react';
 
 interface Page {
@@ -111,8 +112,16 @@ function HeroEditorFields({ hero, onChange }: { hero: HeroSection; onChange: (h:
         <Textarea rows={3} value={hero.subtitle || ''} onChange={e => onChange({ ...hero, subtitle: e.target.value })} />
       </div>
       <div className="space-y-2">
-        <Label>Background Image URL</Label>
-        <Input value={hero.background_image || ''} onChange={e => onChange({ ...hero, background_image: e.target.value })} placeholder="https://..." />
+        <Label>Background Image</Label>
+        {hero.background_image && (
+          <div className="rounded-md overflow-hidden border border-border h-24 mb-2">
+            <img src={hero.background_image} alt="Background preview" className="w-full h-full object-cover" />
+          </div>
+        )}
+        <ImagePickerInput
+          value={hero.background_image || ''}
+          onChange={url => onChange({ ...hero, background_image: url })}
+        />
       </div>
       <div className="space-y-2">
         <Label>Background Video URL</Label>
@@ -163,15 +172,21 @@ function ContentEditorFields({ section, onChange }: { section: ContentSection; o
         <Textarea rows={5} value={section.body_content || ''} onChange={e => onChange({ ...section, body_content: e.target.value })} />
         <p className="text-xs text-muted-foreground">Use newlines to separate list items</p>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label>Image URL</Label>
-          <Input value={section.image || ''} onChange={e => onChange({ ...section, image: e.target.value })} />
-        </div>
-        <div className="space-y-2">
-          <Label>Image Alt Text</Label>
-          <Input value={section.image_alt || ''} onChange={e => onChange({ ...section, image_alt: e.target.value })} />
-        </div>
+      <div className="space-y-2">
+        <Label>Section Image</Label>
+        {section.image && (
+          <div className="rounded-md overflow-hidden border border-border h-24 mb-2">
+            <img src={section.image} alt={section.image_alt || 'Section image'} className="w-full h-full object-cover" />
+          </div>
+        )}
+        <ImagePickerInput
+          value={section.image || ''}
+          onChange={url => onChange({ ...section, image: url })}
+        />
+      </div>
+      <div className="space-y-2">
+        <Label>Image Alt Text</Label>
+        <Input value={section.image_alt || ''} onChange={e => onChange({ ...section, image_alt: e.target.value })} />
       </div>
       <div className="flex items-center gap-3">
         <Switch checked={section.is_centered} onCheckedChange={v => onChange({ ...section, is_centered: v })} />
@@ -233,6 +248,7 @@ export function PageSectionEditor() {
   const [saving, setSaving] = useState(false);
   const [pageEditOpen, setPageEditOpen] = useState(false);
   const [editPageData, setEditPageData] = useState<Page | null>(null);
+  const [mediaLibraryOpen, setMediaLibraryOpen] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -362,6 +378,9 @@ export function PageSectionEditor() {
                 <LayoutTemplate className="h-4 w-4" />Sections
               </h3>
               <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => setMediaLibraryOpen(true)} className="gap-1">
+                  <FolderOpen className="h-3 w-3" />Media
+                </Button>
                 <Button size="sm" variant="outline" onClick={() => { setEditPageData(currentPage); setPageEditOpen(true); }}>
                   <Edit className="h-3 w-3 mr-1" />Page Settings
                 </Button>
@@ -493,6 +512,9 @@ export function PageSectionEditor() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Media Library Dialog */}
+      <MediaLibrary open={mediaLibraryOpen} onOpenChange={setMediaLibraryOpen} mode="browse" />
     </div>
   );
 }

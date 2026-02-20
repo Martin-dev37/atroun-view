@@ -6,6 +6,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GeometricBackground } from "@/components/ui/geometric-background";
 import { AvocadoCursor } from "@/components/ui/avocado-cursor";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { useTheme } from "@/hooks/useTheme";
+
+function ThemeProvider({ children }: { children: React.ReactNode }) {
+  useTheme();
+  return <>{children}</>;
+}
 
 // Public pages
 import Index from "./pages/Index";
@@ -38,37 +44,39 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
-        <Routes>
-          {/* Public website routes */}
-          <Route path="/" element={<><GeometricBackground /><AvocadoCursor /><Index /><ChatWidget /></>} />
-          <Route path="/about" element={<><GeometricBackground /><AvocadoCursor /><About /><ChatWidget /></>} />
-          <Route path="/what-we-do" element={<><GeometricBackground /><AvocadoCursor /><WhatWeDo /><ChatWidget /></>} />
-          <Route path="/technology" element={<><GeometricBackground /><AvocadoCursor /><Technology /><ChatWidget /></>} />
-          <Route path="/markets" element={<><GeometricBackground /><AvocadoCursor /><Markets /><ChatWidget /></>} />
-          <Route path="/sustainability" element={<><GeometricBackground /><AvocadoCursor /><Sustainability /><ChatWidget /></>} />
-          <Route path="/investors" element={<><GeometricBackground /><AvocadoCursor /><Investors /><ChatWidget /></>} />
-          <Route path="/contact" element={<><GeometricBackground /><AvocadoCursor /><Contact /><ChatWidget /></>} />
+        <ThemeProvider>
+          <Routes>
+            {/* Public website routes */}
+            <Route path="/" element={<><GeometricBackground /><AvocadoCursor /><Index /><ChatWidget /></>} />
+            <Route path="/about" element={<><GeometricBackground /><AvocadoCursor /><About /><ChatWidget /></>} />
+            <Route path="/what-we-do" element={<><GeometricBackground /><AvocadoCursor /><WhatWeDo /><ChatWidget /></>} />
+            <Route path="/technology" element={<><GeometricBackground /><AvocadoCursor /><Technology /><ChatWidget /></>} />
+            <Route path="/markets" element={<><GeometricBackground /><AvocadoCursor /><Markets /><ChatWidget /></>} />
+            <Route path="/sustainability" element={<><GeometricBackground /><AvocadoCursor /><Sustainability /><ChatWidget /></>} />
+            <Route path="/investors" element={<><GeometricBackground /><AvocadoCursor /><Investors /><ChatWidget /></>} />
+            <Route path="/contact" element={<><GeometricBackground /><AvocadoCursor /><Contact /><ChatWidget /></>} />
 
-          {/* Admin routes */}
-          <Route path="/admin/login" element={<><AdminLogin /><ChatWidget /></>} />
-          <Route path="/admin" element={<><AdminOverview /><ChatWidget /></>} />
-          <Route path="/admin/users" element={<><UsersPage /><ChatWidget /></>} />
-          <Route path="/admin/contacts" element={<><ContactsPage /><ChatWidget /></>} />
-          <Route path="/admin/emails" element={<><EmailsPage /><ChatWidget /></>} />
-          <Route path="/admin/content" element={<><ContentPage /><ChatWidget /></>} />
-          <Route path="/admin/settings" element={<><SettingsPage /><ChatWidget /></>} />
-          <Route path="/admin/portal/investor" element={<><InvestorPortal /><ChatWidget /></>} />
-          <Route path="/admin/portal/financial-projections" element={<><FinancialProjections /><ChatWidget /></>} />
-          <Route path="/admin/portal/impact-metrics" element={<><ImpactMetricsPage /><ChatWidget /></>} />
-          <Route path="/admin/portal/reports" element={
-            <><DocumentSectionPage section="reports" title="Reports" description="Company reports and publications" portalKey="reports" icon={FileText} /><ChatWidget /></>
-          } />
-          <Route path="/admin/portal/data-room" element={
-            <><DocumentSectionPage section="data_room" title="Data Room" description="Confidential due diligence documents" portalKey="data_room" icon={FolderLock} /><ChatWidget /></>
-          } />
+            {/* Admin routes */}
+            <Route path="/admin/login" element={<><AdminLogin /><ChatWidget /></>} />
+            <Route path="/admin" element={<><AdminOverview /><ChatWidget /></>} />
+            <Route path="/admin/users" element={<><UsersPage /><ChatWidget /></>} />
+            <Route path="/admin/contacts" element={<><ContactsPage /><ChatWidget /></>} />
+            <Route path="/admin/emails" element={<><EmailsPage /><ChatWidget /></>} />
+            <Route path="/admin/content" element={<><ContentPage /><ChatWidget /></>} />
+            <Route path="/admin/settings" element={<><SettingsPage /><ChatWidget /></>} />
+            <Route path="/admin/portal/investor" element={<><InvestorPortal /><ChatWidget /></>} />
+            <Route path="/admin/portal/financial-projections" element={<><FinancialProjections /><ChatWidget /></>} />
+            <Route path="/admin/portal/impact-metrics" element={<><ImpactMetricsPage /><ChatWidget /></>} />
+            <Route path="/admin/portal/reports" element={
+              <><DocumentSectionPage section="reports" title="Reports" description="Company reports and publications" portalKey="reports" icon={FileText} /><ChatWidget /></>
+            } />
+            <Route path="/admin/portal/data-room" element={
+              <><DocumentSectionPage section="data_room" title="Data Room" description="Confidential due diligence documents" portalKey="data_room" icon={FolderLock} /><ChatWidget /></>
+            } />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ThemeProvider>
       </BrowserRouter>
       <Toaster />
       <Sonner />
