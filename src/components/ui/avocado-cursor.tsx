@@ -63,7 +63,7 @@ export const AvocadoCursor = () => {
     <div
       ref={cursorRef}
       className="pointer-events-none fixed z-[9999]"
-      style={{ display: 'none', transform: 'translate(-20%, -10%) rotate(-35deg) scale(1)', willChange: 'left, top, transform' }}
+      style={{ display: 'none', transform: 'translate(-20%, -10%) rotate(-35deg) scale(1)' }}
     >
       <svg
         width="18"
