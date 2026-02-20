@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, Loader2, Trash2, Volume2, VolumeX, Globe, Mic, MicOff } from 'lucide-react';
+import { X, Send, Loader2, Trash2, Volume2, VolumeX, Globe, Mic, MicOff, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -16,6 +16,7 @@ type Message = {
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/company-chat`;
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -267,7 +268,7 @@ export function ChatWidget() {
       }} transition={{
         duration: 0.2,
         ease: "easeOut"
-      }} className={cn("fixed bottom-32 right-4 z-50 w-[380px] max-w-[calc(100vw-2rem)]", "bg-background border border-border rounded-xl shadow-2xl", "flex flex-col overflow-hidden h-[450px]")}>
+      }} className={cn("fixed bottom-32 right-4 z-50 w-[380px] max-w-[calc(100vw-2rem)]", "bg-background border border-border rounded-xl shadow-2xl", "flex flex-col overflow-hidden", isMinimized ? "h-auto" : "h-[450px]")}>
             {/* Header */}
             <div className="bg-primary text-primary-foreground p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -301,13 +302,17 @@ export function ChatWidget() {
                 {messages.length > 0 && <button onClick={handleClearHistory} className="p-1.5 hover:bg-primary-foreground/20 rounded-full transition-colors" aria-label="Clear chat history" title="Clear history">
                     <Trash2 className="w-4 h-4" />
                   </button>}
-                <button onClick={() => setIsOpen(false)} className="p-1.5 hover:bg-primary-foreground/20 rounded-full transition-colors" aria-label="Close chat">
+                <button onClick={() => setIsMinimized(!isMinimized)} className="p-1.5 hover:bg-primary-foreground/20 rounded-full transition-colors" aria-label={isMinimized ? "Expand chat" : "Minimize chat"} title={isMinimized ? "Expand" : "Minimize"}>
+                  <Minus className="w-5 h-5" />
+                </button>
+                <button onClick={() => { setIsOpen(false); setIsMinimized(false); }} className="p-1.5 hover:bg-primary-foreground/20 rounded-full transition-colors" aria-label="Close chat">
                   <X className="w-5 h-5" />
                 </button>
               </div>
             </div>
 
             {/* Messages */}
+            {!isMinimized && <>
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {isLoadingHistory ? <div className="text-center py-6">
                   <Loader2 className="w-6 h-6 animate-spin mx-auto text-muted-foreground" />
@@ -370,6 +375,7 @@ export function ChatWidget() {
                 </Button>
               </div>
             </div>
+            </>}
           </motion.div>}
       </AnimatePresence>
     </>;
