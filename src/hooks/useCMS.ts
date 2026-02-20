@@ -293,7 +293,7 @@ export function useSustainabilityPillars() {
 export function useImpactMetrics() {
   return useQuery({
     queryKey: ['cms_impact_metrics'],
-    queryFn: () => fetchCMSTable<ImpactMetric>('impact_metrics', {
+    queryFn: () => fetchCMSTable<ImpactMetric>('cms_impact_metrics', {
       eq: [['is_active', true]],
       orderBy: ['display_order', { ascending: true }],
     }) as Promise<ImpactMetric[]>,
