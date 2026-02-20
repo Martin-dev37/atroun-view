@@ -25,6 +25,7 @@ import UsersPage from "./pages/admin/Users";
 import ContactsPage from "./pages/admin/Contacts";
 import EmailsPage from "./pages/admin/Emails";
 import ContentPage from "./pages/admin/Content";
+import SettingsPage from "./pages/admin/Settings";
 import InvestorPortal from "./pages/admin/portal/InvestorPortal";
 import FinancialProjections from "./pages/admin/portal/FinancialProjections";
 import ImpactMetricsPage from "./pages/admin/portal/ImpactMetrics";
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/admin/contacts" element={<ContactsPage />} />
           <Route path="/admin/emails" element={<EmailsPage />} />
           <Route path="/admin/content" element={<ContentPage />} />
+          <Route path="/admin/settings" element={<SettingsPage />} />
           <Route path="/admin/portal/investor" element={<InvestorPortal />} />
           <Route path="/admin/portal/financial-projections" element={<FinancialProjections />} />
           <Route path="/admin/portal/impact-metrics" element={<ImpactMetricsPage />} />
