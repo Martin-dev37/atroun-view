@@ -4,9 +4,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Globe, Layout, Eye, Settings } from 'lucide-react';
+import { Globe, Layout, Palette } from 'lucide-react';
 import { WebsiteEditor } from '@/components/admin/editors/WebsiteEditor';
 import { PortalEditor } from '@/components/admin/editors/PortalEditor';
+import { ThemeEditor } from '@/components/admin/editors/ThemeEditor';
 
 export default function ContentPage() {
   const { isAdmin } = useAuth();
@@ -22,16 +23,22 @@ export default function ContentPage() {
         </div>
 
         <Tabs defaultValue="website">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
+          <TabsList className="grid w-full max-w-lg grid-cols-3">
             <TabsTrigger value="website" className="flex items-center gap-2">
-              <Globe className="h-4 w-4" />Website Pages
+              <Globe className="h-4 w-4" />Pages & Content
+            </TabsTrigger>
+            <TabsTrigger value="theme" className="flex items-center gap-2">
+              <Palette className="h-4 w-4" />Theme
             </TabsTrigger>
             <TabsTrigger value="portal" className="flex items-center gap-2">
-              <Layout className="h-4 w-4" />Portal Sections
+              <Layout className="h-4 w-4" />Portal
             </TabsTrigger>
           </TabsList>
           <TabsContent value="website" className="mt-6">
             <WebsiteEditor />
+          </TabsContent>
+          <TabsContent value="theme" className="mt-6">
+            <ThemeEditor />
           </TabsContent>
           <TabsContent value="portal" className="mt-6">
             <PortalEditor />
