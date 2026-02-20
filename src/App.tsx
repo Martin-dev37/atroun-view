@@ -50,21 +50,21 @@ const App = () => (
           <Route path="/contact" element={<><GeometricBackground /><AvocadoCursor /><Contact /><ChatWidget /></>} />
 
           {/* Admin routes */}
-          <Route path="/admin/login" element={<><AvocadoCursor /><AdminLogin /></>} />
-          <Route path="/admin" element={<AdminOverview />} />
-          <Route path="/admin/users" element={<UsersPage />} />
-          <Route path="/admin/contacts" element={<ContactsPage />} />
-          <Route path="/admin/emails" element={<EmailsPage />} />
-          <Route path="/admin/content" element={<ContentPage />} />
-          <Route path="/admin/settings" element={<SettingsPage />} />
-          <Route path="/admin/portal/investor" element={<InvestorPortal />} />
-          <Route path="/admin/portal/financial-projections" element={<FinancialProjections />} />
-          <Route path="/admin/portal/impact-metrics" element={<ImpactMetricsPage />} />
+          <Route path="/admin/login" element={<><AdminLogin /><ChatWidget /></>} />
+          <Route path="/admin" element={<><AdminOverview /><ChatWidget /></>} />
+          <Route path="/admin/users" element={<><UsersPage /><ChatWidget /></>} />
+          <Route path="/admin/contacts" element={<><ContactsPage /><ChatWidget /></>} />
+          <Route path="/admin/emails" element={<><EmailsPage /><ChatWidget /></>} />
+          <Route path="/admin/content" element={<><ContentPage /><ChatWidget /></>} />
+          <Route path="/admin/settings" element={<><SettingsPage /><ChatWidget /></>} />
+          <Route path="/admin/portal/investor" element={<><InvestorPortal /><ChatWidget /></>} />
+          <Route path="/admin/portal/financial-projections" element={<><FinancialProjections /><ChatWidget /></>} />
+          <Route path="/admin/portal/impact-metrics" element={<><ImpactMetricsPage /><ChatWidget /></>} />
           <Route path="/admin/portal/reports" element={
-            <DocumentSectionPage section="reports" title="Reports" description="Company reports and publications" portalKey="reports" icon={FileText} />
+            <><DocumentSectionPage section="reports" title="Reports" description="Company reports and publications" portalKey="reports" icon={FileText} /><ChatWidget /></>
           } />
           <Route path="/admin/portal/data-room" element={
-            <DocumentSectionPage section="data_room" title="Data Room" description="Confidential due diligence documents" portalKey="data_room" icon={FolderLock} />
+            <><DocumentSectionPage section="data_room" title="Data Room" description="Confidential due diligence documents" portalKey="data_room" icon={FolderLock} /><ChatWidget /></>
           } />
 
           <Route path="*" element={<NotFound />} />
