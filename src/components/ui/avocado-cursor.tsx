@@ -1,28 +1,21 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const AvocadoCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
-  const posRef = useRef({ x: 0, y: 0 });
   const stateRef = useRef({ hovering: false, textInput: false, visible: false });
-
-  const applyStyle = useCallback(() => {
-    const el = cursorRef.current;
-    if (!el) return;
-    const { x, y } = posRef.current;
-    const { hovering, textInput, visible } = stateRef.current;
-    el.style.display = visible && !textInput ? '' : 'none';
-    el.style.left = `${x}px`;
-    el.style.top = `${y}px`;
-    const scale = hovering ? 1.2 : 1;
-    el.style.transform = `translate(-20%, -10%) rotate(-35deg) scale(${scale})`;
-  }, []);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      posRef.current.x = e.clientX;
-      posRef.current.y = e.clientY;
-      if (!stateRef.current.visible) stateRef.current.visible = true;
+      const el = cursorRef.current;
+      if (!el) return;
+
+      el.style.left = `${e.clientX}px`;
+      el.style.top = `${e.clientY}px`;
+
+      if (!stateRef.current.visible) {
+        stateRef.current.visible = true;
+        el.style.display = '';
+      }
 
       const target = e.target as HTMLElement;
       const tag = target.tagName;
@@ -30,19 +23,30 @@ export const AvocadoCursor = () => {
         tag === 'H1' || tag === 'H2' || tag === 'H3' || tag === 'H4' || tag === 'H5' || tag === 'H6' ||
         tag === 'LI' || tag === 'TD' || tag === 'TH' || tag === 'LABEL' ||
         target.isContentEditable || !!target.closest('[contenteditable="true"]');
-      stateRef.current.textInput = isText;
 
       const isInteractive = tag === 'BUTTON' || tag === 'A' ||
         !!target.closest('button') || !!target.closest('a') ||
         target.classList.contains('cursor-pointer') || !!target.closest('[role="button"]');
-      stateRef.current.hovering = isInteractive && !isText;
+      const hovering = isInteractive && !isText;
 
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(applyStyle);
+      if (isText !== stateRef.current.textInput) {
+        stateRef.current.textInput = isText;
+        el.style.display = isText ? 'none' : '';
+      }
+      if (hovering !== stateRef.current.hovering) {
+        stateRef.current.hovering = hovering;
+        el.style.transform = `translate(-20%, -10%) rotate(-35deg) scale(${hovering ? 1.2 : 1})`;
+      }
     };
 
-    const onEnter = () => { stateRef.current.visible = true; requestAnimationFrame(applyStyle); };
-    const onLeave = () => { stateRef.current.visible = false; requestAnimationFrame(applyStyle); };
+    const onEnter = () => {
+      stateRef.current.visible = true;
+      if (cursorRef.current && !stateRef.current.textInput) cursorRef.current.style.display = '';
+    };
+    const onLeave = () => {
+      stateRef.current.visible = false;
+      if (cursorRef.current) cursorRef.current.style.display = 'none';
+    };
 
     document.addEventListener('mousemove', onMove, { passive: true });
     document.addEventListener('mouseenter', onEnter);
@@ -52,15 +56,14 @@ export const AvocadoCursor = () => {
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseenter', onEnter);
       document.removeEventListener('mouseleave', onLeave);
-      cancelAnimationFrame(rafRef.current);
     };
-  }, [applyStyle]);
+  }, []);
 
   return (
     <div
       ref={cursorRef}
       className="pointer-events-none fixed z-[9999]"
-      style={{ display: 'none', willChange: 'left, top, transform' }}
+      style={{ display: 'none', transform: 'translate(-20%, -10%) rotate(-35deg) scale(1)', willChange: 'left, top, transform' }}
     >
       <svg
         width="18"
