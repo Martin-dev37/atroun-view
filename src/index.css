@@ -129,19 +129,24 @@
 @layer base {
   * {
     @apply border-border;
+  }
+
+  /* Custom cursor only on public pages (where AvocadoCursor is rendered) */
+  body:has(.avocado-cursor) * {
     cursor: none !important;
   }
 
-  input,
-  textarea,
-  [contenteditable="true"],
-  p,
-  span,
-  h1, h2, h3, h4, h5, h6,
-  li,
-  td, th,
-  label,
-  ::selection {
+  body:has(.avocado-cursor) input,
+  body:has(.avocado-cursor) textarea,
+  body:has(.avocado-cursor) [contenteditable="true"],
+  body:has(.avocado-cursor) p,
+  body:has(.avocado-cursor) span,
+  body:has(.avocado-cursor) h1, body:has(.avocado-cursor) h2, body:has(.avocado-cursor) h3,
+  body:has(.avocado-cursor) h4, body:has(.avocado-cursor) h5, body:has(.avocado-cursor) h6,
+  body:has(.avocado-cursor) li,
+  body:has(.avocado-cursor) td, body:has(.avocado-cursor) th,
+  body:has(.avocado-cursor) label,
+  body:has(.avocado-cursor) ::selection {
     cursor: text !important;
   }
 
