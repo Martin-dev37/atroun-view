@@ -1,4 +1,8 @@
-project_id = "vlenbnbtzalmvlpmmwts"
+project_id = "jvaqwejpgklzwkihzlcf"
 
 [functions.company-chat]
 verify_jwt = false
+
+[functions.investor-chat]
+verify_jwt = false
+
