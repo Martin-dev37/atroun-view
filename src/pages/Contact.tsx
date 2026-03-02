@@ -86,13 +86,15 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert({
+      const { data: result, error } = await supabase.functions.invoke('contact-notify', {
+        body: {
           name: data.name,
           email: data.email,
           message: data.message,
-        });
+          subject: data.subject || '',
+          phone: data.phone || '',
+        },
+      });
 
       if (error) {
         console.error('Submission error:', error);
