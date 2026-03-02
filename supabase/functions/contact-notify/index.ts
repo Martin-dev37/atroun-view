@@ -57,26 +57,44 @@ Deno.serve(async (req) => {
       });
     }
 
-    // 3. Send notification email via Lovable AI edge function proxy
-    // Using a simple fetch to an external email service or logging
-    // For now, we send via Supabase's built-in SMTP if configured,
-    // otherwise log the notification
-    const notificationBody = `
-New Contact Form Submission
+    // 3. Send notification email via Resend
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (resendApiKey) {
+      const emailHtml = `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ""}
+        ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ""}
+        <hr />
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, "<br/>")}</p>
+        <hr />
+        <p style="color:#999;font-size:12px;">Submitted at ${new Date().toISOString()}</p>
+      `;
 
-Name: ${name}
-Email: ${email}
-${subject ? `Subject: ${subject}` : ""}
-${phone ? `Phone: ${phone}` : ""}
+      const resendRes = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "ATROUN Contact Form <onboarding@resend.dev>",
+          to: ["atroun.bd@gmail.com"],
+          subject: `New Contact: ${subject || name}`,
+          html: emailHtml,
+          reply_to: email,
+        }),
+      });
 
-Message:
-${message}
-
----
-Submitted at: ${new Date().toISOString()}
-    `.trim();
-
-    console.log(`📧 Notification for atroun.bd@gmail.com:\\n${notificationBody}`);
+      if (!resendRes.ok) {
+        const errText = await resendRes.text();
+        console.error("Resend error:", errText);
+      } else {
+        console.log("✅ Notification email sent to atroun.bd@gmail.com");
+      }
+    }
 
     return new Response(
       JSON.stringify({ success: true }),
