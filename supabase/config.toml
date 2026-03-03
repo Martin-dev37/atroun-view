@@ -6,3 +6,9 @@ verify_jwt = false
 [functions.investor-chat]
 verify_jwt = false
 
+[functions.contact-notify]
+verify_jwt = false
+
+[functions.manage-users]
+verify_jwt = false
+

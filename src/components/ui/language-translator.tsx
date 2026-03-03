@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Globe } from 'lucide-react';
 import {
   DropdownMenu,
@@ -35,20 +35,16 @@ function setGoogleTranslateCookie(lang: string) {
   document.cookie = `googtrans=/en/${lang}; path=/`;
 }
 
+function getTranslateSelect(): HTMLSelectElement | null {
+  return document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
+}
+
 export function LanguageTranslator() {
   const [currentLang, setCurrentLang] = useState(() => getGoogleTranslateCookie());
-  const [isReady, setIsReady] = useState(false);
+  const observerRef = useRef<MutationObserver | null>(null);
 
+  // Ensure hidden container exists for the widget
   useEffect(() => {
-    // Don't re-init if the widget already exists
-    if (document.querySelector('.goog-te-combo')) {
-      setIsReady(true);
-      return;
-    }
-
-    if (document.getElementById('google-translate-script')) return;
-
-    // Create hidden container for the widget
     let container = document.getElementById('google_translate_element');
     if (!container) {
       container = document.createElement('div');
@@ -56,61 +52,66 @@ export function LanguageTranslator() {
       container.style.display = 'none';
       document.body.appendChild(container);
     }
-
-    window.googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: 'en',
-          includedLanguages: 'en,fr,es,de,pt,ru',
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false,
-        },
-        'google_translate_element'
-      );
-      setIsReady(true);
+    return () => {
+      observerRef.current?.disconnect();
     };
-
-    const script = document.createElement('script');
-    script.id = 'google-translate-script';
-    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    script.async = true;
-    document.body.appendChild(script);
   }, []);
+
+  const triggerTranslate = useCallback((langCode: string) => {
+    const select = getTranslateSelect();
+    if (select) {
+      select.value = langCode;
+      select.dispatchEvent(new Event('change'));
+      return true;
+    }
+    return false;
+  }, []);
+
+  const waitForSelectAndTranslate = useCallback((langCode: string) => {
+    // Try immediately first
+    if (triggerTranslate(langCode)) return;
+
+    // Use MutationObserver to detect when the select appears
+    observerRef.current?.disconnect();
+    const observer = new MutationObserver(() => {
+      if (triggerTranslate(langCode)) {
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    observerRef.current = observer;
+
+    // Safety timeout to clean up observer
+    setTimeout(() => observer.disconnect(), 5000);
+  }, [triggerTranslate]);
 
   const changeLanguage = useCallback((langCode: string) => {
     setCurrentLang(langCode);
-    setGoogleTranslateCookie(langCode);
-
-    // Attempt to use the hidden select
-    const tryChange = (attempts = 0) => {
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-      if (select) {
-        select.value = langCode;
-        select.dispatchEvent(new Event('change'));
-        return;
-      }
-      if (attempts < 10) {
-        setTimeout(() => tryChange(attempts + 1), 300);
-      }
-    };
 
     if (langCode === 'en') {
-      // Reset to English: clear cookie and reload to remove translation frame
+      // Clear cookies and restore original
       document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
       document.cookie = `googtrans=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
-      // Try the widget first; if it doesn't work, a reload will reset it
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-      if (select) {
-        select.value = 'en';
-        select.dispatchEvent(new Event('change'));
-      } else {
+
+      // Try using the widget's built-in restore
+      const banner = document.querySelector('.goog-te-banner-frame') as HTMLIFrameElement;
+      if (banner?.contentDocument) {
+        const restoreBtn = banner.contentDocument.querySelector('.goog-te-banner-frame-content button');
+        if (restoreBtn) {
+          (restoreBtn as HTMLElement).click();
+          return;
+        }
+      }
+      // Fallback: trigger select to 'en' or reload
+      if (!triggerTranslate('en')) {
         window.location.reload();
       }
       return;
     }
 
-    tryChange();
-  }, []);
+    setGoogleTranslateCookie(langCode);
+    waitForSelectAndTranslate(langCode);
+  }, [triggerTranslate, waitForSelectAndTranslate]);
 
   const currentLanguage = LANGUAGES.find(l => l.code === currentLang) || LANGUAGES[0];
 
