@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 
 import heroImage from '@/assets/hero-contact.jpg';
-import { supabase } from '@/integrations/supabase/client';
+
 import {
   useHeroSection,
   useContactInfo,
@@ -86,18 +86,27 @@ const Contact = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      const { data: result, error } = await supabase.functions.invoke('contact-notify', {
-        body: {
-          name: data.name,
-          email: data.email,
-          message: data.message,
-          subject: data.subject || '',
-          phone: data.phone || '',
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/contact-notify`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            message: data.message,
+            subject: data.subject || '',
+            phone: data.phone || '',
+          }),
+        }
+      );
 
-      if (error) {
-        console.error('Submission error:', error);
+      if (!response.ok) {
+        const errBody = await response.text();
+        console.error('Contact notify error:', response.status, errBody);
         throw new Error('Failed to send your message. Please try again.');
       }
 
