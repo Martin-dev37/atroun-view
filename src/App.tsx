@@ -5,11 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GeometricBackground } from "@/components/ui/geometric-background";
 import { AvocadoCursor } from "@/components/ui/avocado-cursor";
-import { ChatWidget } from "@/components/chat/ChatWidget";
-import { useTheme } from "@/hooks/useTheme";
-import { PageGuard } from "@/components/layout/PageGuard";
-import { ChatWidget } from "@/components/chat/ChatWidget";
-import { useTheme } from "@/hooks/useTheme";
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   useTheme();
