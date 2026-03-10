@@ -86,32 +86,18 @@ export function LanguageTranslator() {
   }, [triggerTranslate]);
 
   const changeLanguage = useCallback((langCode: string) => {
-    setCurrentLang(langCode);
+    if (langCode === currentLang) return;
 
     if (langCode === 'en') {
-      // Clear cookies and restore original
       document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC';
       document.cookie = `googtrans=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
-
-      // Try using the widget's built-in restore
-      const banner = document.querySelector('.goog-te-banner-frame') as HTMLIFrameElement;
-      if (banner?.contentDocument) {
-        const restoreBtn = banner.contentDocument.querySelector('.goog-te-banner-frame-content button');
-        if (restoreBtn) {
-          (restoreBtn as HTMLElement).click();
-          return;
-        }
-      }
-      // Fallback: trigger select to 'en' or reload
-      if (!triggerTranslate('en')) {
-        window.location.reload();
-      }
-      return;
+    } else {
+      setGoogleTranslateCookie(langCode);
     }
 
-    setGoogleTranslateCookie(langCode);
-    waitForSelectAndTranslate(langCode);
-  }, [triggerTranslate, waitForSelectAndTranslate]);
+    // Reload to apply the new language cleanly
+    window.location.reload();
+  }, [currentLang]);
 
   const currentLanguage = LANGUAGES.find(l => l.code === currentLang) || LANGUAGES[0];
 
