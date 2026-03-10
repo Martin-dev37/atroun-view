@@ -1,24 +1,32 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageTranslator } from '@/components/ui/language-translator';
+import { usePublishedPages } from '@/hooks/useCMS';
 import logo from '@/assets/atroun-logo.png';
 
-const pages = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'What We Do', href: '/what-we-do' },
-  { name: 'Technology', href: '/technology' },
-  { name: 'Markets', href: '/markets' },
-  { name: 'Sustainability', href: '/sustainability' },
-  { name: 'Investors', href: '/investors' },
-  { name: 'Contact', href: '/contact' },
+const allPages = [
+  { name: 'Home', href: '/', slug: 'home' },
+  { name: 'About', href: '/about', slug: 'about' },
+  { name: 'What We Do', href: '/what-we-do', slug: 'what-we-do' },
+  { name: 'Technology', href: '/technology', slug: 'technology' },
+  { name: 'Markets', href: '/markets', slug: 'markets' },
+  { name: 'Sustainability', href: '/sustainability', slug: 'sustainability' },
+  { name: 'Investors', href: '/investors', slug: 'investors' },
+  { name: 'Contact', href: '/contact', slug: 'contact' },
 ];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { data: publishedPages } = usePublishedPages();
+
+  const pages = useMemo(() => {
+    if (!publishedPages) return allPages; // Show all while loading
+    const publishedSlugs = new Set(publishedPages.map(p => p.slug));
+    return allPages.filter(page => publishedSlugs.has(page.slug));
+  }, [publishedPages]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">

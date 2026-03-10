@@ -7,6 +7,7 @@ import { GeometricBackground } from "@/components/ui/geometric-background";
 import { AvocadoCursor } from "@/components/ui/avocado-cursor";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { useTheme } from "@/hooks/useTheme";
+import { PageGuard } from "@/components/layout/PageGuard";
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   useTheme();
@@ -48,13 +49,13 @@ const App = () => (
           <Routes>
             {/* Public website routes */}
             <Route path="/" element={<><GeometricBackground /><AvocadoCursor /><Index /><ChatWidget /></>} />
-            <Route path="/about" element={<><GeometricBackground /><AvocadoCursor /><About /><ChatWidget /></>} />
-            <Route path="/what-we-do" element={<><GeometricBackground /><AvocadoCursor /><WhatWeDo /><ChatWidget /></>} />
-            <Route path="/technology" element={<><GeometricBackground /><AvocadoCursor /><Technology /><ChatWidget /></>} />
-            <Route path="/markets" element={<><GeometricBackground /><AvocadoCursor /><Markets /><ChatWidget /></>} />
-            <Route path="/sustainability" element={<><GeometricBackground /><AvocadoCursor /><Sustainability /><ChatWidget /></>} />
-            <Route path="/investors" element={<><GeometricBackground /><AvocadoCursor /><Investors /><ChatWidget /></>} />
-            <Route path="/contact" element={<><GeometricBackground /><AvocadoCursor /><Contact /><ChatWidget /></>} />
+            <Route path="/about" element={<PageGuard slug="about"><GeometricBackground /><AvocadoCursor /><About /><ChatWidget /></PageGuard>} />
+            <Route path="/what-we-do" element={<PageGuard slug="what-we-do"><GeometricBackground /><AvocadoCursor /><WhatWeDo /><ChatWidget /></PageGuard>} />
+            <Route path="/technology" element={<PageGuard slug="technology"><GeometricBackground /><AvocadoCursor /><Technology /><ChatWidget /></PageGuard>} />
+            <Route path="/markets" element={<PageGuard slug="markets"><GeometricBackground /><AvocadoCursor /><Markets /><ChatWidget /></PageGuard>} />
+            <Route path="/sustainability" element={<PageGuard slug="sustainability"><GeometricBackground /><AvocadoCursor /><Sustainability /><ChatWidget /></PageGuard>} />
+            <Route path="/investors" element={<PageGuard slug="investors"><GeometricBackground /><AvocadoCursor /><Investors /><ChatWidget /></PageGuard>} />
+            <Route path="/contact" element={<PageGuard slug="contact"><GeometricBackground /><AvocadoCursor /><Contact /><ChatWidget /></PageGuard>} />
 
             {/* Admin routes */}
             <Route path="/admin/login" element={<><AdminLogin /><ChatWidget /></>} />

@@ -74,6 +74,15 @@ async function fetchCMSTable<T>(
 }
 
 // Page hooks
+export function usePublishedPages() {
+  return useQuery({
+    queryKey: ['cms_published_pages'],
+    queryFn: () => fetchCMSTable<Page>('pages', {
+      eq: [['is_published', true]],
+    }) as Promise<Page[]>,
+  });
+}
+
 export function usePage(slug: string) {
   return useQuery({
     queryKey: ['cms_page', slug],
