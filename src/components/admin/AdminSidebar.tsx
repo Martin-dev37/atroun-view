@@ -12,7 +12,7 @@ import {
 import {
   LayoutDashboard, Users, Mail, PhoneCall, Globe, Settings,
   TrendingUp, BarChart3, FileText, FolderLock, Briefcase,
-  LogOut, Shield, Image
+  LogOut, Shield, Image, DollarSign
 } from 'lucide-react';
 import atrounLogo from '@/assets/atroun-logo.png';
 import { cn } from '@/lib/utils';
@@ -30,6 +30,7 @@ const adminItems = [
   { label: 'Users', path: '/admin/users', icon: Users },
   { label: 'Contacts / CRM', path: '/admin/contacts', icon: PhoneCall },
   { label: 'Email Campaigns', path: '/admin/emails', icon: Mail },
+  { label: 'Finance', path: '/admin/finance', icon: DollarSign },
   { label: 'Content Editor', path: '/admin/content', icon: Globe },
 ];
 

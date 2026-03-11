@@ -33,6 +33,7 @@ import ContactsPage from "./pages/admin/Contacts";
 import EmailsPage from "./pages/admin/Emails";
 import ContentPage from "./pages/admin/Content";
 import SettingsPage from "./pages/admin/Settings";
+import FinancePage from "./pages/admin/Finance";
 import InvestorPortal from "./pages/admin/portal/InvestorPortal";
 import FinancialProjections from "./pages/admin/portal/FinancialProjections";
 import ImpactMetricsPage from "./pages/admin/portal/ImpactMetrics";
@@ -65,6 +66,7 @@ const App = () => (
             <Route path="/admin/emails" element={<><EmailsPage /><ChatWidget /></>} />
             <Route path="/admin/content" element={<><ContentPage /><ChatWidget /></>} />
             <Route path="/admin/settings" element={<><SettingsPage /><ChatWidget /></>} />
+            <Route path="/admin/finance" element={<><FinancePage /><ChatWidget /></>} />
             <Route path="/admin/portal/investor" element={<><InvestorPortal /><ChatWidget /></>} />
             <Route path="/admin/portal/financial-projections" element={<><FinancialProjections /><ChatWidget /></>} />
             <Route path="/admin/portal/impact-metrics" element={<><ImpactMetricsPage /><ChatWidget /></>} />
