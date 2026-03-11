@@ -13,6 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { UserPlus, Search, Edit, Trash2, Loader2, Phone, Mail, Building, Tag } from 'lucide-react';
+import { ContactImport } from '@/components/admin/ContactImport';
 
 interface Contact {
   id: string;
