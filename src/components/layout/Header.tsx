@@ -55,7 +55,6 @@ export function Header() {
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 lg:hidden">
-          <LanguageTranslator />
           <Button
             variant="ghost"
             size="icon"
