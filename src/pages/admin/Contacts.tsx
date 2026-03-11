@@ -13,6 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { UserPlus, Search, Edit, Trash2, Loader2, Phone, Mail, Building, Tag } from 'lucide-react';
+import { ContactImport } from '@/components/admin/ContactImport';
 
 interface Contact {
   id: string;
@@ -143,11 +144,13 @@ export default function ContactsPage() {
             <h1 className="text-3xl font-display font-semibold text-foreground">Contacts / CRM</h1>
             <p className="text-muted-foreground mt-1">Manage contacts and communication history</p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={() => setEditContact({ status: 'active', subscribed_to_emails: true })}>
-                <UserPlus className="h-4 w-4 mr-2" />Add Contact
-              </Button>
+          <div className="flex items-center gap-2">
+            <ContactImport onImportComplete={loadContacts} />
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={() => setEditContact({ status: 'active', subscribed_to_emails: true })}>
+                  <UserPlus className="h-4 w-4 mr-2" />Add Contact
+                </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader><DialogTitle>{editContact?.id ? 'Edit' : 'Add'} Contact</DialogTitle></DialogHeader>
@@ -181,7 +184,8 @@ export default function ContactsPage() {
                 </Button>
               </div>
             </DialogContent>
-          </Dialog>
+            </Dialog>
+          </div>
         </div>
 
         {/* Stats */}
