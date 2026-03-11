@@ -30,6 +30,7 @@ const adminItems = [
   { label: 'Users', path: '/admin/users', icon: Users },
   { label: 'Contacts / CRM', path: '/admin/contacts', icon: PhoneCall },
   { label: 'Email Campaigns', path: '/admin/emails', icon: Mail },
+  { label: 'Finance', path: '/admin/finance', icon: DollarSign },
   { label: 'Content Editor', path: '/admin/content', icon: Globe },
 ];
 

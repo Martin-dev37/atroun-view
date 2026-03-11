@@ -66,6 +66,7 @@ const App = () => (
             <Route path="/admin/emails" element={<><EmailsPage /><ChatWidget /></>} />
             <Route path="/admin/content" element={<><ContentPage /><ChatWidget /></>} />
             <Route path="/admin/settings" element={<><SettingsPage /><ChatWidget /></>} />
+            <Route path="/admin/finance" element={<><FinancePage /><ChatWidget /></>} />
             <Route path="/admin/portal/investor" element={<><InvestorPortal /><ChatWidget /></>} />
             <Route path="/admin/portal/financial-projections" element={<><FinancialProjections /><ChatWidget /></>} />
             <Route path="/admin/portal/impact-metrics" element={<><ImpactMetricsPage /><ChatWidget /></>} />
