@@ -12,7 +12,7 @@ import {
 import {
   LayoutDashboard, Users, Mail, PhoneCall, Globe, Settings,
   TrendingUp, BarChart3, FileText, FolderLock, Briefcase,
-  LogOut, Shield, Image
+  LogOut, Shield, Image, DollarSign
 } from 'lucide-react';
 import atrounLogo from '@/assets/atroun-logo.png';
 import { cn } from '@/lib/utils';
