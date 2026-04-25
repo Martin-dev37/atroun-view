@@ -28,7 +28,7 @@ const values = [
 const leadershipTeam = [
   {
     name: 'Martin M. Mwangi',
-    role: 'Founder',
+    role: 'Founder & Managing Director',
     bio: 'Martin Mwangi is the Founder of ATROUN BioDynamics, where he leads the development of East Africa\'s first integrated avocado biorefinery platform. With experience across project management, agri-processing innovation, and platform-based business development, his work focuses on converting underutilized agricultural resources into scalable, circular bioeconomy systems. Based in Uganda, Martin is building ATROUN with a long-term view toward value addition, climate resilience, and farmer-centered industrial growth.',
     image: martinMwangiPhoto,
   },
