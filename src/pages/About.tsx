@@ -3,6 +3,7 @@ import { Layout } from '@/components/layout/Layout';
 import { Section, SectionHeader } from '@/components/ui/section';
 import heroImage from '@/assets/hero-about-biorefinery.jpg';
 import martinMwangiPhoto from '@/assets/martin-mwangi.jpg';
+import edgarNdekeraPhoto from '@/assets/edgar-ndekera.jpg';
 import { User } from 'lucide-react';
 
 const values = [
@@ -37,9 +38,10 @@ const leadershipTeam = [
     bio: 'Responsible for the overall strategic direction, day-to-day operations, and execution of ATROUN\'s business plan. Works closely with the Founder to translate vision into operational reality, overseeing team leadership, investor relations, and ensuring alignment across all business functions to achieve sustainable growth and market expansion.',
   },
   {
-    name: 'Technical Director',
-    role: 'Processing & Quality',
-    bio: 'Oversees all processing operations, quality management systems, and technical development. Responsible for establishing and maintaining the rigorous standards required for international food and cosmetic ingredient markets.',
+    name: 'Edgar Ndekera Mbiri',
+    role: 'Chief Technical Officer',
+    bio: 'Edgar Ndekera Mbiri is a Food Scientist and Process Engineer with expertise in advanced food systems and sustainable processing technologies. He holds a First Class Bachelor\u2019s degree in Food Processing Technology, graduating top of both his class and university, and a Master of Food Technology (cum laude) from KU Leuven under the IUPFOOD programme. His research focuses on plant-based ingredient engineering, particularly the relationship between processing conditions, microstructure, and functionality. As CTO at ATROUN BioDynamics, Edgar leads technical development, oversees process optimization, and drives the transformation of agricultural biomass into high-value, scalable biorefinery products.',
+    image: edgarNdekeraPhoto,
   },
   {
     name: 'Operations Lead',
