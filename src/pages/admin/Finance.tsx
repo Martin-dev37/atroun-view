@@ -16,8 +16,12 @@ import { Textarea } from '@/components/ui/textarea';
 import {
   DollarSign, TrendingUp, TrendingDown, ArrowUpDown, Search,
   Plus, Loader2, CreditCard, Send, Filter, Calendar,
-  ArrowUpRight, ArrowDownRight, Wallet, Building2
+  ArrowUpRight, ArrowDownRight, Wallet, Building2, BarChart3
 } from 'lucide-react';
+import {
+  AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
+} from 'recharts';
 
 interface Transaction {
   id: string;
