@@ -93,6 +93,51 @@ export default function FinancePage() {
   const pendingPayments = payments.filter(p => ['pending', 'approved', 'processing'].includes(p.status)).reduce((s, p) => s + Number(p.amount), 0);
   const netBalance = totalIncome - totalExpenses;
 
+  // Chart data: monthly income vs expenses (last 12 months)
+  const monthlyData = (() => {
+    const buckets: Record<string, { month: string; income: number; expense: number; net: number; sortKey: string }> = {};
+    const now = new Date();
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      buckets[key] = {
+        month: d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }),
+        income: 0,
+        expense: 0,
+        net: 0,
+        sortKey: key,
+      };
+    }
+    transactions.forEach(t => {
+      if (t.status !== 'completed') return;
+      const d = new Date(t.transaction_date);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      if (!buckets[key]) return;
+      const amt = Number(t.amount);
+      if (t.type === 'income') buckets[key].income += amt;
+      else if (t.type === 'expense' || t.type === 'payment') buckets[key].expense += amt;
+    });
+    return Object.values(buckets)
+      .sort((a, b) => a.sortKey.localeCompare(b.sortKey))
+      .map(b => ({ ...b, net: b.income - b.expense }));
+  })();
+
+  // Category breakdown (expenses only)
+  const categoryData = (() => {
+    const totals: Record<string, number> = {};
+    transactions
+      .filter(t => (t.type === 'expense' || t.type === 'payment') && t.status === 'completed')
+      .forEach(t => {
+        totals[t.category] = (totals[t.category] ?? 0) + Number(t.amount);
+      });
+    return Object.entries(totals)
+      .map(([name, value]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), value }))
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 6);
+  })();
+
+  const PIE_COLORS = ['hsl(var(--primary))', 'hsl(var(--accent))', 'hsl(var(--destructive))', 'hsl(var(--secondary))', 'hsl(var(--muted-foreground))', 'hsl(var(--ring))'];
+
   // Save transaction
   async function handleSaveTx() {
     if (!editTx?.description || !editTx?.amount) return;
