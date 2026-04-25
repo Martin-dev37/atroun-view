@@ -150,6 +150,28 @@
     cursor: text !important;
   }
 
+  /* Admin routes: always force native pointer cursor (no avocado cursor) */
+  body.admin-route,
+  body.admin-route * {
+    cursor: auto !important;
+  }
+  body.admin-route a,
+  body.admin-route button,
+  body.admin-route [role="button"],
+  body.admin-route .cursor-pointer,
+  body.admin-route summary,
+  body.admin-route select {
+    cursor: pointer !important;
+  }
+  body.admin-route input,
+  body.admin-route textarea,
+  body.admin-route [contenteditable="true"] {
+    cursor: text !important;
+  }
+  body.admin-route .avocado-cursor {
+    display: none !important;
+  }
+
   html {
     scroll-behavior: smooth;
   }
