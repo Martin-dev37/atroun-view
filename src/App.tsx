@@ -8,6 +8,7 @@ import { AvocadoCursor } from "@/components/ui/avocado-cursor";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { useTheme } from "@/hooks/useTheme";
 import { PageGuard } from "@/components/layout/PageGuard";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   useTheme();
@@ -47,6 +48,7 @@ const App = () => (
     <TooltipProvider>
       <BrowserRouter>
         <ThemeProvider>
+          <ScrollToTop />
           <Routes>
             {/* Public website routes */}
             <Route path="/" element={<><GeometricBackground /><AvocadoCursor /><Index /><ChatWidget /></>} />
