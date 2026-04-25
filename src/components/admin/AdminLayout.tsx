@@ -15,6 +15,14 @@ export function AdminLayout({ children, requireAdmin = false, requiredPortalSect
   const { user, isAdmin, loading } = useAuth();
   const navigate = useNavigate();
 
+  // Ensure native pointer cursor on admin routes (no avocado cursor)
+  useEffect(() => {
+    document.body.classList.add('admin-route');
+    return () => {
+      document.body.classList.remove('admin-route');
+    };
+  }, []);
+
   useEffect(() => {
     if (!loading) {
       if (!user) {
