@@ -141,21 +141,67 @@ const LANGUAGE_NAMES: Record<string, string> = {
   sw: 'Swahili',
 };
 
+const VALID_LANGUAGES = ['en', 'fr', 'es', 'de', 'pt', 'ru', 'sw'];
+const MAX_MESSAGES = 50;
+const MAX_MESSAGE_LENGTH = 4000;
+
+function jsonError(message: string, status: number) {
+  return new Response(JSON.stringify({ error: message }), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages, targetLanguage } = await req.json();
+    let body: any;
+    try {
+      body = await req.json();
+    } catch {
+      return jsonError("Invalid JSON body", 400);
+    }
+
+    const { messages, targetLanguage } = body ?? {};
+
+    // Validate messages array
+    if (!Array.isArray(messages)) {
+      return jsonError("messages must be an array", 400);
+    }
+    if (messages.length === 0 || messages.length > MAX_MESSAGES) {
+      return jsonError(`messages count must be between 1 and ${MAX_MESSAGES}`, 400);
+    }
+    for (const msg of messages) {
+      if (!msg || typeof msg !== 'object') {
+        return jsonError("each message must be an object", 400);
+      }
+      if (!['user', 'assistant', 'system'].includes(msg.role)) {
+        return jsonError("invalid message role", 400);
+      }
+      if (typeof msg.content !== 'string' || msg.content.length === 0 || msg.content.length > MAX_MESSAGE_LENGTH) {
+        return jsonError(`message content must be a string under ${MAX_MESSAGE_LENGTH} chars`, 400);
+      }
+    }
+
+    // Validate targetLanguage against allow-list (prevents prompt injection)
+    let safeLanguage: string | undefined;
+    if (targetLanguage !== undefined && targetLanguage !== null) {
+      if (typeof targetLanguage !== 'string' || !VALID_LANGUAGES.includes(targetLanguage)) {
+        return jsonError("invalid target language", 400);
+      }
+      safeLanguage = targetLanguage;
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const languageInstructions = targetLanguage && targetLanguage !== 'en' 
-      ? `\n\nIMPORTANT: Respond ENTIRELY in ${LANGUAGE_NAMES[targetLanguage] || targetLanguage}. Translate your response naturally.`
+    const languageInstructions = safeLanguage && safeLanguage !== 'en'
+      ? `\n\nIMPORTANT: Respond ENTIRELY in ${LANGUAGE_NAMES[safeLanguage]}. Translate your response naturally.`
       : '';
 
     const systemPrompt = `You are the ATROUN BioDynamics AI Assistant, a knowledgeable representative of ATROUN BioDynamics, a pioneering agribusiness company based in Uganda.
