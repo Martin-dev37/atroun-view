@@ -91,7 +91,7 @@ const Index = () => {
               className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
             >
               {hero?.subtitle ||
-                'ATROUN develops integrated processing infrastructure to stabilize perishable produce, recover premium ingredients, and create circular material flows—connecting East African agriculture to global markets.'}
+                'Using integrated agro-processing infrastructure, ATROUN transforms perishable agricultural produce by freeze-drying into premium powder ingredients for export—while ensuring circular material flows and maximum value recovery by converting by-products and wastes into high-quality biochar.'}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
