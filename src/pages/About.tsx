@@ -49,11 +49,6 @@ const leadershipTeam = [
     bio: 'Manages farmer relationships, feedstock sourcing, processing logistics, and downstream distribution to market. Builds the end-to-end supply chain that connects agricultural communities to processing facilities and delivers finished products reliably to customers worldwide.',
   },
   {
-    name: 'Operations Lead',
-    role: 'Supply Chain & Logistics',
-    bio: 'Manages farmer relationships, feedstock sourcing, and logistics coordination. Builds the supply chain infrastructure that connects agricultural communities to processing facilities with reliability and consistency.',
-  },
-  {
     name: 'Commercial Director',
     role: 'Markets & Partnerships',
     bio: 'Leads market development, customer relationships, and strategic partnerships. Focuses on building durable commercial relationships with B2B buyers across food, nutraceutical, and cosmetic sectors.',
