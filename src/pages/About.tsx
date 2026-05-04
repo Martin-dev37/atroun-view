@@ -55,38 +55,7 @@ const leadershipTeam = [
   },
 ];
 
-const advisoryBoard = [
-  {
-    name: 'Dr. Jean-Pierre Habimana',
-    role: 'Agricultural Technology Advisor',
-    bio: 'Former Director of Crop Science at the International Institute of Tropical Agriculture. Over 25 years of experience in sustainable agriculture systems and post-harvest technology across Sub-Saharan Africa.',
-  },
-  {
-    name: 'Chukwuemeka Adeyemi',
-    role: 'Finance & Investment Advisor',
-    bio: 'Managing Partner at a leading African venture capital firm with extensive experience in agribusiness financing. Previously led agricultural investment portfolios at the African Development Bank.',
-  },
-  {
-    name: 'Dr. Marie-Claire Dubois',
-    role: 'Food Science & Quality Advisor',
-    bio: 'Professor of Food Processing Technology at a leading European university. Specialist in freeze-drying technology and food preservation, with advisory roles at major international food ingredient companies.',
-  },
-  {
-    name: 'Emmanuel Tumwine',
-    role: 'Regulatory & Trade Advisor',
-    bio: 'Former Commissioner at a national standards bureau. Deep expertise in food safety regulations, export certifications, and navigating international trade compliance requirements.',
-  },
-  {
-    name: 'Patricia Namutebi',
-    role: 'Supply Chain & Operations Advisor',
-    bio: 'Global supply chain executive with 20+ years at multinational FMCG companies. Expert in building resilient agricultural supply chains and cold chain logistics in emerging markets.',
-  },
-  {
-    name: 'Andrew Ssekandi',
-    role: 'Legal Advisor',
-    bio: 'Senior Partner at a leading corporate law firm with expertise in agribusiness, international trade law, and cross-border transactions. Advises on regulatory compliance, intellectual property, and commercial agreements.',
-  },
-];
+const advisoryBoard: { name: string; role: string; bio: string }[] = [];
 
 const About = () => {
   return (
@@ -123,7 +92,7 @@ const About = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
             >
-              ATROUN Bio-Dynamics is a Uganda-based company developing integrated agri-biotech and biorefinery systems. We focus on transforming perishable agricultural produce into high-value, shelf-stable ingredients for global food, cosmetic, and nutraceutical markets.
+              ATROUN Bio-Dynamics is a Uganda-based company operating integrated agri-biotech and biorefinery systems. We focus on transforming perishable agricultural produce into high-value, shelf-stable ingredients for global food, cosmetic, and nutraceutical markets.
             </motion.p>
           </div>
         </div>
@@ -138,13 +107,13 @@ const About = () => {
           />
           <div className="mt-8 prose prose-lg prose-slate mx-auto font-body">
             <p className="text-muted-foreground leading-relaxed">
-              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce tremendous agricultural abundance, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.
+              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce abundant agricultural produce, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              At the same time, global demand for shelf-stable, nutrient-preserving ingredients continues to grow—in functional foods, nutraceuticals, cosmetics, and specialized nutrition. There's a clear mismatch between supply and market access.
+              At the same time, global demand for shelf-stable ingredients with well-retained nutrients and bioactive compounds continues to grow—in functional foods, nutraceuticals, cosmetics, and specialized nutrition. There's a clear mismatch between supply and market access.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              ATROUN was founded to bridge this gap. By introducing controlled processing infrastructure—specifically lyophilization (freeze-drying) and biochar production—we can stabilize perishable biomass, recover high-value ingredients, and connect local agricultural systems to international buyers seeking quality and reliability.
+              ATROUN was founded to bridge this gap. By introducing controlled processing infrastructure—specifically freeze-drying and biochar production—we can transform perishable agricultural biomass into high-value ingredients, and connect local agricultural systems to international buyers seeking quality and reliability.
             </p>
           </div>
         </div>
@@ -162,7 +131,7 @@ const About = () => {
           <div className="bg-background p-8 md:p-10 rounded-lg shadow-soft">
             <p className="text-sm font-body font-medium tracking-wider uppercase text-accent mb-4">Mission</p>
             <h3 className="text-2xl md:text-3xl font-display font-semibold">
-              To build a globally recognized brand in the lyophilized food and cosmetic sectors by offering high-quality, preservative-free products, while fostering sustainable agricultural practices in Uganda.
+              To deliver consistently high-quality, preservative-free freeze-dried food and cosmetic ingredients to our customers worldwide, while supporting Ugandan farmers and advancing sustainable agricultural practices.
             </h3>
           </div>
         </div>
