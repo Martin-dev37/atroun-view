@@ -40,8 +40,13 @@ const leadershipTeam = [
   {
     name: 'Edgar Ndekera Mbiri',
     role: 'Chief Technical Officer',
-    bio: 'Edgar Ndekera Mbiri is a Food Scientist and Process Engineer with expertise in advanced food systems and sustainable processing technologies. He holds a First Class Bachelor\u2019s degree in Food Processing Technology, graduating top of both his class and university, and a Master of Food Technology (cum laude) from KU Leuven under the IUPFOOD programme. His research focuses on plant-based ingredient engineering, particularly the relationship between processing conditions, microstructure, and functionality. As CTO at ATROUN BioDynamics, Edgar leads technical development, oversees process optimization, and drives the transformation of agricultural biomass into high-value, scalable biorefinery products.',
+    bio: 'Edgar Ndekera Mbiri is a Food Technologist and Process Engineer with expertise in advanced food systems and sustainable processing technologies. He holds a Master of Food Technology from KU Leuven and Ghent University. His research interest is in plant-based ingredient engineering, particularly the relationship between processing conditions, microstructure, and functionality. As CTO at ATROUN BioDynamics, Edgar leads technical development, oversees process optimization, and drives the transformation of agricultural biomass into high-value, scalable biorefinery products.',
     image: edgarNdekeraPhoto,
+  },
+  {
+    name: 'Operations Lead',
+    role: 'Supply Chain & Logistics',
+    bio: 'Manages farmer relationships, feedstock sourcing, processing logistics, and downstream distribution to market. Builds the end-to-end supply chain that connects agricultural communities to processing facilities and delivers finished products reliably to customers worldwide.',
   },
   {
     name: 'Operations Lead',
