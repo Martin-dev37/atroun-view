@@ -40,13 +40,13 @@ const leadershipTeam = [
   {
     name: 'Edgar Ndekera Mbiri',
     role: 'Chief Technical Officer',
-    bio: 'Edgar Ndekera Mbiri is a Food Scientist and Process Engineer with expertise in advanced food systems and sustainable processing technologies. He holds a First Class Bachelor\u2019s degree in Food Processing Technology, graduating top of both his class and university, and a Master of Food Technology (cum laude) from KU Leuven under the IUPFOOD programme. His research focuses on plant-based ingredient engineering, particularly the relationship between processing conditions, microstructure, and functionality. As CTO at ATROUN BioDynamics, Edgar leads technical development, oversees process optimization, and drives the transformation of agricultural biomass into high-value, scalable biorefinery products.',
+    bio: 'Edgar Ndekera Mbiri is a Food Technologist and Process Engineer with expertise in advanced food systems and sustainable processing technologies. He holds a Master of Food Technology from KU Leuven and Ghent University. His research interest is in plant-based ingredient engineering, particularly the relationship between processing conditions, microstructure, and functionality. As CTO at ATROUN BioDynamics, Edgar leads technical development, oversees process optimization, and drives the transformation of agricultural biomass into high-value, scalable biorefinery products.',
     image: edgarNdekeraPhoto,
   },
   {
     name: 'Operations Lead',
     role: 'Supply Chain & Logistics',
-    bio: 'Manages farmer relationships, feedstock sourcing, and logistics coordination. Builds the supply chain infrastructure that connects agricultural communities to processing facilities with reliability and consistency.',
+    bio: 'Manages farmer relationships, feedstock sourcing, processing logistics, and downstream distribution to market. Builds the end-to-end supply chain that connects agricultural communities to processing facilities and delivers finished products reliably to customers worldwide.',
   },
   {
     name: 'Commercial Director',
@@ -55,38 +55,7 @@ const leadershipTeam = [
   },
 ];
 
-const advisoryBoard = [
-  {
-    name: 'Dr. Jean-Pierre Habimana',
-    role: 'Agricultural Technology Advisor',
-    bio: 'Former Director of Crop Science at the International Institute of Tropical Agriculture. Over 25 years of experience in sustainable agriculture systems and post-harvest technology across Sub-Saharan Africa.',
-  },
-  {
-    name: 'Chukwuemeka Adeyemi',
-    role: 'Finance & Investment Advisor',
-    bio: 'Managing Partner at a leading African venture capital firm with extensive experience in agribusiness financing. Previously led agricultural investment portfolios at the African Development Bank.',
-  },
-  {
-    name: 'Dr. Marie-Claire Dubois',
-    role: 'Food Science & Quality Advisor',
-    bio: 'Professor of Food Processing Technology at a leading European university. Specialist in freeze-drying technology and food preservation, with advisory roles at major international food ingredient companies.',
-  },
-  {
-    name: 'Emmanuel Tumwine',
-    role: 'Regulatory & Trade Advisor',
-    bio: 'Former Commissioner at a national standards bureau. Deep expertise in food safety regulations, export certifications, and navigating international trade compliance requirements.',
-  },
-  {
-    name: 'Patricia Namutebi',
-    role: 'Supply Chain & Operations Advisor',
-    bio: 'Global supply chain executive with 20+ years at multinational FMCG companies. Expert in building resilient agricultural supply chains and cold chain logistics in emerging markets.',
-  },
-  {
-    name: 'Andrew Ssekandi',
-    role: 'Legal Advisor',
-    bio: 'Senior Partner at a leading corporate law firm with expertise in agribusiness, international trade law, and cross-border transactions. Advises on regulatory compliance, intellectual property, and commercial agreements.',
-  },
-];
+const advisoryBoard: { name: string; role: string; bio: string }[] = [];
 
 const About = () => {
   return (
@@ -123,7 +92,7 @@ const About = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
             >
-              ATROUN Bio-Dynamics is a Uganda-based company developing integrated agri-biotech and biorefinery systems. We focus on transforming perishable agricultural produce into high-value, shelf-stable ingredients for global food, cosmetic, and nutraceutical markets.
+              ATROUN Bio-Dynamics is a Uganda-based company operating integrated agri-biotech and biorefinery systems. We focus on transforming perishable agricultural produce into high-value, shelf-stable ingredients for global food, cosmetic, and nutraceutical markets.
             </motion.p>
           </div>
         </div>
@@ -138,13 +107,13 @@ const About = () => {
           />
           <div className="mt-8 prose prose-lg prose-slate mx-auto font-body">
             <p className="text-muted-foreground leading-relaxed">
-              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce tremendous agricultural abundance, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.
+              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce abundant agricultural produce, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              At the same time, global demand for shelf-stable, nutrient-preserving ingredients continues to grow—in functional foods, nutraceuticals, cosmetics, and specialized nutrition. There's a clear mismatch between supply and market access.
+              At the same time, global demand for shelf-stable ingredients with well-retained nutrients and bioactive compounds continues to grow—in functional foods, nutraceuticals, cosmetics, and specialized nutrition. There's a clear mismatch between supply and market access.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              ATROUN was founded to bridge this gap. By introducing controlled processing infrastructure—specifically lyophilization (freeze-drying) and biochar production—we can stabilize perishable biomass, recover high-value ingredients, and connect local agricultural systems to international buyers seeking quality and reliability.
+              ATROUN was founded to bridge this gap. By introducing controlled processing infrastructure—specifically freeze-drying and biochar production—we can transform perishable agricultural biomass into high-value ingredients, and connect local agricultural systems to international buyers seeking quality and reliability.
             </p>
           </div>
         </div>
@@ -162,7 +131,7 @@ const About = () => {
           <div className="bg-background p-8 md:p-10 rounded-lg shadow-soft">
             <p className="text-sm font-body font-medium tracking-wider uppercase text-accent mb-4">Mission</p>
             <h3 className="text-2xl md:text-3xl font-display font-semibold">
-              To build a globally recognized brand in the lyophilized food and cosmetic sectors by offering high-quality, preservative-free products, while fostering sustainable agricultural practices in Uganda.
+              To deliver consistently high-quality, preservative-free freeze-dried food and cosmetic ingredients to our customers worldwide, while supporting Ugandan farmers and advancing sustainable agricultural practices.
             </h3>
           </div>
         </div>
@@ -203,27 +172,36 @@ const About = () => {
       <Section>
         <SectionHeader
           title="Advisory Board"
-          subtitle="We are guided by experienced professionals who bring deep expertise across agriculture, finance, food science, and international trade."
+          subtitle="We are assembling an advisory board of experienced professionals across agriculture, finance, food science, and international trade."
           centered
         />
-        <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {advisoryBoard.map((advisor, index) => (
-            <div 
-              key={advisor.name}
-              className="border border-border p-6 rounded-lg animate-fade-in text-center"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center mb-4">
-                <User className="w-8 h-8 text-accent" />
+        {advisoryBoard.length === 0 ? (
+          <div className="mt-12 md:mt-16 max-w-xl mx-auto text-center border border-dashed border-border rounded-lg p-10 bg-muted/30">
+            <p className="text-sm font-body font-medium tracking-wider uppercase text-accent mb-3">Coming Soon</p>
+            <p className="text-muted-foreground font-body leading-relaxed">
+              Profiles of our advisors will be published here once their appointments are finalized.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {advisoryBoard.map((advisor, index) => (
+              <div
+                key={advisor.name}
+                className="border border-border p-6 rounded-lg animate-fade-in text-center"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center mb-4">
+                  <User className="w-8 h-8 text-accent" />
+                </div>
+                <h3 className="text-lg font-display font-semibold">{advisor.name}</h3>
+                <p className="text-sm text-accent font-body font-medium mt-1">{advisor.role}</p>
+                <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
+                  {advisor.bio}
+                </p>
               </div>
-              <h3 className="text-lg font-display font-semibold">{advisor.name}</h3>
-              <p className="text-sm text-accent font-body font-medium mt-1">{advisor.role}</p>
-              <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
-                {advisor.bio}
-              </p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </Section>
 
       {/* Values */}
