@@ -172,27 +172,36 @@ const About = () => {
       <Section>
         <SectionHeader
           title="Advisory Board"
-          subtitle="We are guided by experienced professionals who bring deep expertise across agriculture, finance, food science, and international trade."
+          subtitle="We are assembling an advisory board of experienced professionals across agriculture, finance, food science, and international trade."
           centered
         />
-        <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {advisoryBoard.map((advisor, index) => (
-            <div 
-              key={advisor.name}
-              className="border border-border p-6 rounded-lg animate-fade-in text-center"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center mb-4">
-                <User className="w-8 h-8 text-accent" />
+        {advisoryBoard.length === 0 ? (
+          <div className="mt-12 md:mt-16 max-w-xl mx-auto text-center border border-dashed border-border rounded-lg p-10 bg-muted/30">
+            <p className="text-sm font-body font-medium tracking-wider uppercase text-accent mb-3">Coming Soon</p>
+            <p className="text-muted-foreground font-body leading-relaxed">
+              Profiles of our advisors will be published here once their appointments are finalized.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-12 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {advisoryBoard.map((advisor, index) => (
+              <div
+                key={advisor.name}
+                className="border border-border p-6 rounded-lg animate-fade-in text-center"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center mb-4">
+                  <User className="w-8 h-8 text-accent" />
+                </div>
+                <h3 className="text-lg font-display font-semibold">{advisor.name}</h3>
+                <p className="text-sm text-accent font-body font-medium mt-1">{advisor.role}</p>
+                <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
+                  {advisor.bio}
+                </p>
               </div>
-              <h3 className="text-lg font-display font-semibold">{advisor.name}</h3>
-              <p className="text-sm text-accent font-body font-medium mt-1">{advisor.role}</p>
-              <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
-                {advisor.bio}
-              </p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </Section>
 
       {/* Values */}
