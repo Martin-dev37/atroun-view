@@ -82,7 +82,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
             >
-              {hero?.title || 'Building Systems That Turn Agricultural Abundance into Lasting Value'}
+              {hero?.title || "Transforming Uganda's Abundant Agricultural Produce into Lasting Value"}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
