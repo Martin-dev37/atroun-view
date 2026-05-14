@@ -87,7 +87,7 @@ const Markets = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
             >
-              ATROUN is positioned to serve growing global demand for shelf-stable, nutrient-preserving ingredients. Our focus on quality, consistency, and reliability makes us a credible partner for B2B buyers across multiple industries.
+              ATROUN is positioned to serve growing global demand for nutrient and bioactive-rich ingredients. Our focus on quality, consistency, and reliability makes us a credible partner for B2B buyers across multiple industries.
             </motion.p>
           </div>
         </div>
@@ -177,7 +177,7 @@ const Markets = () => {
               },
               {
                 industry: 'Baby Food & Specialized Nutrition',
-                description: 'Nutrient-preserving formats suitable for infant nutrition and specialized dietary applications where quality and safety are paramount.',
+                description: 'Nutrient and bioactive-rich formats suitable for infant nutrition and specialized dietary applications where quality and safety are paramount.',
               },
             ].map((item) => (
               <div key={item.industry} className="border-l-4 border-accent pl-6 py-2">
