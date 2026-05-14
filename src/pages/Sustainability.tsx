@@ -94,7 +94,7 @@ const Sustainability = () => {
           />
           <div className="mt-10 font-body text-muted-foreground leading-relaxed space-y-4">
             <p>
-              Fresh agricultural produce enters our facility. Through lyophilization, we recover premium, shelf-stable ingredients that retain nutritional value and command strong market prices. The organic residues—peels, seeds, off-spec material—are directed to controlled pyrolysis, producing biochar that improves soil health and sequesters carbon.
+              Fresh agricultural produce enters our facility. Through freeze-drying, we produce premium, shelf-stable ingredients that retain nutrients and bioactive compounds and command strong market prices. The organic residues—peels, seeds, off-spec material—are directed to controlled pyrolysis, producing biochar that improves soil health and sequesters carbon.
             </p>
             <p>
               This isn't about adding sustainability as an afterthought. The circular flow is the business model. Every input generates value; nothing is discarded.
