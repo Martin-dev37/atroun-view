@@ -172,7 +172,7 @@ const Sustainability = () => {
               <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
                 <item.icon className="h-6 w-6 text-accent" />
               </div>
-              <h3 className="text-lg font-display font-semibold">{item.title}</h3>
+              <h3 className="text-lg font-display font-bold">{item.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground font-body leading-relaxed">
                 {item.description}
               </p>
@@ -198,7 +198,7 @@ const Sustainability = () => {
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <item.icon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-lg font-display font-semibold">{item.title}</h3>
+              <h3 className="text-lg font-display font-bold">{item.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground font-body leading-relaxed">
                 {item.description}
               </p>
