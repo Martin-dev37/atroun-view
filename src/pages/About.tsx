@@ -158,7 +158,7 @@ const About = () => {
                   <User className="w-10 h-10 text-primary" />
                 )}
               </div>
-              <h3 className="text-lg font-display font-semibold">{member.name}</h3>
+              <h3 className="text-lg font-display font-bold">{member.name}</h3>
               <p className="text-sm text-accent font-body font-medium mt-1">{member.role}</p>
               <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
                 {member.bio}
