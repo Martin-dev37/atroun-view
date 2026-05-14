@@ -1,0 +1,14 @@
+# ATROUN BioDynamics
+
+> Uganda-based agribusiness building integrated freeze-drying and biochar systems that transform abundant agricultural produce into high-value, shelf-stable food and cosmetic ingredients for global markets.
+
+## Pages
+
+- [Home](/): Overview of ATROUN's mission to transform Uganda's agricultural produce into lasting value.
+- [About](/about): Company story, founders, leadership team, and customer-promise mission.
+- [What We Do](/what-we-do): Freeze-drying and ingredient production, biochar, and circular processing capabilities.
+- [Technology & Quality](/technology): Lyophilization process, quality controls, and documented production parameters.
+- [Markets](/markets): Target B2B segments across food, nutraceutical, and cosmetic industries in Europe, MENA, North America, and Asia-Pacific.
+- [Sustainability](/sustainability): Circular biorefinery model, smallholder farmer impact, and carbon-stable biochar.
+- [Investors](/investors): Investment thesis, phased development approach, financial logic, and FAQs.
+- [Contact](/contact): Partnership inquiries, investor relations, and general contact.
