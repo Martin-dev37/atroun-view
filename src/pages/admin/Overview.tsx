@@ -66,7 +66,7 @@ export default function AdminOverview() {
         {/* Portal Sections */}
         {visiblePortalCards.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-lg font-display font-semibold text-foreground flex items-center gap-2">
+            <h2 className="text-lg font-display font-bold text-foreground flex items-center gap-2">
               <Activity className="h-5 w-5 text-primary" />
               Portal Sections
             </h2>
@@ -96,7 +96,7 @@ export default function AdminOverview() {
         {/* Admin Stats */}
         {isAdmin && (
           <div className="space-y-4">
-            <h2 className="text-lg font-display font-semibold text-foreground flex items-center gap-2">
+            <h2 className="text-lg font-display font-bold text-foreground flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
               Management
             </h2>

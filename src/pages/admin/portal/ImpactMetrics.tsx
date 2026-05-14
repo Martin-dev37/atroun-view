@@ -200,7 +200,7 @@ export default function ImpactMetricsPage() {
         ) : (
           Object.entries(grouped).map(([category, items]) => (
             <div key={category} className="space-y-3">
-              <h2 className="text-lg font-display font-semibold text-foreground">{category}</h2>
+              <h2 className="text-lg font-display font-bold text-foreground">{category}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {items.map(metric => (
                   <Card key={metric.id} className="hover:shadow-soft transition-shadow">

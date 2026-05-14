@@ -82,7 +82,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
             >
-              {hero?.title || "Transforming Uganda's Abundant Agricultural Produce into Lasting Value"}
+              {hero?.title || "Building Agro-processing Systems That Transform Agricultural Abundance into Lasting Value"}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -91,7 +91,7 @@ const Index = () => {
               className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
             >
               {hero?.subtitle ||
-                'Using integrated agro-processing infrastructure, ATROUN transforms perishable agricultural produce by freeze-drying into premium powder ingredients for export—while ensuring circular material flows and maximum value recovery by converting by-products and wastes into high-quality biochar.'}
+                'ATROUN stabilizes perishable produce, recover premium ingredients, and create circular material flows—connecting East African agriculture to global markets.'}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -172,7 +172,7 @@ const Index = () => {
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                   <IconComponent className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-lg font-display font-semibold">{item.title}</h3>
+                <h3 className="text-lg font-display font-bold">{item.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground font-body leading-relaxed">
                   {item.description}
                 </p>

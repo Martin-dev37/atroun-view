@@ -164,7 +164,7 @@ const Technology = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <p className="text-3xl md:text-4xl font-display font-semibold text-primary">{item.value}</p>
-              <h3 className="mt-2 text-lg font-display font-semibold">{item.title}</h3>
+              <h3 className="mt-2 text-lg font-display font-bold">{item.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground font-body">{item.description}</p>
             </div>
           ))}

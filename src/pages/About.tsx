@@ -84,7 +84,7 @@ const About = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
             >
-              Building Agricultural Processing Infrastructure for Africa
+              Agricultural Processing for Africa
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -107,7 +107,7 @@ const About = () => {
           />
           <div className="mt-8 prose prose-lg prose-slate mx-auto font-body">
             <p className="text-muted-foreground leading-relaxed">
-              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce abundant agricultural produce, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.
+              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce abundant agricultural produce, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.{"\n"}
             </p>
             <p className="text-muted-foreground leading-relaxed">
               At the same time, global demand for shelf-stable ingredients with well-retained nutrients and bioactive compounds continues to grow—in functional foods, nutraceuticals, cosmetics, and specialized nutrition. There's a clear mismatch between supply and market access.
@@ -158,7 +158,7 @@ const About = () => {
                   <User className="w-10 h-10 text-primary" />
                 )}
               </div>
-              <h3 className="text-lg font-display font-semibold">{member.name}</h3>
+              <h3 className="text-lg font-display font-bold">{member.name}</h3>
               <p className="text-sm text-accent font-body font-medium mt-1">{member.role}</p>
               <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
                 {member.bio}
@@ -193,7 +193,7 @@ const About = () => {
                 <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center mb-4">
                   <User className="w-8 h-8 text-accent" />
                 </div>
-                <h3 className="text-lg font-display font-semibold">{advisor.name}</h3>
+                <h3 className="text-lg font-display font-bold">{advisor.name}</h3>
                 <p className="text-sm text-accent font-body font-medium mt-1">{advisor.role}</p>
                 <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
                   {advisor.bio}
