@@ -152,12 +152,37 @@ function jsonError(message: string, status: number) {
   });
 }
 
+// In-memory rate limiter: 15 requests per minute per session/IP
+const RATE_LIMIT_MAX = 15;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(identifier: string): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(identifier);
+  if (!record || now > record.resetAt) {
+    rateLimitMap.set(identifier, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  if (record.count >= RATE_LIMIT_MAX) return false;
+  record.count++;
+  return true;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    const identifier =
+      req.headers.get("x-session-id") ||
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      "anonymous";
+    if (!checkRateLimit(identifier)) {
+      return jsonError("Rate limit exceeded. Please wait a moment and try again.", 429);
+    }
+
     let body: any;
     try {
       body = await req.json();
