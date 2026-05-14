@@ -135,7 +135,7 @@ const WhatWeDo = () => {
           <div className="space-y-8">
             {products.map((product) => (
               <div key={product.name} className="bg-background p-6 rounded-lg shadow-soft">
-                <h3 className="text-lg font-display font-semibold">{product.name}</h3>
+                <h3 className="text-lg font-display font-bold">{product.name}</h3>
                 <p className="mt-2 text-muted-foreground font-body text-sm leading-relaxed">
                   {product.description}
                 </p>
