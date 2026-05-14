@@ -84,7 +84,7 @@ const About = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
             >
-              Building Agricultural Processing Infrastructure for Africa
+              Agricultural Processing for Africa
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
