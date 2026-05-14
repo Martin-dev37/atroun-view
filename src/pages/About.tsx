@@ -193,7 +193,7 @@ const About = () => {
                 <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center mb-4">
                   <User className="w-8 h-8 text-accent" />
                 </div>
-                <h3 className="text-lg font-display font-semibold">{advisor.name}</h3>
+                <h3 className="text-lg font-display font-bold">{advisor.name}</h3>
                 <p className="text-sm text-accent font-body font-medium mt-1">{advisor.role}</p>
                 <p className="mt-4 text-sm text-muted-foreground font-body leading-relaxed">
                   {advisor.bio}
