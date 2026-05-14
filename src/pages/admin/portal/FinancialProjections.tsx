@@ -175,7 +175,7 @@ export default function FinancialProjections() {
         ) : (
           Object.entries(groupedByYear).map(([year, metrics]) => (
             <div key={year} className="space-y-3">
-              <h2 className="text-lg font-display font-semibold text-foreground">{year}</h2>
+              <h2 className="text-lg font-display font-bold text-foreground">{year}</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {metrics.map(metric => (
                   <Card key={metric.id} className="hover:shadow-soft transition-shadow">
