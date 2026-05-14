@@ -32,7 +32,7 @@ const fallbackFAQs = [
   {
     id: '1',
     question: 'What is the addressable market for freeze-dried ingredients?',
-    answer: 'The global freeze-dried food market is valued at approximately $60 billion and growing at 7-8% annually. Key drivers include rising demand for convenient, shelf-stable foods with high nutritional retention.',
+    answer: 'The global freeze-dried food market is valued at approximately $60 billion and growing at 7-8% annually. Key drivers include rising demand for convenient, shelf-stable foods and ingredients with well-retained nutrients and bioactives.',
     display_order: 1,
     page_context: 'investors',
     is_active: true,
@@ -52,7 +52,7 @@ const fallbackFAQs = [
   {
     id: '3',
     question: 'What are the primary risks and how are they managed?',
-    answer: 'Key risks include supply chain consistency, operational execution, and market access. We mitigate supply risk through diversified farmer relationships and multi-crop capability.',
+    answer: 'Key risks include supply chain consistency, operational execution, and market access. We mitigate supply risk through diversified farmer relationships and multi-crop capability. Operational execution risk is addressed through a phased build-out, experienced technical leadership, documented process controls, and partnerships with proven equipment vendors. Market access risk is managed by securing letters of intent and offtake agreements with established B2B buyers, maintaining product certifications (food safety, organic, export-ready), and diversifying across regions (EU, MENA, North America, Asia-Pacific) and end-use sectors (food, nutraceutical, cosmetic).',
     display_order: 3,
     page_context: 'investors',
     is_active: true,
@@ -76,7 +76,7 @@ const fallbackHighlights = [
     id: '1',
     icon: 'Target',
     title: 'Clear Market Opportunity',
-    description: 'Growing global demand for shelf-stable, nutrient-preserving ingredients meets underserved African agricultural supply chains.',
+    description: 'Growing global demand for nutrient and bioactive-rich ingredients meets underserved African agricultural supply chains.',
     display_order: 1,
     is_active: true,
     created_at: '',
@@ -221,7 +221,7 @@ const Investors = () => {
         <div className="max-w-3xl mx-auto">
           <SectionHeader
             title={investmentThesis?.title || 'Investment Thesis'}
-            subtitle={investmentThesis?.subtitle || 'A straightforward opportunity at the intersection of agricultural abundance and global market demand.'}
+            subtitle={investmentThesis?.subtitle || 'A straightforward opportunity at the intersection of abundant agricultural produce and global market demand.'}
             centered
           />
           <div className="mt-10 font-body text-muted-foreground leading-relaxed space-y-4">
@@ -230,7 +230,7 @@ const Investors = () => {
             ) : (
               <>
                 <p>
-                  Uganda and the broader East African region produce significant agricultural abundance, but limited processing infrastructure means much of that value is lost to spoilage or exported as low-margin raw commodities. Post-harvest losses exceed 30% for many perishable crops.
+                  Uganda and the broader East African region produce abundant agricultural produce, but limited processing infrastructure means much of that value is lost to spoilage or exported as low-margin raw commodities. Post-harvest losses exceed 30% for many perishable crops.
                 </p>
                 <p>
                   At the same time, global demand for freeze-dried and shelf-stable ingredients is growing at approximately 8% annually, driven by consumer interest in convenient, nutritious, and long-lasting food products.

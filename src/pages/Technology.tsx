@@ -22,7 +22,7 @@ const techPrinciples = [
   },
   {
     title: 'Controlled Environments',
-    description: 'Processing occurs in controlled conditions with documented temperature, pressure, and humidity parameters. This ensures batch-to-batch consistency and supports quality certification requirements.',
+    description: 'Processing occurs in controlled conditions with documented parameters such as temperature, pressure, and humidity. This ensures batch-to-batch consistency and supports quality certification requirements.',
   },
   {
     title: 'Multi-Feedstock Capability',
@@ -93,13 +93,13 @@ const Technology = () => {
             />
             <div className="mt-8 space-y-4 font-body text-muted-foreground leading-relaxed">
               <p>
-                Unlike conventional drying methods that use heat—degrading nutrients and altering texture—lyophilization works by freezing the product and then reducing pressure to allow frozen water to sublimate directly from solid to vapor.
+                Unlike conventional hot-air drying methods—which degrade nutrients and alter texture—lyophilization works by freezing the product and then reducing pressure to allow frozen water to sublimate directly from solid to vapor.
               </p>
               <p>
                 The result is a lightweight, shelf-stable product that retains the original characteristics of fresh produce. When rehydrated, lyophilized ingredients return to near-original form, making them suitable for demanding applications in food, cosmetics, and nutraceuticals.
               </p>
               <p>
-                This technology is widely used in pharmaceutical and specialty food industries globally. ATROUN brings it to East African agricultural value chains, where it can transform perishable abundance into export-ready ingredients.
+                This technology is widely used in pharmaceutical and specialty food industries globally. ATROUN brings it to East African agricultural value chains, where it can transform perishable produce into export-ready ingredients.
               </p>
             </div>
           </div>

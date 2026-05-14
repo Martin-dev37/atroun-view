@@ -16,8 +16,8 @@ const capabilities = [
   },
   {
     icon: Droplets,
-    title: 'Lyophilization & Ingredient Recovery',
-    description: 'Using freeze-drying technology, we stabilize perishable biomass by removing moisture at low temperatures. This preserves nutritional content, flavor, and color while extending shelf life from days to years without refrigeration.',
+    title: 'Freeze-Drying & Ingredient Production',
+    description: 'Using freeze-drying technology, we preserve perishable biomass by removing moisture at low temperatures. This retains nutrients, flavor, and color while extending shelf life from days up to 24–36 months without refrigeration.',
   },
   {
     icon: Leaf,
@@ -76,7 +76,7 @@ const WhatWeDo = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-warm-white leading-[1.1]"
             >
-              Transforming Agricultural Biomass into Premium Ingredients
+              Transforming Uganda's Agricultural Produce into Premium Freeze-Dried Ingredients
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
