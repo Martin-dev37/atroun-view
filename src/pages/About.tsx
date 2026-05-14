@@ -107,7 +107,7 @@ const About = () => {
           />
           <div className="mt-8 prose prose-lg prose-slate mx-auto font-body">
             <p className="text-muted-foreground leading-relaxed">
-              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce abundant agricultural produce, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.
+              The idea for ATROUN emerged from a straightforward observation: Uganda and the broader East African region produce abundant agricultural produce, yet much of that value never reaches markets. Post-harvest losses exceed 30% for many perishable crops. Fresh produce that could command premium prices internationally spoils before it can be processed or shipped.{"\n"}
             </p>
             <p className="text-muted-foreground leading-relaxed">
               At the same time, global demand for shelf-stable ingredients with well-retained nutrients and bioactive compounds continues to grow—in functional foods, nutraceuticals, cosmetics, and specialized nutrition. There's a clear mismatch between supply and market access.
