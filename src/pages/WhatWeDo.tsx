@@ -84,7 +84,7 @@ const WhatWeDo = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-6 text-lg md:text-xl text-warm-white/80 font-body leading-relaxed"
             >
-              ATROUN operates at the intersection of agricultural sourcing, controlled processing, and global market access. We take perishable produce that would otherwise be lost and convert it into shelf-stable, high-value ingredients.
+              ATROUN operates at the intersection of agricultural sourcing, controlled processing, and global market access. We transform avocadoes, that would otherwise be lost, and convert it into shelf-stable, high-value freeze-dried ingredients for larger markets.
             </motion.p>
           </div>
         </div>
