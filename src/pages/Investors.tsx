@@ -52,7 +52,7 @@ const fallbackFAQs = [
   {
     id: '3',
     question: 'What are the primary risks and how are they managed?',
-    answer: 'Key risks include supply chain consistency, operational execution, and market access. We mitigate supply risk through diversified farmer relationships and multi-crop capability. Operational execution risk is addressed through a phased build-out, experienced technical leadership, documented process controls, and partnerships with proven equipment vendors. Market access risk is managed by securing letters of intent and offtake agreements with established B2B buyers, maintaining product certifications (food safety, organic, export-ready), and diversifying across regions (EU, MENA, North America, Asia-Pacific) and end-use sectors (food, nutraceutical, cosmetic).',
+    answer: 'Key risks include supply chain consistency, operational execution, and market access, mitigated through diversified relationships with farmers, suppliers etc. and phased development. Operational execution risk is addressed through a phased build-out, experienced technical leadership, documented process controls, and partnerships with proven equipment vendors. Market access risk is managed by securing letters of intent and offtake agreements with established B2B buyers, maintaining product certifications (food safety, organic, export-ready), and diversifying across regions (EU, MENA, North America, Asia-Pacific) and end-use sectors (food, nutraceutical, cosmetic).',
     display_order: 3,
     page_context: 'investors',
     is_active: true,
