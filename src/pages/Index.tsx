@@ -21,7 +21,7 @@ const fallbackHighlights = [
   {
     icon: 'Factory',
     title: 'Integrated Processing',
-    description: 'Modular biorefinery systems designed to stabilize agricultural biomass and recover high-value ingredients from local supply chains.',
+    description: 'Modular biorefinery systems designed to transform perishable agricultural biomass into high-value ingredients from local supply chains.',
   },
   {
     icon: 'Leaf',
@@ -122,12 +122,12 @@ const Index = () => {
               title={problemSection?.title || 'A Structural Challenge Becomes an Opportunity'}
               subtitle={
                 problemSection?.subtitle ||
-                'In Uganda, over 30% of perishable agricultural produce is lost after harvest due to limited processing capacity and cold-chain infrastructure. Meanwhile, global demand for shelf-stable, nutrient-preserving ingredients continues to grow.'
+                'In Uganda, over 30% of perishable agricultural produce is lost after harvest due to limited processing capacity and cold-chain infrastructure. Meanwhile, global demand for shelf-stable ingredients with well-retained nutrients and bioactive compounds continues to grow.'
               }
             />
             <p className="mt-6 text-muted-foreground font-body leading-relaxed">
               {problemSection?.body_content ||
-                'ATROUN addresses this by bringing processing closer to the source. Our systems stabilize fresh produce through lyophilization (freeze-drying), extending shelf life from days to years—without refrigeration, without preservatives, and without compromising nutritional integrity.'}
+                'ATROUN addresses this by bringing processing closer to the source. Our systems transform fresh produce through freeze-drying, extending shelf life from days up to 24–36 months—without refrigeration, without preservatives, and with well-retained nutrients and bioactive compounds.'}
             </p>
             <div className="mt-8">
               <Button asChild variant="default" className="font-body">
