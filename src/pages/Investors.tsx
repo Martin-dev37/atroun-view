@@ -76,7 +76,7 @@ const fallbackHighlights = [
     id: '1',
     icon: 'Target',
     title: 'Clear Market Opportunity',
-    description: 'Growing global demand for nutrient and bioactive-rich ingredients meets underserved African agricultural supply chains.',
+    description: "Growing global demand for shelf stable nutrients,\nand bioactive-rich ingredients, meets underserved African agricultural supply chains.",
     display_order: 1,
     is_active: true,
     created_at: '',
